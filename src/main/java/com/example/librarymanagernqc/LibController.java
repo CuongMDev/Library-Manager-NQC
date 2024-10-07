@@ -1,19 +1,21 @@
 package com.example.librarymanagernqc;
 
-import com.jfoenix.controls.JFXCheckBox;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.layout.AnchorPane;
 
 public class LibController {
-    @FXML
-    private JFXCheckBox checkBox;
-    @FXML
-    private Label welcomeText;
+    //@FXML
+    //private AnchorPane inputForm;
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to Library Controller NQC Application!");
-        checkBox.setSelected(true);
-        checkBox.setDisable(true);
+
+    }
+
+    @FXML
+    public void initialize() {
+        System.out.println(123);
+
     }
 }

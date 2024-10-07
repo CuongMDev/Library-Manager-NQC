@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="512.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.SplashScreenController">
+   <children>
+      <ImageView fitHeight="516.0" fitWidth="556.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/app-icon.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

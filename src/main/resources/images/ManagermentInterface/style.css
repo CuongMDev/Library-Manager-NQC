@@ -1,0 +1,17 @@
+.mainBackground {
+    -fx-background-color: #ecf0f6;
+}
+
+.topText {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+}
+
+.menuButton {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-font-family: Arial, sans-serif; /* Chọn font chữ */
+    -fx-font-size: 26px; /* Kích thước font chữ */
+    -fx-font-weight: bold; /* Độ đậm của chữ */
+    -fx-pref-width: 600px; /* Chiều rộng cố định */
+    -fx-pref-height: 100px; /* Chiều cao cố định */
+    -fx-alignment: CENTER_LEFT;
+}

@@ -10,11 +10,8 @@ import java.io.IOException;
 public class LibManagerNQCApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LibManagerNQCApplication.class.getResource("lib-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+        SplashScreenController splashController = new SplashScreenController();
+        splashController.showSplashScreen(stage);
     }
 
     public static void main(String[] args) {

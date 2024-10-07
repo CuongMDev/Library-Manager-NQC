@@ -11,7 +11,7 @@
     -fx-background-color: rgba(0, 0, 0, 0.3);
 }
 
-.text-field {
+.loginTextField {
     -fx-background-color: transparent; /* Make background transparent */
     -fx-border-color: transparent transparent #b39fa9 transparent; /* Add a line under the TextField */
     -fx-border-width: 0 0 1px 0; /* Set the width of the bottom border (underline) */
