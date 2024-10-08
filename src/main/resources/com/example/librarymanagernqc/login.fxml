@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.GaussianBlur?>
@@ -27,16 +28,19 @@
          <children>
             <AnchorPane layoutX="490.0" prefHeight="427.0" prefWidth="290.0" styleClass="rightForm">
                <children>
-                  <TextField layoutX="26.0" layoutY="181.0" prefHeight="25.0" prefWidth="231.0" promptText="Username" styleClass="loginTextField" />
+                  <TextField fx:id="usernameField" focusTraversable="false" layoutX="26.0" layoutY="181.0" prefHeight="25.0" prefWidth="231.0" promptText="Username" styleClass="loginTextField" />
                   <Text fill="#fffafa" layoutX="26.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up">
                      <font>
                         <Font size="27.0" />
                      </font>
                   </Text>
-                  <JFXButton fx:id="loginButton" alignment="TOP_LEFT" buttonType="RAISED" layoutX="26.0" layoutY="317.0" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: #ff0090;" text="  Login               &gt;" textFill="SNOW">
+                  <JFXButton fx:id="loginButton" alignment="TOP_LEFT" buttonType="RAISED" defaultButton="true" layoutX="26.0" layoutY="317.0" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="114.0" ripplerFill="#ff0303" styleClass="loginButton" stylesheets="@../../../images/login/style.css" text="  Login               &gt;" textFill="#fffcff">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
                   <PasswordField layoutX="26.0" layoutY="222.0" prefHeight="28.0" prefWidth="231.0" promptText="Password" styleClass="loginTextField" />
                   <Text fill="RED" layoutX="25.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click Login to enter main screen" wrappingWidth="231.0" />
