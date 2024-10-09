@@ -18,13 +18,13 @@
    <children>
       <ImageView fitHeight="535.0" fitWidth="972.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../images/login/background.jpg" />
+            <Image url="@images/background.jpg" />
          </image>
          <effect>
             <GaussianBlur />
          </effect>
       </ImageView>
-      <AnchorPane layoutX="86.0" layoutY="54.0" prefHeight="427.0" prefWidth="780.0" styleClass="mainBackground" stylesheets="@../../../images/login/style.css">
+      <AnchorPane layoutX="86.0" layoutY="54.0" prefHeight="427.0" prefWidth="780.0" styleClass="mainBackground" stylesheets="@style.css">
          <children>
             <AnchorPane layoutX="490.0" prefHeight="427.0" prefWidth="290.0" styleClass="rightForm">
                <children>
@@ -34,7 +34,7 @@
                         <Font size="27.0" />
                      </font>
                   </Text>
-                  <JFXButton fx:id="loginButton" alignment="TOP_LEFT" buttonType="RAISED" defaultButton="true" layoutX="26.0" layoutY="317.0" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="114.0" ripplerFill="#ff0303" styleClass="loginButton" stylesheets="@../../../images/login/style.css" text="  Login               &gt;" textFill="#fffcff">
+                  <JFXButton fx:id="loginButton" alignment="TOP_LEFT" buttonType="RAISED" defaultButton="true" layoutX="26.0" layoutY="317.0" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="114.0" ripplerFill="#ff0303" styleClass="loginButton" stylesheets="@style.css" text="  Login               &gt;" textFill="#fffcff">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

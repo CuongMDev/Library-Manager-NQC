@@ -18,7 +18,7 @@ public class LoginController {
     private void onLoginButtonClick() {
         try {
             // Load the new scene
-            Parent scene = FXMLLoader.load(getClass().getResource("management-interface.fxml"));
+            Parent scene = FXMLLoader.load(getClass().getResource("ManagementInterface/management-interface.fxml"));
 
             // Get the current stage
             Stage stage = (Stage) loginButton.getScene().getWindow();

@@ -14,7 +14,7 @@ public class LibManagerNQCApplication extends Application {
     public void start(Stage stage) throws IOException {
         String mode = System.getProperty("mode", "release");
         if ("debug".equalsIgnoreCase(mode)) {
-            Parent splashScreen = FXMLLoader.load(getClass().getResource("management-interface.fxml"));
+            Parent splashScreen = FXMLLoader.load(getClass().getResource("MângermentInterface/management-interface.fxml"));
             Scene splashScene = new Scene(splashScreen);
 
             stage.setTitle("Library Manager NQC");

@@ -13,7 +13,7 @@ public class SplashScreenController {
     public void showSplashScreen(Stage stage) {
         try {
             // Tải FXML cho màn hình chào
-            Parent splashScreen = FXMLLoader.load(getClass().getResource("splash-screen.fxml"));
+            Parent splashScreen = FXMLLoader.load(getClass().getResource("SplashScreen/splash-screen.fxml"));
             Scene splashScene = new Scene(splashScreen);
 
             stage.setScene(splashScene);
@@ -29,8 +29,8 @@ public class SplashScreenController {
                     stage.close();
 
                     Stage mainStage = new Stage();
-                    Parent mainScreen = FXMLLoader.load(getClass().getResource("login.fxml"));
-                    mainStage.getIcons().add(new Image(getClass().getResourceAsStream("icons/app-icon.png")));
+                    Parent mainScreen = FXMLLoader.load(getClass().getResource("Login/login.fxml"));
+                    mainStage.getIcons().add(new Image(getClass().getResourceAsStream("common/images/app-icon.png")));
                     mainStage.setTitle("Library Manager NQC");
                     mainStage.setScene(new Scene(mainScreen));
                     mainStage.show();
