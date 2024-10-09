@@ -20,6 +20,16 @@
     -fx-background-color: #ff0ac6; /* Màu khi di chuột vào */
 }
 
+.forgotButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #8f858a;
+    -fx-underline: true;
+}
+
+.forgotButton:hover {
+    -fx-text-fill: white; /* Màu khi di chuột vào */
+}
+
 .loginTextField {
     -fx-background-color: transparent; /* Make background transparent */
     -fx-border-color: transparent transparent #b39fa9 transparent; /* Add a line under the TextField */
