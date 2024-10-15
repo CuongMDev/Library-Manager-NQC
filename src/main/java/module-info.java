@@ -1,6 +1,7 @@
 module com.example.librarymanagernqc {
     requires javafx.fxml;
     requires javafx.web;
+    requires org.json;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -10,6 +11,7 @@ module com.example.librarymanagernqc {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires com.jfoenix;
+    requires java.net.http;
 
     opens com.example.librarymanagernqc to javafx.fxml;
     exports com.example.librarymanagernqc;

@@ -17,5 +17,11 @@
     -fx-background-radius: 25;  /* Bo tròn góc của background */
     -fx-border-radius: 30;      /* Bo tròn góc của viền nếu có */
     -fx-padding: 10 20;         /* Khoảng cách bên trong button */
+    -fx-focus-traversable: false;
+    -fx-cursor: HAND;
+}
+
+.menuButton:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
 }
 
