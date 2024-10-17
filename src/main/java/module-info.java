@@ -15,4 +15,6 @@ module com.example.librarymanagernqc {
 
     opens com.example.librarymanagernqc to javafx.fxml;
     exports com.example.librarymanagernqc;
+    exports com.example.librarymanagernqc.ManagementInterface;
+    opens com.example.librarymanagernqc.ManagementInterface to javafx.fxml;
 }
