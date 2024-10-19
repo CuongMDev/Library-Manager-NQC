@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="801.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document">
+<AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document">
    <children>
-      <ScrollPane layoutX="188.0" layoutY="181.0" prefHeight="526.0" prefWidth="689.0">
+      <ScrollPane layoutX="14.0" layoutY="138.0" prefHeight="526.0" prefWidth="689.0">
          <content>
-            <JFXTreeTableView prefHeight="618.0" prefWidth="674.0" />
+            <JFXTreeTableView prefHeight="526.0" prefWidth="674.0" />
          </content>
       </ScrollPane>
-      <Button layoutX="731.0" layoutY="61.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="124.0" text="Button" />
-      <JFXListView layoutX="932.0" layoutY="57.0" prefHeight="745.0" prefWidth="170.0" />
-      <Label layoutX="932.0" layoutY="5.0" prefHeight="50.0" prefWidth="170.0" text="Label" />
-      <Label layoutX="217.0" layoutY="77.0" prefHeight="26.0" prefWidth="54.0" text="Search" />
-      <Button layoutX="24.0" layoutY="688.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="138.0" text="Button" />
-      <TextField layoutX="286.0" layoutY="78.0" prefHeight="26.0" prefWidth="260.0" />
+      <JFXListView layoutX="710.0" layoutY="55.0" prefHeight="745.0" prefWidth="170.0" />
+      <Label alignment="CENTER" layoutX="710.0" layoutY="5.0" prefHeight="50.0" prefWidth="170.0" text="Recent" />
+      <Label alignment="CENTER" layoutX="75.0" layoutY="79.0" prefHeight="26.0" prefWidth="54.0" text="Search" />
+      <TextField layoutX="135.0" layoutY="79.0" prefHeight="26.0" prefWidth="419.0" />
+      <JFXButton layoutX="560.0" layoutY="80.0" prefHeight="25.0" prefWidth="99.0" styleClass="addButton" text="Add Book" />
    </children>
 </AnchorPane>

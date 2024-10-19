@@ -1,0 +1,14 @@
+.menuList {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}
+
+.menuButton {
+    -fx-font-size: 20px; /* Kích thước font chữ */
+    -fx-font-weight: bold; /* Độ đậm của chữ */
+    -fx-focus-traversable: false;
+    -fx-cursor: HAND;
+}
+
+.menuButton:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}

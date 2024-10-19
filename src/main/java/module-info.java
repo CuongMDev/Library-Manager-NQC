@@ -12,6 +12,7 @@ module com.example.librarymanagernqc {
     requires com.almasb.fxgl.all;
     requires com.jfoenix;
     requires java.net.http;
+    requires javafx.swing;
 
     opens com.example.librarymanagernqc to javafx.fxml;
     exports com.example.librarymanagernqc;
