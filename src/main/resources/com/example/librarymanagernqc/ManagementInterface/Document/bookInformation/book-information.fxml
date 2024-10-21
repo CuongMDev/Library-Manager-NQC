@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController">
+<AnchorPane cache="true" prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController">
     <children>
         <Label layoutX="55.0" layoutY="71.0" styleClass="titleFont" text="Book Information" />
-      <AnchorPane layoutX="80.0" layoutY="201.0" prefHeight="539.0" prefWidth="713.0" style="-fx-background-color: white;">
+      <AnchorPane layoutX="55.0" layoutY="196.0" prefHeight="490.0" prefWidth="772.0" style="-fx-background-color: white;">
          <children>
-            <Label layoutX="50.0" layoutY="53.0" styleClass="infoFieldFont" text="Book Title:" />
-            <Label layoutX="122.0" layoutY="48.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
-            <Label layoutX="50.0" layoutY="98.0" styleClass="infoFieldFont" text="Author" />
-            <Label alignment="TOP_LEFT" layoutX="122.0" layoutY="93.0" prefHeight="187.0" prefWidth="217.0" styleClass="longInfoField" text="Label" />
-            <Label layoutX="370.0" layoutY="53.0" styleClass="infoFieldFont" text="Book Title:" />
-            <Label layoutX="442.0" layoutY="48.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+            <Label layoutX="38.0" layoutY="77.0" styleClass="infoFieldFont" text="Book Title:" />
+            <Label layoutX="124.0" layoutY="72.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+            <Label layoutX="38.0" layoutY="141.0" styleClass="infoFieldFont" text="Author:" />
+            <Label alignment="TOP_LEFT" layoutX="124.0" layoutY="141.0" prefHeight="187.0" prefWidth="217.0" styleClass="longInfoField" text="Label" />
+            <Label layoutX="373.0" layoutY="77.0" styleClass="infoFieldFont" text="Quantity:" />
+            <Label layoutX="484.0" layoutY="72.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+            <Label layoutX="373.0" layoutY="141.0" styleClass="infoFieldFont" text="Description:" />
+            <Label alignment="TOP_LEFT" layoutX="484.0" layoutY="141.0" prefHeight="187.0" prefWidth="217.0" styleClass="longInfoField" text="Label" />
+            <Label layoutX="373.0" layoutY="371.0" styleClass="infoFieldFont" text="Published Date:" />
+            <Label layoutX="38.0" layoutY="371.0" styleClass="infoFieldFont" text="Description:" />
+            <Label layoutX="484.0" layoutY="366.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+            <Label layoutX="124.0" layoutY="366.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
          </children>
       </AnchorPane>
+      <ImageView fitHeight="38.0" fitWidth="47.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>
