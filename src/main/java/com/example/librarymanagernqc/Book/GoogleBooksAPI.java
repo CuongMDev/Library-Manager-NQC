@@ -1,4 +1,4 @@
-package com.example.librarymanagernqc;
+package com.example.librarymanagernqc.Book;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -40,25 +40,28 @@ public class GoogleBooksAPI {
 
     // Phương thức tìm kiếm sách theo tiêu đề và tác giả
     public void searchBooks(String title, String author, ApiCallback callback) {
-        String query = String.format("intitle:%s+inauthor:%s", title, author);
+        String query = "";
+        if (!title.isEmpty() && !author.isEmpty()) {
+            query = String.format("?q=intitle:%s+inauthor:%s&", title, author);
+        } else if (title.isEmpty()) {
+            query = String.format("?q=intitle:%s", title);
+        }
+        else if (author.isEmpty()) {
+            query = String.format("?q=inauthor:%s", title);
+        }
+
         sendRequest(query, callback);
     }
 
-    // Phương thức tìm kiếm sách theo tiêu đề
-    public void searchBooksByTitle(String title, ApiCallback callback) {
-        String query = "intitle:" + title;
-        sendRequest(query, callback);
-    }
-
-    // Phương thức tìm kiếm sách theo tác giả
-    public void searchBooksByAuthor(String author, ApiCallback callback) {
-        String query = "inauthor:" + author;
+    // Phương thức tìm kiếm sách theo ID
+    public void searchBookById(String Id, ApiCallback callback) {
+        String query = String.format("/%s?", Id);
         sendRequest(query, callback);
     }
 
     // Phương thức gửi yêu cầu đến API
     private void sendRequest(String query, ApiCallback callback) {
-        String url = String.format("%s?q=%s&key=%s", BASE_URL, query, API_KEY);
+        String url = String.format("%s%skey=%s", BASE_URL, query, API_KEY);
 
         executorService.submit(() -> {
             try {
@@ -78,24 +81,5 @@ public class GoogleBooksAPI {
     // Đóng ExecutorService khi không còn sử dụng
     public void shutdown() {
         executorService.shutdown();
-    }
-
-    public List<String> parseBookTitles(String jsonResponse) {
-        List<String> bookTitles = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject(jsonResponse);
-        JSONArray items = jsonObject.optJSONArray("items");
-
-        if (items != null) {
-            for (int i = 0; i < items.length(); i++) {
-                JSONObject item = items.getJSONObject(i);
-                JSONObject volumeInfo = item.optJSONObject("volumeInfo");
-                if (volumeInfo != null) {
-                    String title = volumeInfo.optString("title");
-                    bookTitles.add(title);
-                }
-            }
-        }
-
-        return bookTitles;
     }
 }

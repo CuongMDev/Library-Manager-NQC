@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController">
+    <children>
+        <Label layoutX="55.0" layoutY="71.0" styleClass="titleFont" text="Book Information" />
+      <AnchorPane layoutX="80.0" layoutY="201.0" prefHeight="539.0" prefWidth="713.0" style="-fx-background-color: white;">
+         <children>
+            <Label layoutX="50.0" layoutY="53.0" styleClass="infoFieldFont" text="Book Title:" />
+            <Label layoutX="122.0" layoutY="48.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+            <Label layoutX="50.0" layoutY="98.0" styleClass="infoFieldFont" text="Author" />
+            <Label alignment="TOP_LEFT" layoutX="122.0" layoutY="93.0" prefHeight="187.0" prefWidth="217.0" styleClass="longInfoField" text="Label" />
+            <Label layoutX="370.0" layoutY="53.0" styleClass="infoFieldFont" text="Book Title:" />
+            <Label layoutX="442.0" layoutY="48.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>

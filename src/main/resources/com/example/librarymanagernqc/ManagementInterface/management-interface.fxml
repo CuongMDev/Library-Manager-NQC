@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="801.0" prefWidth="1102.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.ManagementInterface">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="801.0" prefWidth="1102.0" styleClass="mainBackground" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.ManagementInterfaceController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="1102.0" styleClass="topText" stylesheets="@style.css">
          <children>
@@ -69,7 +69,8 @@
                   <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/document.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton prefHeight="91.0" prefWidth="279.0" styleClass="menuButton" text="Borrowed List" GridPane.rowIndex="1">
@@ -80,7 +81,8 @@
                   <ImageView fitHeight="46.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/return.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton prefHeight="91.0" prefWidth="279.0" styleClass="menuButton" text="User" GridPane.columnIndex="1">
@@ -91,7 +93,8 @@
                   <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/person.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton styleClass="menuButton" text="Information" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -99,7 +102,8 @@
                   <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/information.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton styleClass="menuButton" text="Log Out" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -115,7 +119,8 @@
                   <ImageView fitHeight="46.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/borrow.png" />
-                     </image></ImageView>
+                     </image>
+                  </ImageView>
                </graphic>
             </JFXButton>
          </children>

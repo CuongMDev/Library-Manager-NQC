@@ -32,7 +32,7 @@
 
 .loginTextField {
     -fx-background-color: transparent; /* Make background transparent */
-    -fx-border-color: transparent transparent #b39fa9 transparent; /* Add a line under the TextField */
+    -fx-border-color: #b39fa9; /* Add a line under the TextField */
     -fx-border-width: 0 0 1px 0; /* Set the width of the bottom border (underline) */
     -fx-padding: 5px; /* Padding to control spacing */
     -fx-prompt-text-fill: #8f858a;

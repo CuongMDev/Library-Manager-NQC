@@ -1,5 +1,4 @@
 package com.example.librarymanagernqc.ManagementInterface;
 
-public class Document {
-
+public class ManagementInterfaceController {
 }

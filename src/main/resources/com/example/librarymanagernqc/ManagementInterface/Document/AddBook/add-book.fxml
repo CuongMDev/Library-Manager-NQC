@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXScrollPane?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController">
+   <children>
+      <AnchorPane layoutX="193.0" layoutY="187.0" prefHeight="488.0" prefWidth="565.0">
+         <children>
+            <JFXScrollPane layoutX="11.0" layoutY="14.0" prefHeight="475.0" prefWidth="556.0">
+               <children>
+                  <JFXTreeTableView prefHeight="552.0" prefWidth="556.0">
+                     <columns>
+                        <TreeTableColumn prefWidth="75.0" text="Column X" />
+                     </columns>
+                  </JFXTreeTableView>
+               </children>
+            </JFXScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-public class MainPane {
+public class MainPaneController {
     @FXML
     JFXButton homeButton;
     @FXML
