@@ -1,0 +1,21 @@
+.titleFont {
+  -fx-font-size: 26px; /* Kích thước font chữ */
+  -fx-font-weight: bold; /* Độ đậm của chữ */
+}
+
+.searchField {
+  -fx-background-color: transparent; /* Make background transparent */
+  -fx-border-color: #cccccc; /* Add a line under the TextField */
+  -fx-border-width: 0 0 1px 0; /* Set the width of the bottom border (underline) */
+  -fx-padding: 5px; /* Padding to control spacing */
+}
+
+.searchField:focused {
+  -fx-border-color: #bab8b8;
+}
+
+.borrowingButton {
+  -fx-background-color: rgba(0, 0, 0, 0.2);
+  -fx-cursor: HAND;
+  -fx-background-radius: 8;
+}
