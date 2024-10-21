@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowingSlip.BorrowingSlipController">
+  <children>
+    <JFXTreeTableView layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="744.0">
+      <columns>
+        <TreeTableColumn prefWidth="97.3333066701889" text="ID" />
+        <TreeTableColumn minWidth="0.0" prefWidth="356.8000030517578" text="Book Title" />
+        <TreeTableColumn prefWidth="194.4000244140625" text="Author" />
+        <TreeTableColumn prefWidth="96.79998779296875" text="Option" />
+      </columns>
+    </JFXTreeTableView>
+    <Label layoutX="62.0" layoutY="147.0" prefHeight="26.0" prefWidth="44.0" text="Search:">
+      <font>
+        <Font size="13.0" />
+      </font></Label>
+    <TextField layoutX="106.0" layoutY="146.0" prefHeight="26.0" prefWidth="482.0" styleClass="searchField" />
+    <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Borrowing Slip" />
+  </children>
+</AnchorPane>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController">
+   <children>
+      <Label layoutX="47.0" layoutY="59.0" prefHeight="47.0" prefWidth="190.0" styleClass="titleFont" stylesheets="@style.css" text="Borrowed List" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <JFXTreeTableView layoutX="32.0" layoutY="240.0" prefHeight="476.0" prefWidth="817.0">
+         <columns>
+            <TreeTableColumn prefWidth="100.79996490478516" text="User " />
+            <TreeTableColumn prefWidth="177.5999755859375" text="Book Title" />
+            <TreeTableColumn prefWidth="172.0" text="Loan Date" />
+            <TreeTableColumn prefWidth="210.39999389648438" text="Due Date" />
+            <TreeTableColumn prefWidth="156.80010986328125" text="Status" />
+         </columns>
+      </JFXTreeTableView>
+      <Label layoutX="47.0" layoutY="142.0" prefHeight="34.0" prefWidth="60.0" text="Search:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="107.0" layoutY="147.0" prefHeight="29.0" prefWidth="297.0" styleClass="searchField" stylesheets="@style.css" />
+      <JFXButton layoutX="701.0" layoutY="59.0" prefHeight="47.0" prefWidth="119.0" styleClass="borrowingButton" text="Borrowing Sip" />
+   </children>
+</AnchorPane>
