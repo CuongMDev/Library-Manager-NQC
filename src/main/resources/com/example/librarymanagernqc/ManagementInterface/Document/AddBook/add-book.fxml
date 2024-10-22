@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController">
    <children>
-      <JFXTreeTableView layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="743.0">
+      <TableView fx:id="bookTableView" layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="749.0" styleClass="tableView">
          <columns>
-            <TreeTableColumn prefWidth="110.39999771118164" text="ID" />
-            <TreeTableColumn minWidth="0.0" prefWidth="310.3999786376953" text="Book Title" />
-            <TreeTableColumn prefWidth="179.20001220703125" text="Author" />
-            <TreeTableColumn minWidth="0.0" prefWidth="142.4000244140625" text="Option" />
+            <TableColumn fx:id="idColumn" prefWidth="108.0" text="ID" />
+            <TableColumn fx:id="bookTitleColumn" prefWidth="378.0" text="Book Title" />
+            <TableColumn fx:id="authorColumn" prefWidth="157.0" text="Author" />
+            <TableColumn prefWidth="104.0" text="Option" />
          </columns>
-      </JFXTreeTableView>
+      </TableView>
       <Label layoutX="62.0" layoutY="147.0" prefHeight="26.0" prefWidth="44.0" text="Search:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <TextField layoutX="257.0" layoutY="147.0" prefHeight="26.0" prefWidth="369.0" promptText="Book Title" styleClass="searchField" />
+      <TextField fx:id="bookTitleField" layoutX="257.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="369.0" promptText="Book Title" styleClass="searchField" />
       <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Book Manager" />
-      <TextField layoutX="635.0" layoutY="147.0" prefHeight="26.0" prefWidth="169.0" promptText="Author" styleClass="searchField" />
-      <TextField layoutX="106.0" layoutY="147.0" prefHeight="26.0" prefWidth="143.0" promptText="ID" styleClass="searchField" />
+      <TextField fx:id="authorField" layoutX="635.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="169.0" promptText="Author" styleClass="searchField" />
+      <TextField fx:id="idField" layoutX="106.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="143.0" promptText="ID" styleClass="searchField" />
+      <ProgressIndicator fx:id="searchProgressIndicator" layoutX="811.0" layoutY="148.0" prefHeight="26.0" prefWidth="21.0" />
    </children>
 </AnchorPane>

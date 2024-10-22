@@ -2,24 +2,16 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document.DocumentController">
    <children>
-      <JFXTreeTableView layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="631.0">
-         <columns>
-            <TreeTableColumn prefWidth="97.3333066701889" text="ID" />
-            <TreeTableColumn minWidth="0.0" prefWidth="257.3333511352539" text="Book Title" />
-            <TreeTableColumn prefWidth="143.99996948242188" text="Author" />
-            <TreeTableColumn prefWidth="130.66667683919275" text="Option" />
-         </columns>
-      </JFXTreeTableView>
-      <JFXListView focusTraversable="false" layoutX="702.0" layoutY="270.0" prefHeight="477.0" prefWidth="155.0" styleClass="recentList" />
+      <JFXListView focusTraversable="false" layoutX="702.0" layoutY="270.0" prefHeight="476.0" prefWidth="155.0" styleClass="recentList" />
       <Label alignment="CENTER" layoutX="702.0" layoutY="220.0" prefHeight="50.0" prefWidth="155.0" styleClass="recentFont" text="Recent" />
       <Label layoutX="62.0" layoutY="147.0" prefHeight="26.0" prefWidth="44.0" text="Search:">
          <font>
@@ -28,5 +20,13 @@
       <TextField layoutX="106.0" layoutY="146.0" prefHeight="26.0" prefWidth="482.0" styleClass="searchField" />
       <JFXButton layoutX="730.0" layoutY="71.0" prefHeight="38.0" prefWidth="99.0" styleClass="addButton" text="Add Book" />
       <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Book Manager" />
+      <TableView layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="636.0" styleClass="tableView">
+        <columns>
+            <TableColumn fx:id="idColumn" prefWidth="108.0" text="ID" />
+          <TableColumn fx:id="bookTitleColumn" prefWidth="269.0" text="Book Title" />
+          <TableColumn fx:id="authorColumn" prefWidth="132.0" text="Author" />
+            <TableColumn prefWidth="125.0" text="Option" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

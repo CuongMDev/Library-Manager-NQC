@@ -3,14 +3,14 @@ package com.example.librarymanagernqc.Book;
 public class Book {
     private String id;
     private String title;
-    private String[] authors;
+    private String authors;
     private String publisher;
     private String publishedDate;
     private String description;
     private int count;
 
     // Constructor
-    public Book(String id, String title, String[] authors, String publisher, String publishedDate, String description) {
+    public Book(String id, String title, String authors, String publisher, String publishedDate, String description) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -28,8 +28,8 @@ public class Book {
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public String[] getAuthors() { return authors; }
-    public void setAuthors(String[] authors) { this.authors = authors; }
+    public String getAuthors() { return authors; }
+    public void setAuthors(String authors) { this.authors = authors; }
 
     public String getPublisher() { return publisher; }
     public void setPublisher(String publisher) { this.publisher = publisher; }

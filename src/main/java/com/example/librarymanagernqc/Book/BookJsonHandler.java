@@ -11,6 +11,9 @@ public class BookJsonHandler {
     }
 
     static Book getBookFromJson(JSONObject item) {
+        if (!item.has("volumeInfo")) {
+            return null;
+        }
         JSONObject volumeInfo = item.getJSONObject("volumeInfo");
         if (volumeInfo == null) {
             return null;
@@ -18,27 +21,40 @@ public class BookJsonHandler {
 
         String id = item.getString("id");
         String title = volumeInfo.getString("title");
-        JSONArray authorsArray = volumeInfo.getJSONArray("authors");
-        String[] authors = new String[authorsArray.length()];
-        for (int i = 0; i < authorsArray.length(); i++) {
-            authors[i] = authorsArray.getString(i);
+        StringBuilder authors = new StringBuilder();
+        if (volumeInfo.has("authors")) {
+            JSONArray authorsArray = volumeInfo.getJSONArray("authors");
+            for (int i = 0; i < authorsArray.length(); i++) {
+                authors.append(authorsArray.getString(i));
+                if (i < authorsArray.length() - 1) {
+                    authors.append(", ");
+                }
+            }
         }
         String publisher = volumeInfo.optString("publisher", "Unknown");
         String publishedDate = volumeInfo.optString("publishedDate", "Unknown");
         String description = volumeInfo.optString("description", "No description");
 
-        return new Book(id, title, authors, publisher, publishedDate, description);
+        return new Book(id, title, authors.toString(), publisher, publishedDate, description);
     }
 
     static public List<Book> parseBookTitles(String jsonResponse) {
         List<Book> bookList = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonResponse);
-        JSONArray items = jsonObject.optJSONArray("items");
+        if (jsonObject.has("items")) {
+            JSONArray items = jsonObject.optJSONArray("items");
 
-        if (items != null) {
-            for (int i = 0; i < items.length(); i++) {
-                JSONObject item = items.getJSONObject(i);
-                bookList.add(getBookFromJson(item));
+            if (items != null) {
+                for (int i = 0; i < items.length(); i++) {
+                    JSONObject item = items.getJSONObject(i);
+                    bookList.add(getBookFromJson(item));
+                }
+            }
+        }
+        else {
+            Book book = getBookFromJson(jsonObject);
+            if (book != null) {
+                bookList.add(book);
             }
         }
 
