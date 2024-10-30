@@ -3,30 +3,35 @@ package com.example.librarymanagernqc.ManagementInterface;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainPaneController {
+    private enum PaneType {
+        DOCUMENT
+    }
+
     @FXML
-    JFXButton homeButton;
+    private JFXButton homeButton;
     @FXML
-    StackPane mainStackPane;
+    private StackPane mainStackPane;
+
+    private final Pane[] panes = new Pane[PaneType.values().length];
+
+    @FXML
+    private void initialize() throws IOException {
+        panes[PaneType.DOCUMENT.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Document/document.fxml")));
+    }
+
+    public void switchPane(PaneType paneType) {
+        mainStackPane.getChildren().setAll(panes[paneType.ordinal()]);
+    }
 
     @FXML
     void OnHomeButtonClicked() {
-        switchToPane("Document/document.fxml");
-    }
-
-    // Phương thức để chuyển đổi các Pane bằng cách tải từ FXML
-    private void switchToPane(String fxmlFile) {
-        try {
-            // Load FXML
-            Parent scene = FXMLLoader.load(getClass().getResource(fxmlFile));
-            mainStackPane.getChildren().setAll(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        switchPane(PaneType.DOCUMENT);
     }
 }

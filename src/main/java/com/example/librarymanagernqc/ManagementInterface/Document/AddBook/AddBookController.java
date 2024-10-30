@@ -12,12 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 
 public class AddBookController {
-    @FXML
-    TextField mainAnchorPane;
     @FXML
     TextField idField;
     @FXML
@@ -80,5 +79,9 @@ public class AddBookController {
                 new Thread(searchTask).start();
             }
         }
+    }
+
+    @FXML
+    private void onBackMouseClicked(MouseEvent mouseEvent) {
     }
 }

@@ -9,13 +9,16 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 public class SplashScreenController {
     public void showSplashScreen(Stage stage) {
         try {
             // Tải FXML cho màn hình chào
-            Parent splashScreen = FXMLLoader.load(getClass().getResource("SplashScreen/splash-screen.fxml"));
+            Parent splashScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SplashScreen/splash-screen.fxml")));
             Scene splashScene = new Scene(splashScreen);
 
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("common/images/app-icon.png"))));
             stage.setScene(splashScene);
             stage.setResizable(false);
             stage.initStyle(StageStyle.UNDECORATED);
@@ -29,8 +32,8 @@ public class SplashScreenController {
                     stage.close();
 
                     Stage mainStage = new Stage();
-                    Parent mainScreen = FXMLLoader.load(getClass().getResource("Login/login.fxml"));
-                    mainStage.getIcons().add(new Image(getClass().getResourceAsStream("common/images/app-icon.png")));
+                    Parent mainScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login/login.fxml")));
+                    mainStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("common/images/app-icon.png"))));
                     mainStage.setTitle("Library Manager NQC");
                     mainStage.setScene(new Scene(mainScreen));
                     mainStage.show();

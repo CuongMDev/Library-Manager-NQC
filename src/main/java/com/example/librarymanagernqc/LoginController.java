@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class LoginController {
     @FXML
     private JFXButton loginButton;
@@ -18,7 +20,7 @@ public class LoginController {
     private void onLoginButtonClick() {
         try {
             // Load the new scene
-            Parent scene = FXMLLoader.load(getClass().getResource("ManagementInterface/management-interface.fxml"));
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ManagementInterface/management-interface.fxml")));
 
             // Get the current stage
             Stage stage = (Stage) loginButton.getScene().getWindow();
