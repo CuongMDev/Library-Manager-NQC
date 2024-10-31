@@ -3,36 +3,50 @@ package com.example.librarymanagernqc.ManagementInterface.Document.AddBook;
 import com.example.librarymanagernqc.Book.Book;
 import com.example.librarymanagernqc.Book.BookJsonHandler;
 import com.example.librarymanagernqc.Book.GoogleBooksAPI;
+import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
+import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class AddBookController {
     @FXML
-    TextField idField;
+    private StackPane mainStackPane;
     @FXML
-    TextField bookTitleField;
+    public JFXButton backButton;
     @FXML
-    TextField authorField;
+    private TextField idField;
     @FXML
-    ProgressIndicator searchProgressIndicator;
+    private TextField bookTitleField;
     @FXML
-    TableColumn<Book, String> idColumn;
+    private TextField authorField;
     @FXML
-    TableColumn<Book, String> bookTitleColumn;
+    private ProgressIndicator searchProgressIndicator;
     @FXML
-    TableColumn<Book, String> authorColumn;
+    private TableColumn<Book, String> idColumn;
     @FXML
-    TableView<Book> bookTableView;
+    private TableColumn<Book, String> bookTitleColumn;
+    @FXML
+    private TableColumn<Book, String> authorColumn;
+    @FXML
+    private TableColumn<Book, Void> optionColumn;
+    @FXML
+    private TableView<Book> bookTableView;
 
     @FXML
     private void initialize() {
@@ -40,6 +54,54 @@ public class AddBookController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
+        JFXButton addButton = new JFXButton();
+
+        optionColumn.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Book, Void> call(TableColumn<Book, Void> param) {
+                return new TableCell<>() {
+                    private final JFXButton addButton = new JFXButton();
+                    {
+                        //create add Image
+                        ImageView addImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/add2.png")))); // Đường dẫn tới ảnh
+                        addImage.setFitWidth(20); // Đặt kích thước cho ảnh
+                        addImage.setFitHeight(20);
+
+                        //set addButton
+                        addButton.setRipplerFill(Color.WHITE);
+                        addButton.setCursor(Cursor.HAND);
+                        addButton.setGraphic(addImage);
+                        addButton.setOnAction(event -> {
+                            Book book = getTableView().getItems().get(getIndex());
+                            //load book information
+                            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
+                            FXMLLoader bookInfoLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
+                            try {
+                                mainStackPane.getChildren().add(bookInfoLoader.load());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            BookInformationController bookInfoController = bookInfoLoader.getController();
+                            bookInfoController.addBook(book);
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(addButton);
+                        }
+
+                        // Căn giữa ảnh trong ô
+                        setStyle("-fx-alignment: CENTER;");
+                    }
+                };
+            }
+        });
     }
 
     @FXML
@@ -79,9 +141,5 @@ public class AddBookController {
                 new Thread(searchTask).start();
             }
         }
-    }
-
-    @FXML
-    private void onBackMouseClicked(MouseEvent mouseEvent) {
     }
 }

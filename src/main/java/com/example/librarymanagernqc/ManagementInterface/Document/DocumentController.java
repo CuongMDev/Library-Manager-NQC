@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.ManagementInterface.Document;
 
 import com.example.librarymanagernqc.Book.Book;
+import com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
@@ -9,7 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class DocumentController {
     @FXML
@@ -21,8 +21,6 @@ public class DocumentController {
     @FXML
     private StackPane mainStackPane;
 
-    private Pane savePane;
-
     @FXML
     private void initialize() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -32,7 +30,14 @@ public class DocumentController {
 
     @FXML
     private void onAddMouseClicked() throws IOException {
-        savePane = (Pane) mainStackPane.getChildren().removeLast();
-        mainStackPane.getChildren().add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AddBook/add-book.fxml"))));
+        Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
+        FXMLLoader addBookLoader = new FXMLLoader(getClass().getResource("AddBook/add-book.fxml"));
+        mainStackPane.getChildren().add(addBookLoader.load());
+
+        AddBookController addBookController = addBookLoader.getController();
+        addBookController.backButton.setOnMouseClicked(event -> {
+            mainStackPane.getChildren().removeLast();
+            mainStackPane.getChildren().add(savePane);
+        });
     }
 }

@@ -6,6 +6,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
@@ -22,7 +24,14 @@
                </font>
             </Label>
             <TextField layoutX="106.0" layoutY="146.0" prefHeight="26.0" prefWidth="482.0" styleClass="searchField" />
-            <JFXButton layoutX="730.0" layoutY="71.0" onMouseClicked="#onAddMouseClicked" prefHeight="38.0" prefWidth="99.0" styleClass="addButton" text="Add Book" />
+            <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="785.0" layoutY="71.0" onMouseClicked="#onAddMouseClicked" prefHeight="38.0" prefWidth="19.0" ripplerFill="WHITE" styleClass="imageButton" stylesheets="@../../common/images/style.css" text="Add Book">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/addbook.png" />
+                     </image>
+                  </ImageView>
+               </graphic></JFXButton>
             <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Book Manager" />
             <TableView layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="636.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
               <columns>

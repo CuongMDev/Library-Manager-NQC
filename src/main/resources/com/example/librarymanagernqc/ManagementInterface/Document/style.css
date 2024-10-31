@@ -26,8 +26,3 @@
 .recentList {
     -fx-border-color: #e8e8e8 #c8c8c8 #c8c8c8 #c8c8c8;
 }
-
-.addButton {
-    -fx-background-color: rgba(0, 0, 0, 0.2);
-    -fx-cursor: HAND;
-}

@@ -4,18 +4,38 @@
 }
 
 .infoField {
-    -fx-border-color: #bab8b8; /* Add a line under the TextField */
+    -fx-background-color: transparent; /* Make background transparent */
+    -fx-border-color: #cccccc; /* Add a line under the TextField */
     -fx-border-width: 0 0 1px 0; /* Set the width of the bottom border (underline) */
     -fx-padding: 5px; /* Padding to control spacing */
 }
 
 .longInfoField {
-    -fx-border-color: #bab8b8; /* Add a line under the TextField */
-    -fx-padding: 5px; /* Padding to control spacing */
+    -fx-background-color: transparent; /* Make background transparent */
+    -fx-border-color: #cccccc; /* Add a line under the TextField */
+    -fx-focus-color: transparent;  /* Xóa viền khi focus */
+    -fx-faint-focus-color: transparent; /* Xóa màu mờ khi focus */
+    -fx-padding: 0;                      /* Xóa padding */
 }
 
+.infoField:focused {
+    -fx-border-color: #bab8b8;
+}
+
+.longInfoField:focused {
+    -fx-border-color: #bab8b8;
+}
 
 .infoFieldFont {
     -fx-font-size: 13px; /* Kích thước font chữ */
     -fx-font-weight: bold; /* Độ đậm của chữ */
+}
+
+.cancelButton {
+    -fx-background-color: white;
+}
+
+.addButton {
+    -fx-background-color: green;
+    -fx-text-fill: white;
 }

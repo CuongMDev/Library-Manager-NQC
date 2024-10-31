@@ -9,6 +9,16 @@ public class Book {
     private String description;
     private int count;
 
+    public Book() {
+        this.id = "";
+        this.title = "";
+        this.authors = "";
+        this.publisher = "";
+        this.publishedDate = "";
+        this.description = "";
+        this.count = 0;
+    }
+
     // Constructor
     public Book(String id, String title, String authors, String publisher, String publishedDate, String description) {
         this.id = id;
@@ -17,7 +27,6 @@ public class Book {
         this.publisher = publisher;
         this.publishedDate = publishedDate;
         this.description = description;
-
         this.count = 0;
     }
 

@@ -21,8 +21,9 @@ public class BookJsonHandler {
 
         String id = item.getString("id");
         String title = volumeInfo.getString("title");
-        StringBuilder authors = new StringBuilder();
+        StringBuilder authors;
         if (volumeInfo.has("authors")) {
+            authors = new StringBuilder();
             JSONArray authorsArray = volumeInfo.getJSONArray("authors");
             for (int i = 0; i < authorsArray.length(); i++) {
                 authors.append(authorsArray.getString(i));
@@ -30,6 +31,8 @@ public class BookJsonHandler {
                     authors.append(", ");
                 }
             }
+        } else {
+            authors = new StringBuilder("Unknown");
         }
         String publisher = volumeInfo.optString("publisher", "Unknown");
         String publishedDate = volumeInfo.optString("publishedDate", "Unknown");
