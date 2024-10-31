@@ -63,7 +63,7 @@ public class AddBookController {
                     private final JFXButton addButton = new JFXButton();
                     {
                         //create add Image
-                        ImageView addImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/add2.png")))); // Đường dẫn tới ảnh
+                        ImageView addImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/add.png")))); // Đường dẫn tới ảnh
                         addImage.setFitWidth(20); // Đặt kích thước cho ảnh
                         addImage.setFitHeight(20);
 
