@@ -21,6 +21,7 @@ public class LoginController {
         try {
             // Load the new scene
             Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ManagementInterface/management-interface.fxml")));
+            Parent scene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ManagementInterface/main-pane.fxml")));
 
             // Get the current stage
             Stage stage = (Stage) loginButton.getScene().getWindow();

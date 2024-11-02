@@ -18,6 +18,10 @@
     -fx-padding: 0;                      /* Xóa padding */
 }
 
+.longInfoField .content {
+    -fx-background-color: white;
+}
+
 .infoField:focused {
     -fx-border-color: #bab8b8;
 }
