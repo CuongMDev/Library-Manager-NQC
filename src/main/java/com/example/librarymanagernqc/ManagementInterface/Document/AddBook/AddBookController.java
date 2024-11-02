@@ -54,7 +54,6 @@ public class AddBookController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
-        JFXButton addButton = new JFXButton();
 
         optionColumn.setCellFactory(new Callback<>() {
             @Override

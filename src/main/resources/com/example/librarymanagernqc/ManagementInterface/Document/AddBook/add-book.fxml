@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane fx:id="mainStackPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController">
    <children>
       <AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css">
@@ -23,7 +22,7 @@
                </font>
             </Label>
             <TextField fx:id="bookTitleField" layoutX="257.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="369.0" promptText="Book Title" styleClass="searchField" />
-            <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Book Manager" />
+            <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Add Book" />
             <TextField fx:id="authorField" layoutX="635.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="169.0" promptText="Author" styleClass="searchField" />
             <TextField fx:id="idField" layoutX="106.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="143.0" promptText="ID" styleClass="searchField" />
             <ProgressIndicator fx:id="searchProgressIndicator" layoutX="811.0" layoutY="148.0" prefHeight="26.0" prefWidth="21.0" />

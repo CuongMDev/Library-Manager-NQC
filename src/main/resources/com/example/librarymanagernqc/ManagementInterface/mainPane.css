@@ -5,8 +5,11 @@
 .menuButton {
     -fx-font-size: 20px; /* Kích thước font chữ */
     -fx-font-weight: bold; /* Độ đậm của chữ */
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 20px;
     -fx-focus-traversable: false;
     -fx-cursor: HAND;
+    -fx-pref-height: 80;
 }
 
 .menuButton:hover {

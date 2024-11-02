@@ -13,9 +13,11 @@
 .longInfoField {
     -fx-background-color: transparent; /* Make background transparent */
     -fx-border-color: #cccccc; /* Add a line under the TextField */
-    -fx-focus-color: transparent;  /* Xóa viền khi focus */
-    -fx-faint-focus-color: transparent; /* Xóa màu mờ khi focus */
     -fx-padding: 0;                      /* Xóa padding */
+}
+
+.longInfoField .content {
+    -fx-background-color: white;
 }
 
 .infoField:focused {

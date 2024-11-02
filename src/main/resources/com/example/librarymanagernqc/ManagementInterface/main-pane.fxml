@@ -1,28 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="801.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.MainPaneController">
     <children>
       <AnchorPane prefHeight="802.0" prefWidth="230.0" styleClass="menuList" stylesheets="@mainPane.css">
          <children>
-              <Label alignment="CENTER" layoutX="48.0" layoutY="142.0" prefHeight="27.0" prefWidth="138.0" text="Quản lý thư viện">
-                  <font>
-                      <Font size="18.0" />
-                  </font>
-              </Label>
             <ImageView fitHeight="87.0" fitWidth="111.0" layoutX="73.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/manager.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="homeButton" layoutY="209.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Home" />
+            <Text layoutX="17.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library ManAgement NQC" textAlignment="CENTER" wrappingWidth="198.13671875">
+               <font>
+                  <Font name="Algerian" size="17.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="0.6161137440758294" endY="0.9478672985781991" startX="0.6066350710900472">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.5899999737739563" blue="0.23600000143051147" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.37909232280242255">
+                           <color>
+                              <Color red="0.3111189901828766" blue="0.7300000190734863" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.34290000796318054" green="0.36000001430511475" blue="0.017999999225139618" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <JFXButton fx:id="homeButton" layoutY="235.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Document">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/document.png" />
+                     </image>
+                  </ImageView>
+               </graphic></JFXButton>
+            <JFXButton fx:id="userButton" layoutY="315.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="User">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/person.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="borrowedButton" layoutY="395.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Borrowed List">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/return.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="bookReturnButton" layoutY="475.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Book Return List">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/borrow.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="infoButton" layoutY="555.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Information">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/information.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="logoutButton" layoutY="635.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Logout">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/logout.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
          </children>
       </AnchorPane>
       <StackPane fx:id="mainStackPane" layoutX="230.0" layoutY="2.0" prefHeight="802.0" prefWidth="873.0" />
