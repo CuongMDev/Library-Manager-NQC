@@ -22,7 +22,6 @@
                </font>
             </Label>
             <TextField fx:id="bookTitleField" layoutX="257.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="369.0" promptText="Book Title" styleClass="searchField" />
-            <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Book Manager" />
             <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Add Book" />
             <TextField fx:id="authorField" layoutX="635.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="169.0" promptText="Author" styleClass="searchField" />
             <TextField fx:id="idField" layoutX="106.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="143.0" promptText="ID" styleClass="searchField" />

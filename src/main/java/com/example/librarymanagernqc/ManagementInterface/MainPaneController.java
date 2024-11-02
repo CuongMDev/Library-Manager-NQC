@@ -16,9 +16,9 @@ public class  MainPaneController {
     }
 
     @FXML
-    public JFXButton homeButton;
+    private JFXButton homeButton;
     @FXML
-    public JFXButton borrowListButton;
+    public JFXButton logoutButton;
     @FXML
     private StackPane mainStackPane;
 
@@ -36,10 +36,8 @@ public class  MainPaneController {
     }
 
     @FXML
-    void OnHomeButtonClicked() {
+    private void OnHomeButtonClicked() {
         switchPane(PaneType.DOCUMENT);
     }
 
-    @FXML
-    void OnBorrowedListButtonClicked() { switchPane(PaneType.BORROW_LIST); }
 }
