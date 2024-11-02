@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -54,7 +55,6 @@ public class AddBookController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
-        JFXButton addButton = new JFXButton();
 
         optionColumn.setCellFactory(new Callback<>() {
             @Override
@@ -84,6 +84,13 @@ public class AddBookController {
 
                             BookInformationController bookInfoController = bookInfoLoader.getController();
                             bookInfoController.addBook(book);
+
+                            bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
+                                if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
+                                    mainStackPane.getChildren().removeLast();
+                                    mainStackPane.getChildren().add(savePane);
+                                }
+                            });
                         });
                     }
 

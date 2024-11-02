@@ -1,9 +1,11 @@
 package com.example.librarymanagernqc.ManagementInterface.Document.BookInformation;
 
 import com.example.librarymanagernqc.Book.Book;
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class BookInformationController {
     @FXML
@@ -18,6 +20,8 @@ public class BookInformationController {
     private TextField bookPublishedDate;
     @FXML
     private TextArea bookDescription;
+    @FXML
+    public JFXButton cancelButton;
 
     @FXML
     private void initialize() {

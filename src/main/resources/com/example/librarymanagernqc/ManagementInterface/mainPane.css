@@ -2,13 +2,56 @@
     -fx-background-color: rgba(0, 0, 0, 0.1);
 }
 
+/*.menuButton {*/
+/*    -fx-font-size: 20px; !* Kích thước font chữ *!*/
+/*    -fx-font-weight: bold; !* Độ đậm của chữ *!*/
+/*    -fx-focus-traversable: false;*/
+/*    -fx-cursor: HAND;*/
+/*}*/
+
+/*.menuButton:hover {*/
+/*    -fx-background-color: rgba(0, 0, 0, 0.1);*/
+/*}*/
+
 .menuButton {
-    -fx-font-size: 20px; /* Kích thước font chữ */
-    -fx-font-weight: bold; /* Độ đậm của chữ */
+    /* Kích thước và phong cách chữ */
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+
+    /* Màu nền tím nhạt và chữ đen */
+    -fx-background-color: linear-gradient(to bottom, #D1C4E9, #B39DDB); /* Gradient tím nhạt */
+    -fx-text-fill: black;
+
+    /* Tùy chọn bo góc và viền */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #9575CD; /* Viền tím đậm hơn */
+    -fx-border-width: 2px;
+
+    /* Hiệu ứng đổ bóng */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.5, 0, 2);
+
+    /* Tránh hiện khung khi chọn */
     -fx-focus-traversable: false;
+
+    /* Thay đổi con trỏ khi rê chuột */
     -fx-cursor: HAND;
 }
 
+/* Hiệu ứng khi rê chuột vào nút */
 .menuButton:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-background-color: #bf75dc; /* Màu nền đậm hơn khi rê chuột */
+    -fx-border-color: #7E57C2;     /* Đổi màu viền */
+    -fx-border-width: 3px;         /* Tăng độ dày viền */
+
+    /* Hiệu ứng phóng to nhẹ */
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }
+
+/* Hiệu ứng khi nhấn nút */
+.menuButton:pressed {
+    -fx-background-color: #9575CD; /* Màu nền khi nhấn */
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.4), 4, 0.0, 0, 2); /* Đổ bóng bên trong */
+}
+

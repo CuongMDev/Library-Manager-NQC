@@ -22,7 +22,8 @@
                   <Image url="@images/manager.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="homeButton" layoutY="209.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Home" />
+            <JFXButton fx:id="homeButton" layoutX="17.0" layoutY="208.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="200.0" styleClass="menuButton" text="Home" />
+            <JFXButton fx:id="borrowListButton" layoutX="15.0" layoutY="283.0" onMouseClicked="#OnBorrowedListButtonClicked" prefHeight="66.0" prefWidth="200.0" styleClass="menuButton" text="BorrowList" />
          </children>
       </AnchorPane>
       <StackPane fx:id="mainStackPane" layoutX="230.0" layoutY="2.0" prefHeight="802.0" prefWidth="873.0" />
