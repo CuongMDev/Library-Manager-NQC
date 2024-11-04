@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -41,23 +43,29 @@ public class UserController {
     }
 
     @FXML
-    private void onAddMouseClicked() throws IOException {
-        Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-        FXMLLoader addUserLoader = new FXMLLoader(getClass().getResource("AddUser/add-user.fxml"));
-        mainStackPane.getChildren().add(addUserLoader.load());
+    private void onAddMouseClicked(MouseEvent mouseEvent) throws IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
+            FXMLLoader addUserLoader = new FXMLLoader(getClass().getResource("AddUser/add-user.fxml"));
+            mainStackPane.getChildren().add(addUserLoader.load());
 
-        AddUserController addUserController = addUserLoader.getController();
-        addUserController.cancelButton.setOnMouseClicked(event -> {
-            mainStackPane.getChildren().removeLast();
-            mainStackPane.getChildren().add(savePane);
-        });
-        addUserController.addButton.setOnMouseClicked(event -> {
-            if (addUserController.checkAndHandleValidUser()) {
-                mainStackPane.getChildren().removeLast();
-                mainStackPane.getChildren().add(savePane);
+            AddUserController addUserController = addUserLoader.getController();
+            addUserController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
+                if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
+                    mainStackPane.getChildren().removeLast();
+                    mainStackPane.getChildren().add(savePane);
+                }
+            });
+            addUserController.addButton.setOnMouseClicked(addUserMouseEvent -> {
+                if (addUserMouseEvent.getButton() == MouseButton.PRIMARY) {
+                    if (addUserController.checkValidAndHandleBook()) {
+                        mainStackPane.getChildren().removeLast();
+                        mainStackPane.getChildren().add(savePane);
 
-                userTable.getItems().add(addUserController.getUser());
-            }
-        });
+                        userTable.getItems().add(addUserController.getUser());
+                    }
+                }
+            });
+        }
     }
 }

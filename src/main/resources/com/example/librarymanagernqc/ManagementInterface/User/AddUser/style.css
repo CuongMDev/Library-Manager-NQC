@@ -10,12 +10,10 @@
 }
 
 .infoField.invalid {
-    -fx-border-width: 0 0 1px 0;
     -fx-border-color: #ff6363;
 }
 
 .infoField.invalid:focused {
-    -fx-border-width: 0 0 2px 0;
     -fx-border-color: red;
 }
 
@@ -30,7 +28,6 @@
 }
 
 .infoField:focused {
-    -fx-border-width: 0 0 2px 0;
     -fx-border-color: #bab8b8;
 }
 

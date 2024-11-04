@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -31,14 +32,17 @@
                         <Image url="@images/addbook.png" />
                      </image>
                   </ImageView>
-               </graphic></JFXButton>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Add book" />
+               </tooltip></JFXButton>
             <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="Book Manager" />
-            <TableView layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="636.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
+            <TableView fx:id="booksTableView" layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="636.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
               <columns>
                   <TableColumn fx:id="idColumn" prefWidth="108.0" text="ID" />
-                <TableColumn fx:id="bookTitleColumn" prefWidth="269.0" text="Book Title" />
-                <TableColumn fx:id="authorColumn" prefWidth="132.0" text="Author" />
-                  <TableColumn prefWidth="125.0" text="Option" />
+                <TableColumn fx:id="bookTitleColumn" prefWidth="297.0" text="Book Title" />
+                <TableColumn fx:id="authorColumn" prefWidth="140.0" text="Author" />
+                  <TableColumn prefWidth="89.0" text="Option" />
               </columns>
             </TableView>
          </children>

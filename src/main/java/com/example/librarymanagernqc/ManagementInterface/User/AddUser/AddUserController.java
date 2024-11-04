@@ -52,7 +52,7 @@ public class AddUserController {
         return true;
     }
 
-    public boolean checkAndHandleValidUser() {
+    public boolean checkValidAndHandleBook() {
         if (checkValidUser()) {
             return true;
         }

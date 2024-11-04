@@ -47,7 +47,7 @@ public class AddBookController {
     @FXML
     private TableColumn<Book, Void> optionColumn;
     @FXML
-    private TableView<Book> bookTableView;
+    private TableView<Book> booksTableView;
 
     @FXML
     private void initialize() {
@@ -85,10 +85,21 @@ public class AddBookController {
                             BookInformationController bookInfoController = bookInfoLoader.getController();
                             bookInfoController.addBook(book);
 
+                            //cancel button event
                             bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                                 if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     mainStackPane.getChildren().removeLast();
                                     mainStackPane.getChildren().add(savePane);
+                                }
+                            });
+
+                            //add button event
+                            bookInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
+                                if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
+                                    if (bookInfoController.checkValidAndHandleBook()) {
+                                        mainStackPane.getChildren().removeLast();
+                                        mainStackPane.getChildren().add(savePane);
+                                    }
                                 }
                             });
                         });
@@ -121,7 +132,7 @@ public class AddBookController {
 
             if (!id.isEmpty() || !title.isEmpty() || !author.isEmpty()) {
                 searchProgressIndicator.setVisible(true);
-                bookTableView.getItems().clear();
+                booksTableView.getItems().clear();
 
                 Task<String> searchTask = null;
                 if (!id.isEmpty()) {
@@ -134,7 +145,7 @@ public class AddBookController {
                 searchTask.setOnSucceeded(event -> {
                     List<Book> books = BookJsonHandler.parseBookTitles(finalSearchTask.getValue());
                     for (Book book : books) {
-                        bookTableView.getItems().add(book);
+                        booksTableView.getItems().add(book);
                     }
                     searchProgressIndicator.setVisible(false);
                 });

@@ -26,7 +26,7 @@
             <TextField fx:id="authorField" layoutX="635.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="169.0" promptText="Author" styleClass="searchField" />
             <TextField fx:id="idField" layoutX="106.0" layoutY="147.0" onKeyPressed="#onKeyPressed" prefHeight="26.0" prefWidth="143.0" promptText="ID" styleClass="searchField" />
             <ProgressIndicator fx:id="searchProgressIndicator" layoutX="811.0" layoutY="148.0" prefHeight="26.0" prefWidth="21.0" />
-            <TableView fx:id="bookTableView" layoutX="62.0" layoutY="219.0" prefHeight="523.0" prefWidth="746.0" styleClass="tableView" stylesheets="@../../../common/images/style.css">
+            <TableView fx:id="booksTableView" layoutX="62.0" layoutY="219.0" prefHeight="523.0" prefWidth="746.0" styleClass="tableView" stylesheets="@../../../common/images/style.css">
               <columns>
                   <TableColumn fx:id="idColumn" prefWidth="108.0" text="ID" />
                   <TableColumn fx:id="bookTitleColumn" prefWidth="378.0" text="Book Title" />

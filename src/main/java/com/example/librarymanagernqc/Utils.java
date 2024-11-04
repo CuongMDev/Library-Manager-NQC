@@ -5,7 +5,9 @@ import javafx.scene.control.TextFormatter;
 import java.util.function.UnaryOperator;
 
 public class Utils {
-    // Chỉ cho phép nhập số vào field
+    /**
+    * Chỉ cho phép nhập số vào field
+    */
     public static final UnaryOperator<TextFormatter.Change> numberFilter = change -> {
         String newText = change.getControlNewText();
         if (newText.matches("\\d*")) { // Kiểm tra xem tất cả ký tự là số
@@ -14,7 +16,9 @@ public class Utils {
         return null; // Từ chối thay đổi
     };
 
-    // chỉ cho phép nhập chữ cái
+    /**
+    * chỉ cho phép nhập chữ cái
+    */
     public static final UnaryOperator<TextFormatter.Change> alphabetFilter = change -> {
         String newText = change.getControlNewText();
         // Kiểm tra nếu văn bản mới chỉ chứa chữ cái
@@ -24,7 +28,9 @@ public class Utils {
         return null; // Từ chối thay đổi
     };
 
-    // chỉ cho phép nhập chữ cái hoặc số
+    /**
+    * chỉ cho phép nhập chữ cái hoặc số
+    */
     public static final UnaryOperator<TextFormatter.Change> alphabetNumberFilter = change -> {
         String newText = change.getControlNewText();
         // Kiểm tra nếu văn bản mới chỉ chứa chữ cái hoặc số

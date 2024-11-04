@@ -20,6 +20,14 @@
     -fx-background-color: white;
 }
 
+.infoField.invalid {
+    -fx-border-color: #ff6363;
+}
+
+.infoField.invalid:focused {
+    -fx-border-color: red;
+}
+
 .infoField:focused {
     -fx-border-color: #bab8b8;
 }
