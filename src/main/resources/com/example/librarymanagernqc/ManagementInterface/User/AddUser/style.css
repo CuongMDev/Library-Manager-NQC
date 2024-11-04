@@ -7,7 +7,16 @@
     -fx-background-color: transparent; /* Make background transparent */
     -fx-border-color: #cccccc; /* Add a line under the TextField */
     -fx-border-width: 0 0 1px 0; /* Set the width of the bottom border (underline) */
-    -fx-padding: 5px; /* Padding to control spacing */
+}
+
+.infoField.invalid {
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #ff6363;
+}
+
+.infoField.invalid:focused {
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: red;
 }
 
 .infoField .text-field {
@@ -21,10 +30,7 @@
 }
 
 .infoField:focused {
-    -fx-border-color: #bab8b8;
-}
-
-.longInfoField:focused {
+    -fx-border-width: 0 0 2px 0;
     -fx-border-color: #bab8b8;
 }
 

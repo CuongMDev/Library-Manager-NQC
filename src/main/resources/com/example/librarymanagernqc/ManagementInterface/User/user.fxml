@@ -34,15 +34,15 @@
                   <Tooltip opacity="0.5" text="Add User" />
                </tooltip></JFXButton>
                 <Label layoutX="62.0" layoutY="71.0" styleClass="titleFont" text="User" />
-                <TableView layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="769.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
+                <TableView fx:id="userTable" layoutX="62.0" layoutY="220.0" prefHeight="526.0" prefWidth="769.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
                     <columns>
-                        <TableColumn fx:id="bookTitleColumn" prefWidth="105.33335876464844" text="Username" />
-                  <TableColumn fx:id="bookTitleColumn1" prefWidth="101.33331298828125" text="CCCD" />
-                        <TableColumn fx:id="authorColumn" prefWidth="136.66668701171875" text="Full Name" />
-                  <TableColumn fx:id="idColumn12" prefWidth="68.66668701171875" text="Sex" />
-                        <TableColumn prefWidth="157.99993896484375" text="Date Of Birth" />
-                  <TableColumn fx:id="idColumn1" prefWidth="106.00006103515625" text="SDT" />
-                  <TableColumn fx:id="idColumn11" prefWidth="90.6666259765625" text="Option" />
+                        <TableColumn fx:id="usernameColumn" prefWidth="105.33335876464844" text="Username" />
+                  <TableColumn fx:id="citizenIdColumn" prefWidth="101.33331298828125" text="Citizen ID" />
+                        <TableColumn fx:id="fullNameColumn" prefWidth="136.66668701171875" text="Full Name" />
+                  <TableColumn fx:id="genderColumn" prefWidth="68.66668701171875" text="Gender" />
+                        <TableColumn fx:id="dateOfBirthColumn" prefWidth="157.99993896484375" text="Date Of Birth" />
+                  <TableColumn fx:id="phoneNumberColumn" prefWidth="106.00006103515625" text="Phone Number" />
+                  <TableColumn fx:id="optionColumn" prefWidth="90.6666259765625" text="Option" />
                     </columns>
                 </TableView>
             </children>

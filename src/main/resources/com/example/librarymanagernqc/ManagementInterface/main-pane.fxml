@@ -15,9 +15,9 @@
     <children>
       <AnchorPane prefHeight="802.0" prefWidth="230.0" styleClass="menuList" stylesheets="@mainPane.css">
          <children>
-            <ImageView fitHeight="87.0" fitWidth="111.0" layoutX="73.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="87.0" fitWidth="111.0" layoutX="81.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/manager.png" />
+                  <Image url="@images/rack97.jpg" />
                </image>
             </ImageView>
             <Text layoutX="17.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library ManAgement NQC" textAlignment="CENTER" wrappingWidth="198.13671875">

@@ -31,6 +31,8 @@ public class  MainPaneController {
         panes[PaneType.USER.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("User/user.fxml")));
         panes[PaneType.BORROW_LIST.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("BorrowedList/borrowedList.fxml")));
 
+        //setDefault
+        switchPane(PaneType.DOCUMENT);
     }
 
     public void switchPane(PaneType paneType) {

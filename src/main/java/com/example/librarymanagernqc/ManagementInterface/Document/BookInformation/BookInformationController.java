@@ -1,10 +1,12 @@
 package com.example.librarymanagernqc.ManagementInterface.Document.BookInformation;
 
 import com.example.librarymanagernqc.Book.Book;
+import com.example.librarymanagernqc.Utils;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 
 public class BookInformationController {
@@ -27,6 +29,9 @@ public class BookInformationController {
     private void initialize() {
         bookAuthor.setWrapText(true);
         bookDescription.setWrapText(true);
+
+        //chỉ cho phép nhập số
+        bookQuantity.setTextFormatter(new TextFormatter<>(Utils.numberFilter));
     }
 
     public void addBook(Book book) {
