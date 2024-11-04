@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane cache="true" prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.User.AddUser.AddUserController">
+    <children>
+        <Label layoutX="55.0" layoutY="71.0" styleClass="titleFont" text="User Information" />
+        <AnchorPane layoutX="55.0" layoutY="196.0" prefHeight="490.0" prefWidth="772.0" style="-fx-background-color: white;">
+            <children>
+                <Label layoutX="38.0" layoutY="77.0" styleClass="infoFieldFont" text="Username:" />
+                <TextField fx:id="bookTitle" focusTraversable="false" layoutX="124.0" layoutY="72.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+                <Label layoutX="37.0" layoutY="225.0" styleClass="infoFieldFont" text="Full Name:" />
+            <TextField fx:id="bookTitle1" focusTraversable="false" layoutX="124.0" layoutY="220.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+                <Label layoutX="446.0" layoutY="77.0" styleClass="infoFieldFont" text="CCCD:" />
+                <TextField fx:id="bookQuantity" focusTraversable="false" layoutX="484.0" layoutY="72.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+                <Label layoutX="446.0" layoutY="225.0" styleClass="infoFieldFont" text="Sex:" />
+            <ComboBox fx:id="sexBox" focusTraversable="false" layoutX="484.0" layoutY="216.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
+                <Label layoutX="38.0" layoutY="371.0" styleClass="infoFieldFont" text="Date Of Birth:" />
+            <DatePicker focusTraversable="false" layoutX="124.0" layoutY="362.0" prefHeight="25.0" prefWidth="217.0" styleClass="infoField" />
+                <Label layoutX="446.0" layoutY="371.0" styleClass="infoFieldFont" text="SDT:" />
+                <TextField fx:id="bookPublishedDate" focusTraversable="false" layoutX="484.0" layoutY="366.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
+            </children>
+        </AnchorPane>
+        <ImageView fitHeight="38.0" fitWidth="47.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+        <JFXButton layoutX="737.0" layoutY="715.0" prefHeight="45.0" prefWidth="90.0" styleClass="addButton" text="Add">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </JFXButton>
+        <JFXButton fx:id="cancelButton" layoutX="632.0" layoutY="715.0" prefHeight="45.0" prefWidth="90.0" styleClass="cancelButton" text="Cancel">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </JFXButton>
+    </children>
+</AnchorPane>

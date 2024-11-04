@@ -30,7 +30,7 @@
             <AnchorPane layoutX="490.0" prefHeight="427.0" prefWidth="290.0" styleClass="rightForm">
                <children>
                   <TextField fx:id="usernameField" focusTraversable="false" layoutX="26.0" layoutY="181.0" prefHeight="25.0" prefWidth="231.0" promptText="Username" styleClass="loginTextField" />
-                  <Text fill="#fffafa" layoutX="26.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up">
+                  <Text fill="#fffafa" layoutX="26.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In">
                      <font>
                         <Font size="27.0" />
                      </font>

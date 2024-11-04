@@ -10,14 +10,14 @@
     -fx-padding: 5px; /* Padding to control spacing */
 }
 
-.longInfoField {
-    -fx-background-color: transparent; /* Make background transparent */
-    -fx-border-color: #cccccc; /* Add a line under the TextField */
-    -fx-padding: 0;                      /* Xóa padding */
+.infoField .text-field {
+    -fx-background-color: white;
 }
 
-.longInfoField .content {
-    -fx-background-color: white;
+.infoField .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
 }
 
 .infoField:focused {

@@ -35,18 +35,17 @@ public class LoginController {
             MainPaneController mainPaneController = mainPaneLoader.getController();
             mainPaneController.logoutButton.setOnMouseClicked(logoutMouseEvent -> {
                 if (logoutMouseEvent.getButton() == MouseButton.PRIMARY) {
-                    // Get the current stage
-                    Stage mainPaneStage = (Stage) mainPaneController.logoutButton.getScene().getWindow();
-                    mainPaneStage.close();
+                    // Close the current stage
+                    stage.close();
 
                     // Set the new scene
                     try {
-                        mainPaneStage.setScene(new Scene(new FXMLLoader(getClass().getResource("Login/login.fxml")).load()));
+                        stage.setScene(new Scene(new FXMLLoader(getClass().getResource("Login/login.fxml")).load()));
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    mainPaneStage.show();
-                    mainPaneStage.centerOnScreen();
+                    stage.show();
+                    stage.centerOnScreen();
                 }
             });
 

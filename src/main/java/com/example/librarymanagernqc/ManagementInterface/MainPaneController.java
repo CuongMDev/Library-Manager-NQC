@@ -12,6 +12,7 @@ import java.util.Objects;
 public class  MainPaneController {
     private enum PaneType {
         DOCUMENT,
+        USER,
         BORROW_LIST
     }
 
@@ -27,6 +28,7 @@ public class  MainPaneController {
     @FXML
     private void initialize() throws IOException {
         panes[PaneType.DOCUMENT.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Document/document.fxml")));
+        panes[PaneType.USER.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("User/user.fxml")));
         panes[PaneType.BORROW_LIST.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("BorrowedList/borrowedList.fxml")));
 
     }
@@ -40,4 +42,8 @@ public class  MainPaneController {
         switchPane(PaneType.DOCUMENT);
     }
 
+    @FXML
+    private void OnUserButtonClicked() {
+        switchPane(PaneType.USER);
+    }
 }

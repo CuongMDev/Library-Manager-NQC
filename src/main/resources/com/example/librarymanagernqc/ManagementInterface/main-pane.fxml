@@ -54,7 +54,7 @@
                      </image>
                   </ImageView>
                </graphic></JFXButton>
-            <JFXButton fx:id="userButton" layoutY="315.0" onMouseClicked="#OnHomeButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="User">
+            <JFXButton fx:id="userButton" layoutY="315.0" onMouseClicked="#OnUserButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="User">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>

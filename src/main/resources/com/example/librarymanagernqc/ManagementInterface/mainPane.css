@@ -3,8 +3,8 @@
 }
 
 .menuButton {
-    -fx-font-size: 20px; /* Kích thước font chữ /
-    -fx-font-weight: bold; / Độ đậm của chữ */
+    -fx-font-size: 20px; /* Kích thước font chữ */
+    -fx-font-weight: bold; /* Độ đậm của chữ */
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 0 0 0 20px;
     -fx-focus-traversable: false;
@@ -12,12 +12,21 @@
     -fx-pref-height: 80;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
-    -fx-border-color: black;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: gray;
+    -fx-text-fill: gray;
 }
 
 .menuButton:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.1);
+    -fx-text-fill: black;
+    -fx-border-color: black;
 }
+
+.menuButton:pressed {
+    -fx-text-fill: black;
+    -fx-border-color: black;
+}
+
 
 
 
