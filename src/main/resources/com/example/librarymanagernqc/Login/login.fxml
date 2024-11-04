@@ -9,13 +9,14 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="951.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="951.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.Login.LoginController">
    <children>
       <ImageView fitHeight="535.0" fitWidth="972.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -27,31 +28,35 @@
       </ImageView>
       <AnchorPane layoutX="86.0" layoutY="54.0" prefHeight="427.0" prefWidth="780.0" styleClass="mainBackground" stylesheets="@style.css">
          <children>
-            <AnchorPane layoutX="490.0" prefHeight="427.0" prefWidth="290.0" styleClass="rightForm">
+            <StackPane fx:id="rightFormStackPane" layoutX="490.0">
                <children>
-                  <TextField fx:id="usernameField" focusTraversable="false" layoutX="26.0" layoutY="181.0" prefHeight="25.0" prefWidth="231.0" promptText="Username" styleClass="loginTextField" />
-                  <Text fill="#fffafa" layoutX="26.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In">
-                     <font>
-                        <Font size="27.0" />
-                     </font>
-                  </Text>
-                  <JFXButton fx:id="loginButton" alignment="TOP_LEFT" buttonType="RAISED" defaultButton="true" layoutX="26.0" layoutY="317.0" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="114.0" ripplerFill="#ff0303" styleClass="loginButton" stylesheets="@style.css" text="  Login               &gt;" textFill="#fffcff">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
-                  <PasswordField layoutX="26.0" layoutY="222.0" prefHeight="28.0" prefWidth="231.0" promptText="Password" styleClass="loginTextField" />
-                  <Text fill="RED" layoutX="25.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click Login to enter main screen" wrappingWidth="231.0" />
-                  <Button layoutX="145.0" layoutY="317.0" mnemonicParsing="false" styleClass="forgotButton" text="Forgot your password?">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
+                  <AnchorPane prefHeight="427.0" prefWidth="290.0" styleClass="rightForm">
+                     <children>
+                        <TextField fx:id="usernameField" focusTraversable="false" layoutX="26.0" layoutY="181.0" prefHeight="25.0" prefWidth="231.0" promptText="Username" styleClass="loginTextField" />
+                        <Text fill="#fffafa" layoutX="26.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Text>
+                        <JFXButton fx:id="loginButton" alignment="TOP_LEFT" buttonType="RAISED" defaultButton="true" layoutX="26.0" layoutY="317.0" onMouseClicked="#onLoginMouseClicked" prefHeight="25.0" prefWidth="114.0" ripplerFill="#ff0303" styleClass="loginButton" stylesheets="@style.css" text="  Login               &gt;" textFill="#fffcff">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                        <PasswordField layoutX="26.0" layoutY="222.0" prefHeight="28.0" prefWidth="231.0" promptText="Password" styleClass="loginTextField" />
+                        <Text fill="RED" layoutX="25.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click Login to enter main screen" wrappingWidth="231.0" />
+                        <Button layoutX="145.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#OnForgotPasswordMouseClicked" styleClass="forgotButton" text="Forgot your password?">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
+            </StackPane>
             <AnchorPane prefHeight="427.0" prefWidth="491.0" styleClass="leftForm">
                <children>
                   <Text layoutX="66.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Manager">
