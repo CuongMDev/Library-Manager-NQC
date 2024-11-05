@@ -52,6 +52,11 @@ public class DocumentController {
         booksList.add(book);
     }
 
+    private void deleteBookFromList(Book book) {
+        booksList.remove(book);
+        updateTable();
+    }
+
     /**
      * search book by title, limit = 0 mean no limit
      */
@@ -151,8 +156,8 @@ public class DocumentController {
                             //lấy ô hiện tại đang chọn
                             Book book = getTableView().getItems().get(getIndex());
 
-                            // Xóa ô khỏi TableView
-                            getTableView().getItems().remove(book);
+                            // Xóa ô khỏi book list
+                            deleteBookFromList(book);
                         });
                     }
 

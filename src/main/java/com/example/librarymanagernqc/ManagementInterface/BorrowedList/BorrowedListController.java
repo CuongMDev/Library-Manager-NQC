@@ -103,7 +103,7 @@ public class BorrowedListController {
                 return new TableCell<>() {
                     private final JFXButton recordButton = new JFXButton();
                     {
-                        //create add Image
+                        //create record Image
                         ImageView recordImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/record.png")))); // Đường dẫn tới ảnh
                         recordImage.setFitWidth(20); // Đặt kích thước cho ảnh
                         recordImage.setFitHeight(20);
@@ -131,8 +131,6 @@ public class BorrowedListController {
                             //record button event
                             recordBookReturnController.recordButton.setOnMouseClicked(recordMouseEvent -> {
                                 if (recordMouseEvent.getButton() == MouseButton.PRIMARY) {
-
-
                                     mainStackPane.getChildren().removeLast();
                                     mainStackPane.getChildren().add(savePane);
                                 }

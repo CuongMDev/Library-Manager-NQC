@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface;
 
+import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,14 +26,18 @@ public class  MainPaneController {
     @FXML
     private StackPane mainStackPane;
 
+    private final FXMLLoader[] loaders = new FXMLLoader[PaneType.values().length];
     private final Pane[] panes = new Pane[PaneType.values().length];
 
     @FXML
     private void initialize() throws IOException {
-        panes[PaneType.DOCUMENT.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Document/document.fxml")));
-        panes[PaneType.USER.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("User/user.fxml")));
-        panes[PaneType.BORROWED_LIST.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("BorrowedList/borrowed-list.fxml")));
+        loaders[PaneType.DOCUMENT.ordinal()] = new FXMLLoader(getClass().getResource("Document/document.fxml"));
+        loaders[PaneType.USER.ordinal()] = new FXMLLoader(getClass().getResource("User/user.fxml"));
+        loaders[PaneType.BORROWED_LIST.ordinal()] = new FXMLLoader(getClass().getResource("BorrowedList/borrowed-list.fxml"));
 
+        for (int i = 0; i < PaneType.values().length; i++) {
+            panes[i] = loaders[i].load();
+        }
         //setDefault
         switchPane(PaneType.DOCUMENT);
     }
@@ -59,6 +64,9 @@ public class  MainPaneController {
     public void OnBorrowedButtonClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             switchPane(PaneType.BORROWED_LIST);
+
+            BorrowedListController borrowedListController = loaders[PaneType.BORROWED_LIST.ordinal()].getController();
+            borrowedListController.updateTable();
         }
     }
 }

@@ -14,21 +14,21 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <TableView layoutX="51.0" layoutY="242.0" prefHeight="526.0" prefWidth="769.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
-         <columns>
-            <TableColumn fx:id="usernameColumn" prefWidth="100.79996490478516" text="Username " />
-            <TableColumn fx:id="bookTitleColumn" prefWidth="289.6000213623047" text="Book Title" />
-            <TableColumn fx:id="loanDateColumn" prefWidth="107.99993896484375" text="Loan Date" />
-            <TableColumn fx:id="dueDateColumn" prefWidth="105.60003662109375" text="Due Date" />
-            <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="102.4000244140625" text="Status" />
-            <TableColumn fx:id="optionColumn" prefWidth="63.199951171875" text="Option" />
-         </columns>
-      </TableView>
       <Label layoutX="59.0" layoutY="147.0" prefHeight="29.0" prefWidth="47.0" text="Search:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <TextField fx:id="searchTitleField" layoutX="107.0" layoutY="147.0" prefHeight="29.0" prefWidth="297.0" promptText="Book Title" styleClass="searchField" stylesheets="@style.css" />
+      <TableView fx:id="bookLoansTable" layoutX="51.0" layoutY="241.0" prefHeight="526.0" prefWidth="777.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
+        <columns>
+            <TableColumn fx:id="usernameColumn" prefWidth="100.79996490478516" text="Username " />
+            <TableColumn fx:id="bookTitleColumn" prefWidth="289.6000213623047" text="Book Title" />
+            <TableColumn fx:id="loanDateColumn" prefWidth="107.99993896484375" text="Loan Date" />
+            <TableColumn fx:id="dueDateColumn" prefWidth="105.60003662109375" text="Due Date" />
+            <TableColumn fx:id="statusColumn" prefWidth="98.0" text="Status" />
+            <TableColumn fx:id="optionColumn" prefWidth="72.0" text="Option" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

@@ -43,7 +43,7 @@ public class RecordBookReturnController {
     }
 
     public void addBook(BookLoan bookLoan) {
-        username.setText(bookLoan.getUser());
+        username.setText(bookLoan.getUsername());
         bookTitle.setText(bookLoan.getBookTitle());
         status.setText(bookLoan.getStatus());
         loanDate.getValue();
