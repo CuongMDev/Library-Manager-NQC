@@ -1,14 +1,19 @@
 package com.example.librarymanagernqc;
 
-import javafx.animation.PauseTransition;
+import com.example.librarymanagernqc.Book.Book;
+import com.example.librarymanagernqc.Book.BookJsonHandler;
+import com.example.librarymanagernqc.TimeGetter.TimeGetter;
+import com.jfoenix.controls.JFXAlert;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
 
+import java.util.List;
 import java.util.Objects;
 
 public class SplashScreenController {
@@ -24,24 +29,41 @@ public class SplashScreenController {
             stage.initStyle(StageStyle.UNDECORATED);
             stage.show();
 
-            // Thiết lập thời gian hiển thị
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(event -> {
-                // Chuyển đến màn hình chính
-                try {
-                    stage.close();
+            try {
+                //lấy thời gian từ server
+                Task<Void> fetchTimeTask = TimeGetter.fetchCurrentTimeFromServer();
 
-                    Stage mainStage = new Stage();
-                    Parent mainScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login/login.fxml")));
-                    mainStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("common/images/app-icon.png"))));
-                    mainStage.setTitle("Library Manager NQC");
-                    mainStage.setScene(new Scene(mainScreen));
-                    mainStage.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-            pause.play();
+                fetchTimeTask.setOnSucceeded(event -> {
+                    // Chuyển đến màn hình chính
+                    try {
+                        stage.close();
+
+                        Stage mainStage = new Stage();
+                        Parent mainScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login/login.fxml")));
+                        mainStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("common/images/app-icon.png"))));
+                        mainStage.setTitle("Library Manager NQC");
+                        mainStage.setScene(new Scene(mainScreen));
+                        mainStage.setResizable(false);
+                        mainStage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                fetchTimeTask.setOnFailed(event -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Please Recheck your Internet Connection");
+                    alert.setContentText(fetchTimeTask.getException().getMessage());
+                    alert.showAndWait();
+
+                    stage.close();
+                });
+
+                // Chạy task trong một luồng nền
+                new Thread(fetchTimeTask).start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

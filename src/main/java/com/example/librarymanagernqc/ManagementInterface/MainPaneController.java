@@ -34,7 +34,7 @@ public class  MainPaneController {
     private void initialize() throws IOException {
         panes[PaneType.DOCUMENT.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Document/document.fxml")));
         panes[PaneType.USER.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("User/user.fxml")));
-        panes[PaneType.BORROWED_LIST.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("BorrowedList/borrowedList.fxml")));
+        panes[PaneType.BORROWED_LIST.ordinal()] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("BorrowedList/borrowed-list.fxml")));
 
         //setDefault
         switchPane(PaneType.DOCUMENT);

@@ -34,4 +34,6 @@ module com.example.librarymanagernqc {
     opens com.example.librarymanagernqc.ManagementInterface.BorrowedList to javafx.fxml;
     exports com.example.librarymanagernqc.Login;
     opens com.example.librarymanagernqc.Login to javafx.fxml;
+    exports com.example.librarymanagernqc.TimeGetter;
+    opens com.example.librarymanagernqc.TimeGetter to javafx.fxml;
 }

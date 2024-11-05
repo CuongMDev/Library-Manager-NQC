@@ -59,19 +59,19 @@ public class DocumentController {
             @Override
             public TableCell<Book, Void> call(TableColumn<Book, Void> param) {
                 return new TableCell<>() {
-                    private final JFXButton detailButton = new JFXButton();
+                    private final JFXButton editButton = new JFXButton();
                     {
                         //create add Image
-                        ImageView detailImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/information.png")))); // Đường dẫn tới ảnh
-                        detailImage.setFitWidth(20); // Đặt kích thước cho ảnh
-                        detailImage.setFitHeight(20);
+                        ImageView editImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/edit.png")))); // Đường dẫn tới ảnh
+                        editImage.setFitWidth(20); // Đặt kích thước cho ảnh
+                        editImage.setFitHeight(20);
 
-                        //set detailButton
+                        //set editButton
 
-                        detailButton.setRipplerFill(Color.WHITE);
-                        detailButton.setCursor(Cursor.HAND);
-                        detailButton.setGraphic(detailImage);
-                        detailButton.setOnAction(event -> {
+                        editButton.setRipplerFill(Color.WHITE);
+                        editButton.setCursor(Cursor.HAND);
+                        editButton.setGraphic(editImage);
+                        editButton.setOnAction(event -> {
                             //lấy ô hiện tại đang chọn
                             Book currentBook = getTableView().getItems().get(getIndex());
                             //load book information
@@ -117,7 +117,7 @@ public class DocumentController {
                         deleteImage.setFitWidth(20); // Đặt kích thước cho ảnh
                         deleteImage.setFitHeight(20);
 
-                        //set detailButton
+                        //set deleteButton
 
                         deleteButton.setRipplerFill(Color.WHITE);
                         deleteButton.setCursor(Cursor.HAND);
@@ -131,7 +131,7 @@ public class DocumentController {
                         });
                     }
 
-                    private final HBox buttonsBox = new HBox(5, detailButton, deleteButton);
+                    private final HBox buttonsBox = new HBox(5, editButton, deleteButton);
 
                     @Override
                     protected void updateItem(Void item, boolean empty) {
