@@ -24,7 +24,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <TextField layoutX="106.0" layoutY="146.0" prefHeight="26.0" prefWidth="482.0" styleClass="searchField" />
+            <TextField fx:id="searchField" layoutX="106.0" layoutY="146.0" prefHeight="26.0" prefWidth="482.0" styleClass="searchField" />
             <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="785.0" layoutY="71.0" onMouseClicked="#onAddMouseClicked" prefHeight="38.0" prefWidth="19.0" ripplerFill="WHITE" styleClass="imageButton" stylesheets="@../../common/images/style.css" text="Add Book">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">

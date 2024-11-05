@@ -10,6 +10,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,8 +24,8 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 
 public class DocumentController {
     @FXML
@@ -39,22 +40,46 @@ public class DocumentController {
     private TableView<Book> booksTableView;
     @FXML
     private StackPane mainStackPane;
+    @FXML
+    private TextField searchField;
 
     /**
-    * books that have been added will be moved to this queue
-    */
-    private static final Queue<Book> booksQueue = new LinkedList<>();
+     * all books list
+     */
+    private static final List<Book> booksList = new LinkedList<>();
 
-    public static void addBookToQueue(Book book) {
-        booksQueue.add(book);
+    public static void addBookToList(Book book) {
+        booksList.add(book);
     }
 
-    @FXML
-    private void initialize() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
+    /**
+     * search book by title, limit = 0 mean no limit
+     */
+    public static List<Book> searchBooksList(String title, int limit) {
+        return Book.fuzzySearch(booksList, title, 0, limit);
+    }
 
+    /**
+     * search book by title, limit = 0 mean no limit
+     */
+    public static Book searchBookById(String id) {
+        for (Book book : booksList) {
+            if (book.getId().equals(id)) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    private void updateTable() {
+        if (searchField.getText().isEmpty()) {
+            addBooksListToTable(booksList);
+        } else {
+            addBooksListToTable(searchBooksList(searchField.getText(), 0));
+        }
+    }
+
+    private void initOptionColumns() {
         optionColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Book, Void> call(TableColumn<Book, Void> param) {
@@ -91,7 +116,7 @@ public class DocumentController {
                             bookInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (bookInfoController.checkValidAndHandleBook()) {
-                                        currentBook.setCount(bookInfoController.getBook().getCount());
+                                        currentBook.setQuantity(bookInfoController.getBook().getQuantity());
 
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);
@@ -150,6 +175,26 @@ public class DocumentController {
         });
     }
 
+    private void addBooksListToTable(List<Book> booksList) {
+        booksTableView.getItems().clear();
+        for (Book book : booksList) {
+            booksTableView.getItems().add(book);
+        }
+    }
+
+    @FXML
+    private void initialize() {
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
+        initOptionColumns();
+
+        // Lắng nghe thay đổi của text
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updateTable();
+        });
+    }
+
     @FXML
     private void onAddMouseClicked(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
@@ -164,11 +209,7 @@ public class DocumentController {
                     mainStackPane.getChildren().add(savePane);
                 }
 
-                //check if booksQueue have book and add all to table
-                while (!booksQueue.isEmpty()) {
-                    Book book = booksQueue.remove();
-                    booksTableView.getItems().add(book);
-                }
+                updateTable();
             });
         }
     }

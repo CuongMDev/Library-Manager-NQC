@@ -1,5 +1,10 @@
 package com.example.librarymanagernqc.Book;
 
+import com.example.librarymanagernqc.Utils;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class Book {
     private String id;
     private String title;
@@ -7,7 +12,7 @@ public class Book {
     private String publisher;
     private String publishedDate;
     private String description;
-    private int count;
+    private int quantity;
 
 //    public Book() {
 //        this.id = "";
@@ -20,14 +25,14 @@ public class Book {
 //    }
 
     // Constructor
-    public Book(String id, String title, String authors, String publisher, String publishedDate, String description, int count) {
+    public Book(String id, String title, String authors, String publisher, String publishedDate, String description, int quantity) {
         this.id = id;
         this.title = title;
         this.authors = authors;
         this.publisher = publisher;
         this.publishedDate = publishedDate;
         this.description = description;
-        this.count = count;
+        this.quantity = quantity;
     }
 
     // Getters and Setters
@@ -49,6 +54,13 @@ public class Book {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public int getCount() { return count; }
-    public void setCount(int count) { this.count = count; }
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    /**
+     * search book by title, limit = 0 mean no limit
+     */
+    public static List<Book> fuzzySearch(List<Book> books, String word, int maxDistance, int limit) {
+        return Utils.fuzzySearch(books, word,"getTitle", 0, limit);
+    }
 }

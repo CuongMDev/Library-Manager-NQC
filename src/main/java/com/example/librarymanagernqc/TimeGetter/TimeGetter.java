@@ -12,13 +12,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class TimeGetter {
     private static final String timeUrl = "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Bangkok";
     private static final HttpClient client = HttpClient.newHttpClient();
 
-    private static LocalDateTime currentTime;
+    private static LocalDateTime currentTime = LocalDateTime.now();
 
     private TimeGetter() {}
 
