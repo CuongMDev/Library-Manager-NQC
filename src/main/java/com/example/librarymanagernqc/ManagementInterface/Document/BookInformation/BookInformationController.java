@@ -1,8 +1,8 @@
 package com.example.librarymanagernqc.ManagementInterface.Document.BookInformation;
 
-import com.example.librarymanagernqc.Book.Book;
+import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
-import com.example.librarymanagernqc.Utils;
+import com.example.librarymanagernqc.Objects.Utils;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -84,7 +84,7 @@ public class BookInformationController {
                 Integer.parseInt(bookQuantity.getText()));
     }
 
-    public void addBook(Book book) {
+    public void setBook(Book book) {
         bookId = book.getId();
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthors());

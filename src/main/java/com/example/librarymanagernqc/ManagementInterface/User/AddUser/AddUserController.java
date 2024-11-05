@@ -1,7 +1,7 @@
 package com.example.librarymanagernqc.ManagementInterface.User.AddUser;
 
 import com.example.librarymanagernqc.User.User;
-import com.example.librarymanagernqc.Utils;
+import com.example.librarymanagernqc.Objects.Utils;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;

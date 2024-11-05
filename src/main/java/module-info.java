@@ -31,11 +31,16 @@ module com.example.librarymanagernqc {
     exports com.example.librarymanagernqc.ManagementInterface.User.AddUser;
     opens com.example.librarymanagernqc.ManagementInterface.User.AddUser to javafx.fxml;
     exports com.example.librarymanagernqc.User;
-    exports com.example.librarymanagernqc.Book;
+    exports com.example.librarymanagernqc.Objects.Book;
     exports com.example.librarymanagernqc.ManagementInterface.BorrowedList;
     opens com.example.librarymanagernqc.ManagementInterface.BorrowedList to javafx.fxml;
     exports com.example.librarymanagernqc.Login;
     opens com.example.librarymanagernqc.Login to javafx.fxml;
     exports com.example.librarymanagernqc.TimeGetter;
     opens com.example.librarymanagernqc.TimeGetter to javafx.fxml;
+    opens com.example.librarymanagernqc.Objects.Book to javafx.fxml;
+    exports com.example.librarymanagernqc.Objects;
+    opens com.example.librarymanagernqc.Objects to javafx.fxml;
+    exports com.example.librarymanagernqc.Objects.BookLoan;
+    opens com.example.librarymanagernqc.Objects.BookLoan to javafx.fxml;
 }

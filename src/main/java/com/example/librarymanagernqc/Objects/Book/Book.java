@@ -1,8 +1,7 @@
-package com.example.librarymanagernqc.Book;
+package com.example.librarymanagernqc.Objects.Book;
 
-import com.example.librarymanagernqc.Utils;
+import com.example.librarymanagernqc.Objects.Utils;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class Book {

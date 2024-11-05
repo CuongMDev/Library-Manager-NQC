@@ -1,9 +1,6 @@
 package com.example.librarymanagernqc;
 
-import com.example.librarymanagernqc.Book.Book;
-import com.example.librarymanagernqc.Book.BookJsonHandler;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
-import com.jfoenix.controls.JFXAlert;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.util.List;
 import java.util.Objects;
 
 public class SplashScreenController {

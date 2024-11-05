@@ -1,6 +1,5 @@
-package com.example.librarymanagernqc;
+package com.example.librarymanagernqc.Objects;
 
-import com.example.librarymanagernqc.Book.Book;
 import javafx.scene.control.TextFormatter;
 
 import java.lang.reflect.InvocationTargetException;

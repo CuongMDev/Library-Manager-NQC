@@ -1,10 +1,10 @@
 package com.example.librarymanagernqc.ManagementInterface.User.RecordBookLoan;
 
-import com.example.librarymanagernqc.Book.Book;
+import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
+import com.example.librarymanagernqc.User.User;
 import com.jfoenix.controls.JFXListView;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Timer;
 
 public class RecordBookLoan {
     @FXML
@@ -124,5 +123,10 @@ public class RecordBookLoan {
                 }
             }
         });
+    }
+
+    public void setUser(User user) {
+        this.username.setText(user.getUsername());
+        this.fullName.setText(user.getFullName());
     }
 }

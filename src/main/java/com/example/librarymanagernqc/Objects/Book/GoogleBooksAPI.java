@@ -1,4 +1,4 @@
-package com.example.librarymanagernqc.Book;
+package com.example.librarymanagernqc.Objects.Book;
 
 import java.net.URI;
 import java.net.http.HttpClient;

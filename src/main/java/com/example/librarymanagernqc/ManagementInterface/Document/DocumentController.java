@@ -1,6 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.Document;
 
-import com.example.librarymanagernqc.Book.Book;
+import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.jfoenix.controls.JFXButton;
@@ -109,7 +109,7 @@ public class DocumentController {
                             }
 
                             BookInformationController bookInfoController = bookInfoLoader.getController();
-                            bookInfoController.addBook(currentBook);
+                            bookInfoController.setBook(currentBook);
                             bookInfoController.setType(BookInformationController.Type.EDIT);
 
                             //save button event

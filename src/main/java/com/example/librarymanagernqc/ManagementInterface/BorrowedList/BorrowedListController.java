@@ -1,21 +1,16 @@
 package com.example.librarymanagernqc.ManagementInterface.BorrowedList;
 
-import com.example.librarymanagernqc.Book.Book;
-import com.example.librarymanagernqc.BookLoan;
+import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn.RecordBookReturnController;
-import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;

@@ -1,4 +1,4 @@
-package com.example.librarymanagernqc;
+package com.example.librarymanagernqc.Objects.BookLoan;
 
 public class BookLoan {
     private String username;

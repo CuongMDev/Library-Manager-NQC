@@ -1,17 +1,11 @@
 package com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn;
 
-import com.example.librarymanagernqc.BookLoan;
-import com.example.librarymanagernqc.Utils;
+import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public class RecordBookReturnController {
     @FXML

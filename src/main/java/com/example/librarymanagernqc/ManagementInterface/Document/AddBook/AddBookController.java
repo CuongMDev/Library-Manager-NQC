@@ -1,8 +1,8 @@
 package com.example.librarymanagernqc.ManagementInterface.Document.AddBook;
 
-import com.example.librarymanagernqc.Book.Book;
-import com.example.librarymanagernqc.Book.BookJsonHandler;
-import com.example.librarymanagernqc.Book.GoogleBooksAPI;
+import com.example.librarymanagernqc.Objects.Book.Book;
+import com.example.librarymanagernqc.Objects.Book.BookJsonHandler;
+import com.example.librarymanagernqc.Objects.Book.GoogleBooksAPI;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;
@@ -84,7 +84,7 @@ public class AddBookController {
                             }
 
                             BookInformationController bookInfoController = bookInfoLoader.getController();
-                            bookInfoController.addBook(book);
+                            bookInfoController.setBook(book);
 
                             //cancel button event
                             bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {

@@ -1,6 +1,5 @@
 package com.example.librarymanagernqc.ManagementInterface;
 
-import com.example.librarymanagernqc.Book.Book;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Queue;
 
 public class  MainPaneController {
     private enum PaneType {
