@@ -60,7 +60,7 @@ public class DocumentController {
     }
 
     /**
-     * search book by title, limit = 0 mean no limit
+     * search book by id
      */
     public static Book searchBookById(String id) {
         for (Book book : booksList) {

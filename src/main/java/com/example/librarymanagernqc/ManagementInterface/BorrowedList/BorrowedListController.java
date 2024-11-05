@@ -2,12 +2,13 @@ package com.example.librarymanagernqc.ManagementInterface.BorrowedList;
 
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn.RecordBookReturnController;
+import com.example.librarymanagernqc.TimeGetter.TimeGetter;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -16,21 +17,90 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
+import javax.swing.text.DateFormatter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class BorrowedListController {
     @FXML
-    private TreeTableColumn<BookLoan, Void> optionColumn;
+    private TableColumn<BookLoan, String> usernameColumn;
+    @FXML
+    private TableColumn<BookLoan, String> bookTitleColumn;
+    @FXML
+    private TableColumn<BookLoan, String> loanDateColumn;
+    @FXML
+    private TableColumn<BookLoan, String> dueDateColumn;
+    @FXML
+    private TableColumn<BookLoan, String> statusColumn;
+    @FXML
+    private TableColumn<BookLoan, Void> optionColumn;
     @FXML
     private StackPane mainStackPane;
+    @FXML
+    private TextField searchTitleField;
+    @FXML
+    private TableView<BookLoan> bookLoansTable;
+
+    /**
+     * all books list
+     */
+    private static final List<BookLoan> bookLoansList = new LinkedList<>();
+
+    public static void addBookLoanToList(BookLoan bookLoan) {
+        bookLoansList.add(bookLoan);
+    }
+
+    private void addBookLoansListToTable(List<BookLoan> bookLoansList) {
+        bookLoansTable.getItems().clear();
+        LocalDate currentTime = TimeGetter.getCurrentTime().toLocalDate();
+        for (BookLoan bookLoan : bookLoansList) {
+            if (currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).compareTo(bookLoan.getDueDate()) > 0) {
+                bookLoan.setStatus("Overdue");
+            }
+            bookLoansTable.getItems().add(bookLoan);
+        }
+    }
+
+    /**
+     * search book loan by title, limit = 0 mean no limit
+     */
+    private List<BookLoan> searchBookLoansList(String title) {
+        return BookLoan.fuzzySearch(bookLoansList, title, 0, 0);
+    }
+
+    public void updateTable() {
+        if (searchTitleField.getText().isEmpty()) {
+            addBookLoansListToTable(bookLoansList);
+        } else {
+            addBookLoansListToTable(searchBookLoansList(searchTitleField.getText()));
+        }
+    }
+
 
     @FXML
     private void initialize() {
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
+        loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
+        dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        // Lắng nghe thay đổi của text
+        searchTitleField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updateTable();
+        });
+
         optionColumn.setCellFactory(new Callback<>() {
             @Override
-            public TreeTableCell<BookLoan, Void> call(TreeTableColumn<BookLoan, Void> param) {
-                return new TreeTableCell<>() {
+            public TableCell<BookLoan, Void> call(TableColumn<BookLoan, Void> param) {
+                return new TableCell<>() {
                     private final JFXButton recordButton = new JFXButton();
                     {
                         //create add Image
@@ -45,7 +115,7 @@ public class BorrowedListController {
                         recordButton.setGraphic(recordImage);
                         recordButton.setOnAction(event -> {
                             //lấy ô hiện tại đang chọn
-                            BookLoan currentBook = getTreeTableView().getSelectionModel().getSelectedItem().getValue();
+                            BookLoan currentBook = getTableView().getItems().get(getIndex());
                             //load book information
                             Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
                             FXMLLoader recordBookReturnLoader = new FXMLLoader(getClass().getResource("RecordBookReturn/record-book-return.fxml"));

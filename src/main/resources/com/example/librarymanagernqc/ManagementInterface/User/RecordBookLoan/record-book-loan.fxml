@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane cache="true" prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.User.RecordBookLoan.RecordBookLoan">
+<AnchorPane cache="true" prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.User.RecordBookLoan.RecordBookLoanController">
     <children>
         <Label layoutX="55.0" layoutY="71.0" styleClass="titleFont" text="Record Return Information" />
         <AnchorPane layoutX="55.0" layoutY="196.0" prefHeight="490.0" prefWidth="772.0" style="-fx-background-color: white;">

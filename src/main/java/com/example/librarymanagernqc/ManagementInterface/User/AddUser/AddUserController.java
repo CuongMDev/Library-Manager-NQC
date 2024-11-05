@@ -1,5 +1,7 @@
 package com.example.librarymanagernqc.ManagementInterface.User.AddUser;
 
+import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
+import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.Objects.Utils;
 import com.jfoenix.controls.JFXButton;
@@ -9,9 +11,15 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class AddUserController {
+    public enum Type {
+        ADD,
+        EDIT
+    }
+
     @FXML
     public JFXButton addButton;
     @FXML
@@ -103,10 +111,26 @@ public class AddUserController {
         return false;
     }
 
+    public void setType(BookInformationController.Type type) {
+        if (type == BookInformationController.Type.EDIT) {
+            addButton.setText("Save");
+        }
+    }
+
+    public void setUser(User user) {
+        username.setText(user.getUsername());
+        citizenId.setText(user.getCitizenId());
+        fullName.setText(user.getFullName());
+        gender.setValue(user.getGender());
+        phoneNumber.setText(user.getPhoneNumber());
+        dateOfBirth.setValue(LocalDate.parse(user.getDateOfBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    }
+
     public User getUser() {
         return new User(username.getText(), fullName.getText(),
                 citizenId.getText(), gender.getValue(),
                 dateOfBirth.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                 phoneNumber.getText());
     }
+
 }

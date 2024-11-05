@@ -1,18 +1,27 @@
 package com.example.librarymanagernqc.Objects.BookLoan;
 
+import com.example.librarymanagernqc.Objects.Book.Book;
+import com.example.librarymanagernqc.Objects.Utils;
+
+import java.util.List;
+
 public class BookLoan {
     private String username;
     private String bookTitle;
     private String loanDate;
     private String dueDate;
     private String status;
+    private String loanQuantity;
+    private String bookId;
 
-    public BookLoan(String username, String bookTitle, String loanDate, String dueDate, String status) {
+    public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, String loanQuantity) {
         this.username = username;
         this.bookTitle = bookTitle;
+        this.bookId = bookId;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
-        this.status = status;
+        this.status = "Borrowing";
+        this.loanQuantity = loanQuantity;
     }
 
     public String getUser() {
@@ -53,5 +62,28 @@ public class BookLoan {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getLoanQuantity() {
+        return loanQuantity;
+    }
+
+    public void setLoanQuantity(String loanQuantity) {
+        this.loanQuantity = loanQuantity;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    /**
+     * search book loan by title, limit = 0 mean no limit
+     */
+    public static List<BookLoan> fuzzySearch(List<BookLoan> bookLoans, String word, int maxDistance, int limit) {
+        return Utils.fuzzySearch(bookLoans, word,"getBookTitle", 0, limit);
     }
 }

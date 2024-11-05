@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -14,21 +14,21 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <JFXTreeTableView layoutX="51.0" layoutY="242.0" prefHeight="526.0" prefWidth="769.0">
+      <TableView layoutX="51.0" layoutY="242.0" prefHeight="526.0" prefWidth="769.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
          <columns>
-            <TreeTableColumn prefWidth="100.79996490478516" text="Username " />
-            <TreeTableColumn prefWidth="289.6000213623047" text="Book Title" />
-            <TreeTableColumn prefWidth="107.99993896484375" text="Loan Date" />
-            <TreeTableColumn prefWidth="105.60003662109375" text="Due Date" />
-            <TreeTableColumn minWidth="0.0" prefWidth="102.4000244140625" text="Status" />
-            <TreeTableColumn fx:id="optionColumn" prefWidth="63.199951171875" text="Option" />
+            <TableColumn fx:id="usernameColumn" prefWidth="100.79996490478516" text="Username " />
+            <TableColumn fx:id="bookTitleColumn" prefWidth="289.6000213623047" text="Book Title" />
+            <TableColumn fx:id="loanDateColumn" prefWidth="107.99993896484375" text="Loan Date" />
+            <TableColumn fx:id="dueDateColumn" prefWidth="105.60003662109375" text="Due Date" />
+            <TableColumn fx:id="statusColumn" minWidth="0.0" prefWidth="102.4000244140625" text="Status" />
+            <TableColumn fx:id="optionColumn" prefWidth="63.199951171875" text="Option" />
          </columns>
-      </JFXTreeTableView>
+      </TableView>
       <Label layoutX="59.0" layoutY="147.0" prefHeight="29.0" prefWidth="47.0" text="Search:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="107.0" layoutY="147.0" prefHeight="29.0" prefWidth="297.0" styleClass="searchField" stylesheets="@style.css" />
+      <TextField fx:id="searchTitleField" layoutX="107.0" layoutY="147.0" prefHeight="29.0" prefWidth="297.0" promptText="Book Title" styleClass="searchField" stylesheets="@style.css" />
    </children>
 </AnchorPane>

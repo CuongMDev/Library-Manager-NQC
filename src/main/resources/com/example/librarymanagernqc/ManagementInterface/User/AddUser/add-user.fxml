@@ -29,7 +29,7 @@
             </children>
         </AnchorPane>
         <ImageView fitHeight="38.0" fitWidth="47.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-        <JFXButton fx:id="addButton" layoutX="737.0" layoutY="715.0" prefHeight="45.0" prefWidth="90.0" styleClass="addButton" text="Add">
+        <JFXButton fx:id="addButton" defaultButton="true" layoutX="737.0" layoutY="715.0" prefHeight="45.0" prefWidth="90.0" styleClass="addButton" text="Add">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
