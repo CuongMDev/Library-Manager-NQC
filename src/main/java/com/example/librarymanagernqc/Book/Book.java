@@ -20,14 +20,14 @@ public class Book {
 //    }
 
     // Constructor
-    public Book(String id, String title, String authors, String publisher, String publishedDate, String description) {
+    public Book(String id, String title, String authors, String publisher, String publishedDate, String description, int count) {
         this.id = id;
         this.title = title;
         this.authors = authors;
         this.publisher = publisher;
         this.publishedDate = publishedDate;
         this.description = description;
-        this.count = 0;
+        this.count = count;
     }
 
     // Getters and Setters

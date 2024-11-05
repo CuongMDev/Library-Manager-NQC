@@ -42,7 +42,7 @@
                   <TableColumn fx:id="idColumn" prefWidth="108.0" text="ID" />
                 <TableColumn fx:id="bookTitleColumn" prefWidth="297.0" text="Book Title" />
                 <TableColumn fx:id="authorColumn" prefWidth="140.0" text="Author" />
-                  <TableColumn prefWidth="89.0" text="Option" />
+                  <TableColumn fx:id="optionColumn" prefWidth="89.0" text="Option" />
               </columns>
             </TableView>
          </children>

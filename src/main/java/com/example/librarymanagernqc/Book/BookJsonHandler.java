@@ -38,7 +38,7 @@ public class BookJsonHandler {
         String publishedDate = volumeInfo.optString("publishedDate", "Unknown");
         String description = volumeInfo.optString("description", "No description");
 
-        return new Book(id, title, authors.toString(), publisher, publishedDate, description);
+        return new Book(id, title, authors.toString(), publisher, publishedDate, description, 0);
     }
 
     static public List<Book> parseBookTitles(String jsonResponse) {

@@ -72,6 +72,7 @@ public class AddBookController {
                         addButton.setCursor(Cursor.HAND);
                         addButton.setGraphic(addImage);
                         addButton.setOnAction(event -> {
+                            //lấy ô hiện tại đang chọn
                             Book book = getTableView().getItems().get(getIndex());
                             //load book information
                             Pane savePane = (Pane) mainStackPane.getChildren().removeLast();

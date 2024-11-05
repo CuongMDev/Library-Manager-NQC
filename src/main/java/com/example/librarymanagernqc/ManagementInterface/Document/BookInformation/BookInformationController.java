@@ -12,6 +12,11 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 
 public class BookInformationController {
+    public enum Type {
+        ADD,
+        EDIT
+    }
+
     private String bookId;
     @FXML
     private TextField bookTitle;
@@ -45,6 +50,12 @@ public class BookInformationController {
         bookQuantity.setTextFormatter(new TextFormatter<>(Utils.numberFilter));
     }
 
+    public void setType(Type type) {
+        if (type == Type.EDIT) {
+            addButton.setText("Save");
+        }
+    }
+
     private boolean checkValidBook() {
         if (bookQuantity.getText() == null || Integer.parseInt(bookQuantity.getText()) == 0) {
             return false;
@@ -70,7 +81,9 @@ public class BookInformationController {
     }
 
     public Book getBook() {
-        return new Book(bookId, bookTitle.getText(), bookAuthor.getText(), bookPublisher.getText(), bookPublishedDate.getText(), bookDescription.getText());
+        return new Book(bookId, bookTitle.getText(), bookAuthor.getText(),
+                bookPublisher.getText(), bookPublishedDate.getText(), bookDescription.getText(),
+                Integer.parseInt(bookQuantity.getText()));
     }
 
     public void addBook(Book book) {
