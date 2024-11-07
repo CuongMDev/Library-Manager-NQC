@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -69,6 +70,7 @@ public class AddBookController {
                         addImage.setFitHeight(20);
 
                         //set addButton
+                        addButton.setPadding(Insets.EMPTY);
                         addButton.setRipplerFill(Color.WHITE);
                         addButton.setCursor(Cursor.HAND);
                         addButton.setGraphic(addImage);

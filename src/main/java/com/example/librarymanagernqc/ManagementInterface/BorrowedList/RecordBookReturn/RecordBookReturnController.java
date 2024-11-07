@@ -62,7 +62,7 @@ public class RecordBookReturnController {
     public void setBookLoan(BookLoan bookLoan) {
         username.setText(bookLoan.getUsername());
         bookTitle.setText(bookLoan.getBookTitle());
-        status.setText(bookLoan.getStatus().equals("Borrowing") ? "On time" : "Overdue");
+        status.setText(bookLoan.getStatus());
         loanDate.setText(bookLoan.getLoanDate());
         dueDate.setText(bookLoan.getDueDate());
         daysOverdue.setText(String.valueOf(Math.max(0, ChronoUnit.DAYS.between(LocalDate.parse(bookLoan.getDueDate(), Utils.isoFormatter), TimeGetter.getCurrentTime().toLocalDate()))));

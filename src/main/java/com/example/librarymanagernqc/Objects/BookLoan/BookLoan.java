@@ -20,7 +20,7 @@ public class BookLoan {
         this.bookId = bookId;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
-        this.status = "Borrowing";
+        this.status = "On Time";
         this.loanQuantity = loanQuantity;
     }
 

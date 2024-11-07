@@ -84,20 +84,7 @@ public class BorrowedListController {
         }
     }
 
-
-    @FXML
-    private void initialize() {
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
-        loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
-        dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        // Lắng nghe thay đổi của text
-        searchTitleField.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateTable();
-        });
-
+    private void initOptionColumn() {
         optionColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<BookLoan, Void> call(TableColumn<BookLoan, Void> param) {
@@ -165,6 +152,47 @@ public class BorrowedListController {
                 };
             }
         });
+    }
+
+    private void initStatusColumn() {
+        statusColumn.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<BookLoan, String> call(TableColumn<BookLoan, String> param) {
+                return new TableCell<>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setText(null);
+                        } else {
+                            setText(item);
+                            if ("On Time".equals(item)) {
+                                setTextFill(Color.GREEN); // Nếu giá trị là "On Time", set màu đỏ
+                            } else {
+                                setTextFill(Color.RED); // Nếu không, set màu xanh "Overdue"
+                            }
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    @FXML
+    private void initialize() {
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+        bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
+        loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
+        dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        // Lắng nghe thay đổi của text
+        searchTitleField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updateTable();
+        });
+
+        initOptionColumn();
+        initStatusColumn();
     }
 
 }

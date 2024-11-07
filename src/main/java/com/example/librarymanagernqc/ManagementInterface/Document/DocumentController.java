@@ -6,11 +6,10 @@ import com.example.librarymanagernqc.ManagementInterface.Document.BookInformatio
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -102,6 +101,7 @@ public class DocumentController {
 
                         //set editButton
 
+                        editButton.setPadding(Insets.EMPTY);
                         editButton.setRipplerFill(Color.WHITE);
                         editButton.setCursor(Cursor.HAND);
                         editButton.setGraphic(editImage);
@@ -153,6 +153,7 @@ public class DocumentController {
 
                         //set deleteButton
 
+                        deleteButton.setPadding(Insets.EMPTY);
                         deleteButton.setRipplerFill(Color.WHITE);
                         deleteButton.setCursor(Cursor.HAND);
                         deleteButton.setGraphic(deleteImage);
@@ -165,7 +166,10 @@ public class DocumentController {
                         });
                     }
 
-                    private final HBox buttonsBox = new HBox(5, editButton, deleteButton);
+                    private final HBox buttonsBox = new HBox(10, editButton, deleteButton);
+                    {
+                        buttonsBox.setAlignment(Pos.CENTER);
+                    }
 
                     @Override
                     protected void updateItem(Void item, boolean empty) {
