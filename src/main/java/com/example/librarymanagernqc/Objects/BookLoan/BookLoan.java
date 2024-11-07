@@ -11,10 +11,10 @@ public class BookLoan {
     private String loanDate;
     private String dueDate;
     private String status;
-    private String loanQuantity;
+    private int loanQuantity;
     private String bookId;
 
-    public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, String loanQuantity) {
+    public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, int loanQuantity) {
         this.username = username;
         this.bookTitle = bookTitle;
         this.bookId = bookId;
@@ -64,11 +64,11 @@ public class BookLoan {
         this.status = status;
     }
 
-    public String getLoanQuantity() {
+    public int getLoanQuantity() {
         return loanQuantity;
     }
 
-    public void setLoanQuantity(String loanQuantity) {
+    public void setLoanQuantity(int loanQuantity) {
         this.loanQuantity = loanQuantity;
     }
 

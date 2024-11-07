@@ -1,7 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.User.AddUser;
 
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
-import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.Objects.Utils;
 import com.jfoenix.controls.JFXButton;
@@ -10,9 +9,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class AddUserController {
     public enum Type {
@@ -47,68 +46,69 @@ public class AddUserController {
 
         //chỉ cho phép nhập số
         phoneNumber.setTextFormatter(new TextFormatter<>(Utils.numberFilter));
+
+        // Thiết lập bộ chuyển đổi để thay đổi định dạng hiển thị
+        Utils.setConvertToMyFormatter(dateOfBirth);
     }
 
-    private boolean checkValidUser() {
-        //check empty
-        if (username.getText().isEmpty() || citizenId.getText().isEmpty()
-                || fullName.getText().isEmpty() || dateOfBirth.getValue() == null
-                || gender.getValue() == null || phoneNumber.getText().isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean checkValidAndHandleBook() {
-        if (checkValidUser()) {
-            return true;
-        }
+    public boolean checkValidBook() {
+        boolean valid = true;
 
         if (username.getText().isEmpty()) {
             if (!username.getStyleClass().contains("invalid")) {
                 username.getStyleClass().add("invalid");
             }
+            valid = false;
         } else {
             username.getStyleClass().remove("invalid");
         }
+
         if (citizenId.getText().isEmpty()) {
             if (!citizenId.getStyleClass().contains("invalid")) {
                 citizenId.getStyleClass().add("invalid");
             }
+            valid = false;
         } else {
             citizenId.getStyleClass().remove("invalid");
         }
+
         if (fullName.getText().isEmpty()) {
             if (!fullName.getStyleClass().contains("invalid")) {
                 fullName.getStyleClass().add("invalid");
             }
+            valid = false;
         } else {
             fullName.getStyleClass().remove("invalid");
         }
+
         if (dateOfBirth.getValue() == null) {
             if (!dateOfBirth.getStyleClass().contains("invalid")) {
                 dateOfBirth.getStyleClass().add("invalid");
             }
+            valid = false;
         } else {
             dateOfBirth.getStyleClass().remove("invalid");
         }
+
         if (gender.getValue() == null) {
             if (!gender.getStyleClass().contains("invalid")) {
                 gender.getStyleClass().add("invalid");
             }
+            valid = false;
         } else {
             gender.getStyleClass().remove("invalid");
         }
+
         if (phoneNumber.getText().isEmpty()) {
             if (!phoneNumber.getStyleClass().contains("invalid")) {
                 phoneNumber.getStyleClass().add("invalid");
             }
+            valid = false;
         } else {
             phoneNumber.getStyleClass().remove("invalid");
         }
 
-        return false;
+        return valid;
     }
 
     public void setType(BookInformationController.Type type) {
@@ -123,13 +123,13 @@ public class AddUserController {
         fullName.setText(user.getFullName());
         gender.setValue(user.getGender());
         phoneNumber.setText(user.getPhoneNumber());
-        dateOfBirth.setValue(LocalDate.parse(user.getDateOfBirth(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        dateOfBirth.setValue(LocalDate.parse(user.getDateOfBirth(), Utils.isoFormatter));
     }
 
     public User getUser() {
         return new User(username.getText(), fullName.getText(),
                 citizenId.getText(), gender.getValue(),
-                dateOfBirth.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                dateOfBirth.getValue().toString(),
                 phoneNumber.getText());
     }
 

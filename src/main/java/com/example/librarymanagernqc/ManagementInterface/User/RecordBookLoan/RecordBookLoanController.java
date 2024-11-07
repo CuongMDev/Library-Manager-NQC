@@ -3,6 +3,7 @@ package com.example.librarymanagernqc.ManagementInterface.User.RecordBookLoan;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
+import com.example.librarymanagernqc.Objects.Utils;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
 import com.example.librarymanagernqc.User.User;
 import com.jfoenix.controls.JFXButton;
@@ -11,9 +12,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 public class RecordBookLoanController {
     @FXML
@@ -76,23 +80,47 @@ public class RecordBookLoanController {
         }
     }
 
-    private void setFieldUneditable() {
+    private void setFieldsProperties() {
         username.setEditable(false);
         fullName.setEditable(false);
         loanDate.setEditable(false);
         bookAuthor.setEditable(false);
         bookPublisher.setEditable(false);
         bookQuantity.setEditable(false);
+
+        // Thiết lập bộ chuyển đổi để thay đổi định dạng hiển thị
+        Utils.setConvertToMyFormatter(dueDate);
     }
 
     private void setInitValue() {
-        loanDate.setText(TimeGetter.getCurrentTime().format(DateTimeFormatter.ofPattern("M/d/yyyy")));
+        loanDate.setText(TimeGetter.getCurrentTime().format(Utils.isoFormatter));
         loanQuantity.setText(String.valueOf(0));
+    }
+
+    //return true ID is found
+    private boolean fillFieldsById() {
+        Book findBook = DocumentController.searchBookById(bookId.getText());
+        if (findBook != null) {
+            // Điền gợi ý đã chọn vào TextField
+            bookTitle.setText(findBook.getTitle());
+            bookAuthor.setText(findBook.getAuthors());
+            bookPublisher.setText(findBook.getPublisher());
+            bookQuantity.setText(String.valueOf(findBook.getQuantity()));
+
+            return true;
+        }
+
+        bookTitle.setText("");
+        bookAuthor.setText("");
+        bookPublisher.setText("");
+        bookQuantity.setText("");
+
+        return false;
     }
 
     @FXML
     private void initialize() {
-        setFieldUneditable();
+        setFieldsProperties();
         setInitValue();
 
         // Lắng nghe thay đổi của title text
@@ -101,19 +129,8 @@ public class RecordBookLoanController {
         });
         // Lắng nghe thay đổi của id text
         bookId.textProperty().addListener((observable, oldValue, newValue) -> {
-            Book findBook = DocumentController.searchBookById(newValue);
-            if (findBook != null) {
-                // Điền gợi ý đã chọn vào TextField
-                bookTitle.setText(findBook.getTitle());
-                bookAuthor.setText(findBook.getAuthors());
-                bookPublisher.setText(findBook.getPublisher());
-                bookQuantity.setText(String.valueOf(findBook.getQuantity()));
-                suggestionTitleList.setVisible(false);
-            } else {
-                bookTitle.setText("");
-                bookAuthor.setText("");
-                bookPublisher.setText("");
-                bookQuantity.setText("");
+            if (fillFieldsById()) { // Điền gợi ý đã chọn vào TextField
+                suggestionTitleList.setVisible(false); //ẩn suggestion list
             }
         });
 
@@ -131,6 +148,39 @@ public class RecordBookLoanController {
         });
     }
 
+    public boolean checkValidBookLoan() {
+        boolean valid = true;
+
+        if (dueDate.getValue() == null) {// || dueDate.getValue().isBefore(LocalDate.parse(loanDate.getText(), DateTimeFormatter.ofPattern("M/d/yyyy")))) {
+            valid = false;
+            if (!dueDate.getStyleClass().contains("invalid")) {
+                dueDate.getStyleClass().add("invalid");
+            }
+        } else {
+            dueDate.getStyleClass().remove("invalid");
+        }
+
+        if (!fillFieldsById()) {
+            valid = false;
+            if (!bookTitle.getStyleClass().contains("invalid")) {
+                bookTitle.getStyleClass().add("invalid");
+            }
+        } else {
+            bookTitle.getStyleClass().remove("invalid");
+
+            if (loanQuantity.getText().isBlank() || Integer.parseInt(loanQuantity.getText()) <= 0 || Integer.parseInt(loanQuantity.getText()) > Integer.parseInt(bookQuantity.getText())) {
+                valid = false;
+                if (!loanQuantity.getStyleClass().contains("invalid")) {
+                    loanQuantity.getStyleClass().add("invalid");
+                }
+            } else {
+                loanQuantity.getStyleClass().remove("invalid");
+            }
+        }
+
+        return valid;
+    }
+
     public void setUser(User user) {
         this.username.setText(user.getUsername());
         this.fullName.setText(user.getFullName());
@@ -138,7 +188,8 @@ public class RecordBookLoanController {
 
     public BookLoan getBookLoan() {
         return new BookLoan(username.getText(), bookTitle.getText(), bookId.getText(),
-                loanDate.getText(), dueDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                loanQuantity.getText());
+                loanDate.getText(),
+                dueDate.getValue().format(Utils.isoFormatter),
+                Integer.parseInt(loanQuantity.getText()));
     }
 }

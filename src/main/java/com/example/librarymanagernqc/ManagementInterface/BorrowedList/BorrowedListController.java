@@ -6,6 +6,7 @@ import com.example.librarymanagernqc.TimeGetter.TimeGetter;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -110,12 +111,13 @@ public class BorrowedListController {
 
                         //set recordButton
 
+                        recordButton.setPadding(Insets.EMPTY);
                         recordButton.setRipplerFill(Color.WHITE);
                         recordButton.setCursor(Cursor.HAND);
                         recordButton.setGraphic(recordImage);
                         recordButton.setOnAction(event -> {
                             //lấy ô hiện tại đang chọn
-                            BookLoan currentBook = getTableView().getItems().get(getIndex());
+                            BookLoan currentBookLoan = getTableView().getItems().get(getIndex());
                             //load book information
                             Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
                             FXMLLoader recordBookReturnLoader = new FXMLLoader(getClass().getResource("RecordBookReturn/record-book-return.fxml"));
@@ -126,13 +128,14 @@ public class BorrowedListController {
                             }
 
                             RecordBookReturnController recordBookReturnController = recordBookReturnLoader.getController();
-                            recordBookReturnController.addBook(currentBook);
+                            recordBookReturnController.setBookLoan(currentBookLoan);
 
                             //record button event
                             recordBookReturnController.recordButton.setOnMouseClicked(recordMouseEvent -> {
                                 if (recordMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     mainStackPane.getChildren().removeLast();
                                     mainStackPane.getChildren().add(savePane);
+                                    updateTable();
                                 }
                             });
 

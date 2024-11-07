@@ -1,9 +1,13 @@
 package com.example.librarymanagernqc.Objects;
 
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextFormatter;
+import javafx.util.StringConverter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -44,6 +48,31 @@ public class Utils {
         return null; // Từ chối thay đổi
     };
 
+    public static final DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
+    public static void setConvertToMyFormatter(DatePicker datePicker) {
+        datePicker.setConverter(new StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return Utils.isoFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, Utils.isoFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+    }
+
+
     /**
      * search book by title, limit = 0 mean no limit
      */
@@ -80,6 +109,9 @@ public class Utils {
             if (j == word.length()) {
                 return findWord.length() - i;
             }
+
+            //findWord[i] = word[j] so increase j
+            j++;
         }
 
         return 0;

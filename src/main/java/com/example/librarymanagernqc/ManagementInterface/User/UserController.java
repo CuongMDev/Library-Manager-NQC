@@ -2,9 +2,10 @@ package com.example.librarymanagernqc.ManagementInterface.User;
 
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
+import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.ManagementInterface.User.AddUser.AddUserController;
 import com.example.librarymanagernqc.ManagementInterface.User.RecordBookLoan.RecordBookLoanController;
-import com.example.librarymanagernqc.Objects.Book.Book;
+import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.User.User;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -93,7 +94,7 @@ public class UserController {
                             //save button event
                             userInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    if (userInfoController.checkValidAndHandleBook()) {
+                                    if (userInfoController.checkValidBook()) {
                                         currentUser.setUser(userInfoController.getUser());
 
                                         mainStackPane.getChildren().removeLast();
@@ -171,9 +172,13 @@ public class UserController {
 
                             bookLoanInfoController.recordButton.setOnMouseClicked(recordButtonMouseEvent -> {
                                 if (recordButtonMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    BorrowedListController.addBookLoanToList(bookLoanInfoController.getBookLoan());
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    if (bookLoanInfoController.checkValidBookLoan()) {
+                                        BookLoan getBookLoan = bookLoanInfoController.getBookLoan();
+                                        BorrowedListController.addBookLoanToList(getBookLoan);
+                                        DocumentController.decreaseBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(getBookLoan.getBookId())), getBookLoan.getLoanQuantity());
+                                        mainStackPane.getChildren().removeLast();
+                                        mainStackPane.getChildren().add(savePane);
+                                    }
                                 }
                             });
                         });
@@ -218,7 +223,7 @@ public class UserController {
             });
             addUserController.addButton.setOnMouseClicked(addUserMouseEvent -> {
                 if (addUserMouseEvent.getButton() == MouseButton.PRIMARY) {
-                    if (addUserController.checkValidAndHandleBook()) {
+                    if (addUserController.checkValidBook()) {
                         mainStackPane.getChildren().removeLast();
                         mainStackPane.getChildren().add(savePane);
 

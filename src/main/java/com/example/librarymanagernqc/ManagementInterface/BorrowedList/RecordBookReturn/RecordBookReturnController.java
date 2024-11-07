@@ -1,11 +1,18 @@
 package com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn;
 
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
+import com.example.librarymanagernqc.Objects.Utils;
+import com.example.librarymanagernqc.TimeGetter.TimeGetter;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class RecordBookReturnController {
     @FXML
@@ -19,9 +26,9 @@ public class RecordBookReturnController {
     @FXML
     private TextField fine;
     @FXML
-    private DatePicker loanDate;
+    private TextField loanDate;
     @FXML
-    private DatePicker dueDate;
+    private TextField dueDate;
     @FXML
     private ComboBox<String> bookCondition;
     @FXML
@@ -29,26 +36,35 @@ public class RecordBookReturnController {
     @FXML
     public JFXButton cancelButton;
 
-    @FXML
-    private void initialize() {
-        bookCondition.getItems().addAll("100%", "90%", "80%", "70%", "60%", "50%", "40%", "30%", "20%", "10%");
-
+    private void setFieldsProperties() {
         username.setEditable(false);
         bookTitle.setEditable(false);
         status.setEditable(false);
         daysOverdue.setEditable(true);
-        fine.setEditable(false);
         loanDate.setEditable(true);
         dueDate.setEditable(true);
+
+        //chỉ cho phép nhập số
+        fine.setTextFormatter(new TextFormatter<>(Utils.numberFilter));
     }
 
-    public void addBook(BookLoan bookLoan) {
+    private void setInitValue() {
+        bookCondition.getItems().addAll("100%", "90%", "80%", "70%", "60%", "50%", "40%", "30%", "20%", "10%");
+        bookCondition.setValue("100%");
+    }
+
+    @FXML
+    private void initialize() {
+        setFieldsProperties();
+        setInitValue();
+    }
+
+    public void setBookLoan(BookLoan bookLoan) {
         username.setText(bookLoan.getUsername());
         bookTitle.setText(bookLoan.getBookTitle());
-        status.setText(bookLoan.getStatus());
-        loanDate.getValue();
-        dueDate.getValue();
-        bookCondition.getItems().clear();
-        daysOverdue.setText("####");
+        status.setText(bookLoan.getStatus().equals("Borrowing") ? "On time" : "Overdue");
+        loanDate.setText(bookLoan.getLoanDate());
+        dueDate.setText(bookLoan.getDueDate());
+        daysOverdue.setText(String.valueOf(Math.max(0, ChronoUnit.DAYS.between(LocalDate.parse(bookLoan.getDueDate(), Utils.isoFormatter), TimeGetter.getCurrentTime().toLocalDate()))));
     }
 }

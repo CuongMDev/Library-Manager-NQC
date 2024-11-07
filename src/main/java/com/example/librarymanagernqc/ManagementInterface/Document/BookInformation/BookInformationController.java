@@ -1,7 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.Document.BookInformation;
 
 import com.example.librarymanagernqc.Objects.Book.Book;
-import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.Objects.Utils;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -54,28 +53,19 @@ public class BookInformationController {
         }
     }
 
-    private boolean checkValidBook() {
-        if (bookQuantity.getText() == null || Integer.parseInt(bookQuantity.getText()) == 0) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean checkValidAndHandleBook() {
-        if (checkValidBook()) {
-            DocumentController.addBookToList(getBook());
-            return true;
-        }
+    public boolean checkValidBook() {
+        boolean valid = true;
 
         if (bookQuantity.getText() == null || Integer.parseInt(bookQuantity.getText()) == 0) {
             if (!bookQuantity.getStyleClass().contains("invalid")) {
                 bookQuantity.getStyleClass().add("invalid");
             }
+            valid = false;
         } else {
             bookQuantity.getStyleClass().remove("invalid");
         }
-        return false;
+
+        return valid;
     }
 
     public Book getBook() {

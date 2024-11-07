@@ -52,6 +52,10 @@ public class DocumentController {
         booksList.add(book);
     }
 
+    public static void decreaseBookQuantity(Book book, int decreaseQuantity) {
+        book.setQuantity(book.getQuantity() - decreaseQuantity);
+    }
+
     private void deleteBookFromList(Book book) {
         booksList.remove(book);
         updateTable();
@@ -120,7 +124,7 @@ public class DocumentController {
                             //save button event
                             bookInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    if (bookInfoController.checkValidAndHandleBook()) {
+                                    if (bookInfoController.checkValidBook()) {
                                         currentBook.setQuantity(bookInfoController.getBook().getQuantity());
 
                                         mainStackPane.getChildren().removeLast();

@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,11 +15,11 @@
                 <Label layoutX="37.0" layoutY="77.0" styleClass="infoFieldFont" text="Username:" />
                 <TextField fx:id="username" focusTraversable="false" layoutX="136.0" layoutY="72.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
                 <Label layoutX="36.0" layoutY="180.0" styleClass="infoFieldFont" text="Loan Date:" />
-            <DatePicker fx:id="loanDate" focusTraversable="false" layoutX="136.0" layoutY="177.0" prefHeight="25.0" prefWidth="217.0" styleClass="infoField" />
+            <TextField fx:id="loanDate" focusTraversable="false" layoutX="136.0" layoutY="175.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
                 <Label layoutX="394.0" layoutY="77.0" styleClass="infoFieldFont" text="Book Title:" />
                 <TextField fx:id="bookTitle" focusTraversable="false" layoutX="483.0" layoutY="72.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
                 <Label layoutX="394.0" layoutY="180.0" styleClass="infoFieldFont" text="Due Date:" />
-            <DatePicker fx:id="dueDate" focusTraversable="false" layoutX="483.0" layoutY="177.0" prefHeight="25.0" prefWidth="217.0" styleClass="infoField" />
+            <TextField fx:id="dueDate" focusTraversable="false" layoutX="483.0" layoutY="175.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
                 <Label layoutX="37.0" layoutY="285.0" styleClass="infoFieldFont" text="Status:" />
             <TextField fx:id="status" focusTraversable="false" layoutX="136.0" layoutY="280.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
                 <Label layoutX="394.0" layoutY="285.0" styleClass="infoFieldFont" text="Days Overdue:" />
@@ -29,6 +28,7 @@
             <ComboBox fx:id="bookCondition" layoutX="136.0" layoutY="382.0" prefHeight="26.0" prefWidth="218.0" styleClass="infoField" />
             <Label layoutX="394.0" layoutY="385.0" styleClass="infoFieldFont" text="Fine:" />
             <TextField fx:id="fine" focusTraversable="false" layoutX="483.0" layoutY="381.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
+            <Label layoutX="700.0" layoutY="387.0" styleClass="infoFieldFont" text=".000 VND" />
             </children>
         </AnchorPane>
         <JFXButton fx:id="recordButton" layoutX="737.0" layoutY="715.0" prefHeight="45.0" prefWidth="90.0" styleClass="addButton" text="Record">

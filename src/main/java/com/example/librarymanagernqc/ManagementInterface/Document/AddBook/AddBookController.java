@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.Document.AddBook;
 
+import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.Book.BookJsonHandler;
 import com.example.librarymanagernqc.Objects.Book.GoogleBooksAPI;
@@ -97,9 +98,12 @@ public class AddBookController {
                             //add button event
                             bookInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    if (bookInfoController.checkValidAndHandleBook()) {
+                                    if (bookInfoController.checkValidBook()) {
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);
+
+                                        //add book
+                                        DocumentController.addBookToList(bookInfoController.getBook());
                                     }
                                 }
                             });
