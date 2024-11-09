@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.ManagementInterface;
 
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
+import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +17,12 @@ public class  MainPaneController {
     private enum PaneType {
         DOCUMENT,
         USER,
-        BORROWED_LIST
+        BORROWED_LIST,
+        RETURNED_LIST
     }
 
     @FXML
-    private JFXButton homeButton;
+    private JFXButton documentButton;
     @FXML
     public JFXButton logoutButton;
     @FXML
@@ -34,6 +36,7 @@ public class  MainPaneController {
         loaders[PaneType.DOCUMENT.ordinal()] = new FXMLLoader(getClass().getResource("Document/document.fxml"));
         loaders[PaneType.USER.ordinal()] = new FXMLLoader(getClass().getResource("User/user.fxml"));
         loaders[PaneType.BORROWED_LIST.ordinal()] = new FXMLLoader(getClass().getResource("BorrowedList/borrowed-list.fxml"));
+        loaders[PaneType.RETURNED_LIST.ordinal()] = new FXMLLoader(getClass().getResource("ReturnedList/returned-list.fxml"));
 
         for (int i = 0; i < PaneType.values().length; i++) {
             panes[i] = loaders[i].load();
@@ -67,6 +70,16 @@ public class  MainPaneController {
 
             BorrowedListController borrowedListController = loaders[PaneType.BORROWED_LIST.ordinal()].getController();
             borrowedListController.updateTable();
+        }
+    }
+
+    @FXML
+    public void OnReturnedButtonClicked(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+            switchPane(PaneType.RETURNED_LIST);
+
+            ReturnedListController returnedListController = loaders[PaneType.RETURNED_LIST.ordinal()].getController();
+            returnedListController.updateTable();
         }
     }
 }

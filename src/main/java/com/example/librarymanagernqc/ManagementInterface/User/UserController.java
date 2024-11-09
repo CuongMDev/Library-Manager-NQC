@@ -96,6 +96,7 @@ public class UserController {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (userInfoController.checkValidBook()) {
                                         currentUser.setUser(userInfoController.getUser());
+                                        userTable.refresh();
 
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);

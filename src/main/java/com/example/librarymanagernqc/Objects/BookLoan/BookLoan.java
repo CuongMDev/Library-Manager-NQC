@@ -13,6 +13,8 @@ public class BookLoan {
     private String status;
     private int loanQuantity;
     private String bookId;
+    private String fine;
+    private String bookCondition;
 
     public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, int loanQuantity) {
         this.username = username;
@@ -22,6 +24,19 @@ public class BookLoan {
         this.dueDate = dueDate;
         this.status = "On Time";
         this.loanQuantity = loanQuantity;
+        this.fine = "";
+        this.bookCondition = "100%";
+    }
+
+    public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, int loanQuantity, String fine) {
+        this.username = username;
+        this.bookTitle = bookTitle;
+        this.bookId = bookId;
+        this.loanDate = loanDate;
+        this.dueDate = dueDate;
+        this.status = "On Time";
+        this.loanQuantity = loanQuantity;
+        this.fine = fine;
     }
 
     public String getUsername() {
@@ -78,6 +93,32 @@ public class BookLoan {
 
     public void setBookId(String bookId) {
         this.bookId = bookId;
+    }
+
+    public String getFine() {
+        return fine;
+    }
+
+    public void setFine(String fine) {
+        this.fine = fine;
+    }
+
+    public void setBookCondition(String bookCondition) {
+        this.bookCondition = bookCondition;
+    }
+
+    public String getBookCondition() {
+        return bookCondition;
+    }
+
+    public void setBookLoan(BookLoan bookLoan) {
+        this.bookId = bookLoan.getBookId();
+        this.bookTitle = bookLoan.getBookTitle();
+        this.loanDate = bookLoan.getLoanDate();
+        this.dueDate = bookLoan.getDueDate();
+        this.status = bookLoan.getStatus();
+        this.loanQuantity = bookLoan.getLoanQuantity();
+        this.fine = bookLoan.getFine();
     }
 
     /**

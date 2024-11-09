@@ -45,4 +45,6 @@ module com.example.librarymanagernqc {
     opens com.example.librarymanagernqc.Objects to javafx.fxml;
     exports com.example.librarymanagernqc.Objects.BookLoan;
     opens com.example.librarymanagernqc.Objects.BookLoan to javafx.fxml;
+    exports com.example.librarymanagernqc.ManagementInterface.ReturnedList;
+    opens com.example.librarymanagernqc.ManagementInterface.ReturnedList to javafx.fxml;
 }

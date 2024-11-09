@@ -2,6 +2,7 @@ package com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBoo
 
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.Objects.Utils;
+import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -35,6 +36,8 @@ public class RecordBookReturnController {
     public JFXButton recordButton;
     @FXML
     public JFXButton cancelButton;
+    @FXML
+    public JFXButton backButton;
 
     private void setFieldsProperties() {
         username.setEditable(false);
@@ -43,6 +46,7 @@ public class RecordBookReturnController {
         daysOverdue.setEditable(true);
         loanDate.setEditable(true);
         dueDate.setEditable(true);
+        backButton.setManaged(false);
 
         //chỉ cho phép nhập số
         fine.setTextFormatter(new TextFormatter<>(Utils.numberFilter));
@@ -50,7 +54,7 @@ public class RecordBookReturnController {
 
     private void setInitValue() {
         bookCondition.getItems().addAll("100%", "90%", "80%", "70%", "60%", "50%", "40%", "30%", "20%", "10%");
-        bookCondition.setValue("100%");
+        //bookCondition.setValue("100%");
     }
 
     @FXML
@@ -66,5 +70,13 @@ public class RecordBookReturnController {
         loanDate.setText(bookLoan.getLoanDate());
         dueDate.setText(bookLoan.getDueDate());
         daysOverdue.setText(String.valueOf(Math.max(0, ChronoUnit.DAYS.between(LocalDate.parse(bookLoan.getDueDate(), Utils.isoFormatter), TimeGetter.getCurrentTime().toLocalDate()))));
+        bookCondition.setValue(bookLoan.getBookCondition());
+        fine.setText(bookLoan.getFine());
     }
+
+    public void updateBookLoan(BookLoan bookLoan) {
+        bookLoan.setBookCondition(bookCondition.getValue());
+        bookLoan.setFine(fine.getText());
+    }
+
 }

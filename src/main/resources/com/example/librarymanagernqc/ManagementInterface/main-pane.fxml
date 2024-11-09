@@ -72,7 +72,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="bookReturnButton" layoutY="475.0" onMouseClicked="#OnDocumentButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Book Return List">
+            <JFXButton fx:id="bookReturnButton" layoutY="475.0" onMouseClicked="#OnReturnedButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Book Return List">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>

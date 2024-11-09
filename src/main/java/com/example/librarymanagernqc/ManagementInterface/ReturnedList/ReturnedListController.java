@@ -1,6 +1,5 @@
-package com.example.librarymanagernqc.ManagementInterface.BorrowedList;
+package com.example.librarymanagernqc.ManagementInterface.ReturnedList;
 
-import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn.RecordBookReturnController;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
@@ -30,7 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class BorrowedListController {
+public class ReturnedListController {
     @FXML
     private TableColumn<BookLoan, String> usernameColumn;
     @FXML
@@ -59,11 +58,7 @@ public class BorrowedListController {
         bookLoansList.add(bookLoan);
     }
 
-    public static void removeBookLoanFromList(BookLoan bookLoan) {
-        bookLoansList.remove(bookLoan);
-    }
-
-    private void addBookLoansListToTable(List<BookLoan> bookLoansList) {
+    public void addBookLoansListToTable(List<BookLoan> bookLoansList) {
         bookLoansTable.getItems().clear();
         LocalDate currentTime = TimeGetter.getCurrentTime().toLocalDate();
         for (BookLoan bookLoan : bookLoansList) {
@@ -77,11 +72,11 @@ public class BorrowedListController {
     /**
      * search book loan by title, limit = 0 mean no limit
      */
-    private List<BookLoan> searchBookLoansList(String title) {
+    private  List<BookLoan> searchBookLoansList(String title) {
         return BookLoan.fuzzySearch(bookLoansList, title, 0, 0);
     }
 
-    public void updateTable() {
+    public  void updateTable() {
         if (searchTitleField.getText().isEmpty()) {
             addBookLoansListToTable(bookLoansList);
         } else {
@@ -94,26 +89,26 @@ public class BorrowedListController {
             @Override
             public TableCell<BookLoan, Void> call(TableColumn<BookLoan, Void> param) {
                 return new TableCell<>() {
-                    private final JFXButton recordButton = new JFXButton();
+                    private final JFXButton informationButton = new JFXButton();
 
                     {
                         //create record Image
-                        ImageView recordImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/record.png")))); // Đường dẫn tới ảnh
+                        ImageView recordImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/information.png")))); // Đường dẫn tới ảnh
                         recordImage.setFitWidth(20); // Đặt kích thước cho ảnh
                         recordImage.setFitHeight(20);
 
-                        //set recordButton
+                        //set informationButton
 
-                        recordButton.setPadding(Insets.EMPTY);
-                        recordButton.setRipplerFill(Color.WHITE);
-                        recordButton.setCursor(Cursor.HAND);
-                        recordButton.setGraphic(recordImage);
-                        recordButton.setOnAction(event -> {
+                        informationButton.setPadding(Insets.EMPTY);
+                        informationButton.setRipplerFill(Color.WHITE);
+                        informationButton.setCursor(Cursor.HAND);
+                        informationButton.setGraphic(recordImage);
+                        informationButton.setOnAction(event -> {
                             //lấy ô hiện tại đang chọn
                             BookLoan currentBookLoan = getTableView().getItems().get(getIndex());
                             //load book information
                             Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                            FXMLLoader recordBookReturnLoader = new FXMLLoader(getClass().getResource("RecordBookReturn/record-book-return.fxml"));
+                            FXMLLoader recordBookReturnLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/BorrowedList/RecordBookReturn/record-book-return.fxml"));
                             try {
                                 mainStackPane.getChildren().add(recordBookReturnLoader.load());
                             } catch (IOException e) {
@@ -123,29 +118,27 @@ public class BorrowedListController {
                             RecordBookReturnController recordBookReturnController = recordBookReturnLoader.getController();
                             recordBookReturnController.setBookLoan(currentBookLoan);
 
-                            //record button event
-                            recordBookReturnController.recordButton.setOnMouseClicked(recordMouseEvent -> {
-                                if (recordMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    //cập nhật tình trạng sách và tiền fạt
-                                    recordBookReturnController.updateBookLoan(currentBookLoan);
+                            //ẩn nút ghi nhận
+                            recordBookReturnController.recordButton.setManaged(false);
 
-                                    //thêm thông tin trả sách
-                                    ReturnedListController.addBookLoanToList(currentBookLoan);
+                            //ẩn nút cancel
+                            recordBookReturnController.cancelButton.setManaged(false);
 
-                                    //xóa sách khỏi danh sách mượn
-                                    removeBookLoanFromList(currentBookLoan);
-
+                            //back button event
+                            recordBookReturnController.backButton.setManaged(true);
+                            recordBookReturnController.backButton.setOnMouseClicked(backMouseEvent -> {
+                                if (backMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     mainStackPane.getChildren().removeLast();
                                     mainStackPane.getChildren().add(savePane);
-                                    updateTable();
-                                }
-                            });
 
-                            //cancel button event
-                            recordBookReturnController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
-                                if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    //set lại nút ghi nhận
+                                    recordBookReturnController.recordButton.setManaged(true);
+
+                                    //set lại nút cancel
+                                    recordBookReturnController.cancelButton.setManaged(true);
+
+                                    //ẩn nút back
+                                    recordBookReturnController.backButton.setManaged(false);
                                 }
                             });
 
@@ -158,7 +151,7 @@ public class BorrowedListController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            setGraphic(recordButton);
+                            setGraphic(informationButton);
                         }
 
                         // Căn giữa ảnh trong ô
@@ -211,3 +204,4 @@ public class BorrowedListController {
     }
 
 }
+

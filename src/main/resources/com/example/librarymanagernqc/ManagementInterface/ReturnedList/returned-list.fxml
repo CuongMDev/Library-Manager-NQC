@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="mainStackPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController">
+    <children>
+        <AnchorPane prefHeight="801.0" prefWidth="873.0" stylesheets="@style.css">
+            <children>
+                <Label layoutX="47.0" layoutY="59.0" prefHeight="47.0" prefWidth="190.0" styleClass="titleFont" stylesheets="@style.css" text="Returned List" textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Label>
+                <Label layoutX="59.0" layoutY="147.0" prefHeight="29.0" prefWidth="47.0" text="Search:">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="searchTitleField" layoutX="107.0" layoutY="147.0" prefHeight="29.0" prefWidth="297.0" promptText="Book Title" styleClass="searchField" stylesheets="@style.css" />
+                <TableView fx:id="bookLoansTable" layoutX="51.0" layoutY="241.0" prefHeight="526.0" prefWidth="777.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
+                    <columns>
+                        <TableColumn fx:id="usernameColumn" prefWidth="100.79996490478516" text="Username " />
+                        <TableColumn fx:id="bookTitleColumn" prefWidth="289.6000213623047" text="Book Title" />
+                        <TableColumn fx:id="loanDateColumn" prefWidth="107.99993896484375" text="Loan Date" />
+                        <TableColumn fx:id="dueDateColumn" prefWidth="105.60003662109375" text="Due Date" />
+                        <TableColumn fx:id="statusColumn" prefWidth="98.0" text="Status" />
+                        <TableColumn fx:id="optionColumn" prefWidth="72.0" text="Option" />
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>
