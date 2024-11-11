@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn;
 
+import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.Objects.Utils;
 import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
@@ -16,6 +17,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class RecordBookReturnController {
+    public enum Type {
+        RECORD,
+        INFOMATION
+    }
+
+    private Type currentType;
+
     @FXML
     private TextField username;
     @FXML
@@ -43,10 +51,13 @@ public class RecordBookReturnController {
         username.setEditable(false);
         bookTitle.setEditable(false);
         status.setEditable(false);
-        daysOverdue.setEditable(true);
-        loanDate.setEditable(true);
-        dueDate.setEditable(true);
-        backButton.setManaged(false);
+        daysOverdue.setEditable(false);
+        loanDate.setEditable(false);
+        dueDate.setEditable(false);
+        backButton.setVisible(false);
+
+        //default;
+        currentType = Type.RECORD;
 
         //chỉ cho phép nhập số
         fine.setTextFormatter(new TextFormatter<>(Utils.numberFilter));
@@ -54,13 +65,25 @@ public class RecordBookReturnController {
 
     private void setInitValue() {
         bookCondition.getItems().addAll("100%", "90%", "80%", "70%", "60%", "50%", "40%", "30%", "20%", "10%");
-        //bookCondition.setValue("100%");
+        bookCondition.setValue("100%");
     }
 
     @FXML
     private void initialize() {
         setFieldsProperties();
         setInitValue();
+    }
+
+    public void setType(RecordBookReturnController.Type type) {
+        if (type == Type.INFOMATION) {
+            cancelButton.setVisible(false);
+            recordButton.setVisible(false);
+            backButton.setVisible(true);
+
+            //không cho sửa
+            bookCondition.getItems().setAll(bookCondition.getValue());
+            fine.setEditable(false);
+        }
     }
 
     public void setBookLoan(BookLoan bookLoan) {
@@ -70,6 +93,10 @@ public class RecordBookReturnController {
         loanDate.setText(bookLoan.getLoanDate());
         dueDate.setText(bookLoan.getDueDate());
         daysOverdue.setText(String.valueOf(Math.max(0, ChronoUnit.DAYS.between(LocalDate.parse(bookLoan.getDueDate(), Utils.isoFormatter), TimeGetter.getCurrentTime().toLocalDate()))));
+        if (currentType == Type.INFOMATION) {
+            //không cho sửa
+            bookCondition.getItems().setAll(bookLoan.getBookCondition());
+        }
         bookCondition.setValue(bookLoan.getBookCondition());
         fine.setText(bookLoan.getFine());
     }

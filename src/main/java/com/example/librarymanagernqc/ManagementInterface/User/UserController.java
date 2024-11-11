@@ -176,7 +176,8 @@ public class UserController {
                                     if (bookLoanInfoController.checkValidBookLoan()) {
                                         BookLoan getBookLoan = bookLoanInfoController.getBookLoan();
                                         BorrowedListController.addBookLoanToList(getBookLoan);
-                                        DocumentController.decreaseBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(getBookLoan.getBookId())), getBookLoan.getLoanQuantity());
+                                        //giảm số lượng sách
+                                        DocumentController.changeBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(getBookLoan.getBookId())), -getBookLoan.getLoanQuantity());
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);
                                     }

@@ -151,7 +151,7 @@ public class RecordBookLoanController {
     public boolean checkValidBookLoan() {
         boolean valid = true;
 
-        if (dueDate.getValue() == null) {// || dueDate.getValue().isBefore(LocalDate.parse(loanDate.getText(), DateTimeFormatter.ofPattern("M/d/yyyy")))) {
+        if (dueDate.getValue() == null || dueDate.getValue().isBefore(LocalDate.parse(loanDate.getText(), Utils.isoFormatter))) {
             valid = false;
             if (!dueDate.getStyleClass().contains("invalid")) {
                 dueDate.getStyleClass().add("invalid");

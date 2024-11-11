@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.BorrowedList;
 
+import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn.RecordBookReturnController;
@@ -134,6 +135,9 @@ public class BorrowedListController {
 
                                     //xóa sách khỏi danh sách mượn
                                     removeBookLoanFromList(currentBookLoan);
+
+                                    //add lại số lượng vào document
+                                    DocumentController.changeBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(currentBookLoan.getBookId())), currentBookLoan.getLoanQuantity());
 
                                     mainStackPane.getChildren().removeLast();
                                     mainStackPane.getChildren().add(savePane);

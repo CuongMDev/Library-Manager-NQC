@@ -51,11 +51,12 @@ public class DocumentController {
         booksList.add(book);
     }
 
-    public static void decreaseBookQuantity(Book book, int decreaseQuantity) {
-        book.setQuantity(book.getQuantity() - decreaseQuantity);
+    public static void changeBookQuantity(Book book, int changeQuantity) {
+        book.setQuantity(book.getQuantity() + changeQuantity);
     }
 
     private void deleteBookFromList(Book book) {
+
         booksList.remove(book);
         updateTable();
     }

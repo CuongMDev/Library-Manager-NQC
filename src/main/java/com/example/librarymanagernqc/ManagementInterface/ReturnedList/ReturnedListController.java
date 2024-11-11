@@ -117,12 +117,8 @@ public class ReturnedListController {
 
                             RecordBookReturnController recordBookReturnController = recordBookReturnLoader.getController();
                             recordBookReturnController.setBookLoan(currentBookLoan);
-
-                            //ẩn nút ghi nhận
-                            recordBookReturnController.recordButton.setManaged(false);
-
-                            //ẩn nút cancel
-                            recordBookReturnController.cancelButton.setManaged(false);
+                            //set type infomation
+                            recordBookReturnController.setType(RecordBookReturnController.Type.INFOMATION);
 
                             //back button event
                             recordBookReturnController.backButton.setManaged(true);
@@ -130,15 +126,6 @@ public class ReturnedListController {
                                 if (backMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     mainStackPane.getChildren().removeLast();
                                     mainStackPane.getChildren().add(savePane);
-
-                                    //set lại nút ghi nhận
-                                    recordBookReturnController.recordButton.setManaged(true);
-
-                                    //set lại nút cancel
-                                    recordBookReturnController.cancelButton.setManaged(true);
-
-                                    //ẩn nút back
-                                    recordBookReturnController.backButton.setManaged(false);
                                 }
                             });
 
