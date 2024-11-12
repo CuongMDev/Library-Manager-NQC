@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -26,11 +25,11 @@
                 <TextField fx:id="status" focusTraversable="false" layoutX="136.0" layoutY="280.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
                 <Label layoutX="394.0" layoutY="285.0" styleClass="infoFieldFont" text="Days Overdue:" />
                 <TextField fx:id="daysOverdue" focusTraversable="false" layoutX="483.0" layoutY="280.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
-                <Label layoutX="37.0" layoutY="386.0" styleClass="infoFieldFont" text="Book Condition:" />
-                <ComboBox fx:id="bookCondition" layoutX="136.0" layoutY="382.0" prefHeight="26.0" prefWidth="218.0" styleClass="infoField" />
                 <Label layoutX="394.0" layoutY="385.0" styleClass="infoFieldFont" text="Fine:" />
                 <TextField fx:id="fine" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="483.0" layoutY="381.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
                 <Label layoutX="700.0" layoutY="387.0" styleClass="infoFieldFont" text=".000 VND" />
+            <TextField fx:id="loanQuantity" focusTraversable="false" layoutX="136.0" layoutY="382.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" />
+            <Label layoutX="37.0" layoutY="387.0" styleClass="infoFieldFont" text="Loan Quantity:" />
             </children>
         </AnchorPane>
         <JFXButton fx:id="recordButton" layoutX="737.0" layoutY="715.0" prefHeight="45.0" prefWidth="90.0" styleClass="addButton" text="Record">
