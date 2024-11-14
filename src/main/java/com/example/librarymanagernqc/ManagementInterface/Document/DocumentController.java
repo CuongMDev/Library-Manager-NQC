@@ -3,6 +3,7 @@ package com.example.librarymanagernqc.ManagementInterface.Document;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
+import com.example.librarymanagernqc.database.BookDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,16 +50,37 @@ public class DocumentController {
 
     public static void addBookToList(Book book) {
         booksList.add(book);
+
+    }
+    // Phương thức này được gọi để tải sách từ database
+    private void loadBooksFromDatabase() {
+        BookDAO bookDAO = new BookDAO();
+        List<Book> booksFromDb = bookDAO.getBooksFromDatabase();
+        booksList.clear();
+        booksList.addAll(booksFromDb);
+        updateTable();  // Cập nhật lại bảng sau khi tải dữ liệu từ database
+    }
+
+    private void deleteBookFromList(Book book) {
+        BookDAO bookDAO = new BookDAO();
+        boolean isDeletedFromDb = bookDAO.deleteBookById(book.getId());  // Xóa khỏi database
+
+        if (isDeletedFromDb) {
+            booksList.remove(book);  // Xóa khỏi danh sách sau khi xóa thành công trong database
+            updateTable();  // Cập nhật bảng để phản ánh sự thay đổi
+        } else {
+            System.out.println("Failed to delete book from database.");  // Thông báo nếu xóa không thành công
+        }
     }
 
     public static void decreaseBookQuantity(Book book, int decreaseQuantity) {
         book.setQuantity(book.getQuantity() - decreaseQuantity);
     }
 
-    private void deleteBookFromList(Book book) {
-        booksList.remove(book);
-        updateTable();
-    }
+//    private void deleteBookFromList(Book book) {
+//        booksList.remove(book);
+//        updateTable();
+//    }
 
     /**
      * search book by title, limit = 0 mean no limit
@@ -201,7 +223,8 @@ public class DocumentController {
         bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
         initOptionColumns();
-
+        //tải dữ liệu từ database
+        loadBooksFromDatabase();
         // Lắng nghe thay đổi của text
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             updateTable();

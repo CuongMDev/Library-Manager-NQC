@@ -13,8 +13,11 @@ module com.example.librarymanagernqc {
     requires com.jfoenix;
     requires java.net.http;
     requires javafx.swing;
+  requires jdk.jdi;
+  requires mysql.connector.j;
+  requires java.sql;
 
-    opens com.example.librarymanagernqc to javafx.fxml;
+  opens com.example.librarymanagernqc to javafx.fxml;
     exports com.example.librarymanagernqc;
     exports com.example.librarymanagernqc.ManagementInterface;
     opens com.example.librarymanagernqc.ManagementInterface to javafx.fxml;

@@ -4,6 +4,7 @@ import com.example.librarymanagernqc.ManagementInterface.Document.DocumentContro
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.Book.BookJsonHandler;
 import com.example.librarymanagernqc.Objects.Book.GoogleBooksAPI;
+import com.example.librarymanagernqc.database.BookDAO;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;
@@ -51,6 +52,7 @@ public class AddBookController {
     @FXML
     private TableView<Book> booksTableView;
 
+    private final BookDAO bookDAO = new BookDAO();
     @FXML
     private void initialize() {
         searchProgressIndicator.setVisible(false);
@@ -101,11 +103,18 @@ public class AddBookController {
                             bookInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (bookInfoController.checkValidBook()) {
+                                        //lấy thông tin sách và thêm vào database
+                                        Book newBook = bookInfoController.getBook();
+                                        boolean isInserted = bookDAO.insertBook(newBook);
+                                        if (isInserted) {
+                                            System.out.println("Book added to the database successfully.");
+                                            //add book
+                                            DocumentController.addBookToList(newBook);
+                                        } else {
+                                            System.out.println("Failed to add the book to the database.");
+                                        }
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);
-
-                                        //add book
-                                        DocumentController.addBookToList(bookInfoController.getBook());
                                     }
                                 }
                             });
@@ -167,4 +176,5 @@ public class AddBookController {
             }
         }
     }
+
 }
