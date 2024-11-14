@@ -75,12 +75,22 @@ public class DocumentController {
 
     public static void decreaseBookQuantity(Book book, int decreaseQuantity) {
         book.setQuantity(book.getQuantity() - decreaseQuantity);
+    public static void changeBookQuantity(Book book, int changeQuantity) {
+        book.setQuantity(book.getQuantity() + changeQuantity);
     }
 
+<<<<<<< HEAD
 //    private void deleteBookFromList(Book book) {
 //        booksList.remove(book);
 //        updateTable();
 //    }
+=======
+    private void deleteBookFromList(Book book) {
+
+        booksList.remove(book);
+        updateTable();
+    }
+>>>>>>> 63d4479192cb338cbadb7af49ec498c8e774ff13
 
     /**
      * search book by title, limit = 0 mean no limit
