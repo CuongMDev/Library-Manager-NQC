@@ -3,14 +3,13 @@ package com.example.librarymanagernqc.ManagementInterface.User.AddUser;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.Objects.Utils;
-import com.example.librarymanagernqc.database.UserDAO;
+import com.example.librarymanagernqc.database.DAO.UserDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 

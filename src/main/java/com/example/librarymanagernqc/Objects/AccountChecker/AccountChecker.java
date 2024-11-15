@@ -1,6 +1,8 @@
 package com.example.librarymanagernqc.Objects.AccountChecker;
 
-public class AccountChecker {
+import com.example.librarymanagernqc.AbstractClass.HasError;
+
+public class AccountChecker extends HasError {
     private static String errorMessage = null;
 
     // Private constructor to prevent instantiation
@@ -12,14 +14,7 @@ public class AccountChecker {
             return true;
         }
 
-        errorMessage = "Invalid username or password";
+        setErrorMessage("Invalid username or password");
         return false;
-    }
-
-    /**
-     * @return latest error message, if not exist return null
-     */
-    public static String getErrorMessage() {
-        return errorMessage;
     }
 }

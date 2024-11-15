@@ -5,12 +5,13 @@ import com.example.librarymanagernqc.ManagementInterface.Document.BookInformatio
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.ManagementInterface.User.AddUser.AddUserController;
 import com.example.librarymanagernqc.ManagementInterface.User.RecordBookLoan.RecordBookLoanController;
+import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.User.User;
-import com.example.librarymanagernqc.database.UserDAO;
+import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
+import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
+import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.jfoenix.controls.JFXButton;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -19,6 +20,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,6 +33,8 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class UserController {
@@ -52,16 +56,50 @@ public class UserController {
     private TableColumn<User, Void> optionColumn;
     @FXML
     private TableView<User> userTable;
+    @FXML
+    private TextField searchField;
 
-    private UserDAO userDAO = new UserDAO();
 
-    // Phương thức tải member từ database
-    private void loadMemberFromDatabase(){
-        // Lấy danh sách người dùng từ UserDAO
-        ObservableList<User> users = FXCollections.observableArrayList(userDAO.getUserFromDatabase());
+    /**
+     * all users list
+     */
+    private static List<User> usersList = new LinkedList<>();
 
-        // Đặt dữ liệu vào userTable
-        userTable.setItems(users);
+    private void addUsersListToTable(List<User> usersList) {
+        userTable.getItems().clear();
+        for (User user : usersList) {
+            userTable.getItems().add(user);
+        }
+    }
+
+    public static void setAllBooksList(List<User> newUsersList) {
+        usersList = newUsersList;
+    }
+
+    private void deleteUserFromList(User user) {
+        boolean isDeletedFromDb = UserDatabaseController.deleteUser(user);  // Xóa khỏi database
+
+        if (isDeletedFromDb) {
+            usersList.remove(user);  // Xóa khỏi danh sách sau khi xóa thành công trong database
+            updateTable();  // Cập nhật bảng để phản ánh sự thay đổi
+        } else {
+            System.out.println("Failed to delete book from database.");  // Thông báo nếu xóa không thành công
+        }
+    }
+
+    /**
+     * search book by title, limit = 0 mean no limit
+     */
+    public static List<User> searchUsersList(String title, int limit) {
+        return User.fuzzySearch(usersList, title, 0, limit);
+    }
+
+    public void updateTable() {
+        if (searchField.getText().isEmpty()) {
+            addUsersListToTable(usersList);
+        } else {
+            addUsersListToTable(searchUsersList(searchField.getText(), 0));
+        }
     }
 
     @FXML
@@ -72,11 +110,6 @@ public class UserController {
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
         dateOfBirthColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-
-        userTable.refresh();
-        // Gọi loadMemberFromDatabase() khi khởi tạo để tải dữ liệu người dùng
-        loadMemberFromDatabase();
-//        userTable.refresh();
 
         optionColumn.setCellFactory(new Callback<>() {
             @Override
@@ -151,14 +184,13 @@ public class UserController {
                             User user = getTableView().getItems().get(getIndex());
 
                             // Xóa người dùng khỏi database
-                            boolean isDeleted = userDAO.deleteUser(user);
+                            boolean isDeleted = UserDatabaseController.deleteUser(user);
                             if (isDeleted) {
                                 // Nếu xóa thành công, xóa người dùng khỏi TableView
                                 getTableView().getItems().remove(user);
-                                System.out.println("User deleted successfully from database");
-                            } else {
-                                System.out.println("Failed to delete user from database");
                             }
+
+                            System.out.println(UserDatabaseController.deleteUser(user));
                         });
                     }
 

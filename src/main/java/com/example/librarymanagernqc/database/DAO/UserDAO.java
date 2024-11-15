@@ -1,6 +1,8 @@
-package com.example.librarymanagernqc.database;
+package com.example.librarymanagernqc.database.DAO;
 
 import com.example.librarymanagernqc.User.User;
+import com.example.librarymanagernqc.database.DatabaseHelper;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,12 +13,12 @@ import java.util.List;
 
 public class UserDAO {
   // lấy thông tin user từ database
-  public List<User> getUserFromDatabase(){
+  public List<User> getUserFromDatabase() throws SQLException {
     List<User> users = new ArrayList<User>();
     String query = "SELECT * FROM Member";
     try (Connection connection = DatabaseHelper.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query)) {
+         Statement statement = connection.createStatement();
+         ResultSet resultSet = statement.executeQuery(query)) {
 
       while (resultSet.next()) {
         String username = resultSet.getString("member_name");
@@ -30,6 +32,7 @@ public class UserDAO {
       }
     } catch (SQLException e){
       e.printStackTrace();
+      throw new SQLException(e);
     }
     return users;
   }

@@ -1,30 +1,17 @@
 package com.example.librarymanagernqc.database;
 
+import com.example.librarymanagernqc.AbstractClass.HasError;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
+import com.example.librarymanagernqc.ManagementInterface.User.UserController;
 import com.example.librarymanagernqc.Objects.Book.Book;
+import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
+import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 
 import java.util.List;
 
-public class DatabaseLoader {
+public class DatabaseLoader extends HasError {
     // Private constructor to prevent instantiation
     private DatabaseLoader() {
-    }
-
-    private static String errorMessage = null;
-
-    // Phương thức này được gọi để tải sách từ database
-    private static boolean loadBooksFromDatabase() {
-        BookDAO bookDAO = new BookDAO();
-        try {
-            List<Book> booksFromDb = bookDAO.getBooksFromDatabase();
-            //tải sách vào database
-            DocumentController.setAllBooksList(booksFromDb);
-            return true;
-        }
-        catch (Exception e) {
-            errorMessage = e.getMessage();
-            return false;
-        }
     }
 
     /**
@@ -32,16 +19,16 @@ public class DatabaseLoader {
      * @return true if load successfully, false if not
      */
     public static boolean loadDataFromDatabase() {
-        if (!loadBooksFromDatabase()) {
-            return false;
+        boolean success = true;
+        if (!BookDatabaseController.loadBooksFromDatabase()) {
+            success = false;
+        } else if (!UserDatabaseController.loadMemberFromDatabase()) {
+            success = false;
         }
-        return true;
-    }
 
-    /**
-     * @return latest error message, if not exist return null
-     */
-    public static String getErrorMessage() {
-        return errorMessage;
+        if (!success) {
+            setErrorMessage("Error loading data from database");
+        }
+        return success;
     }
 }

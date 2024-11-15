@@ -1,7 +1,9 @@
 package com.example.librarymanagernqc.ManagementInterface;
 
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
+import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
+import com.example.librarymanagernqc.ManagementInterface.User.UserController;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,6 +55,9 @@ public class  MainPaneController {
     private void OnDocumentButtonClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             switchPane(PaneType.DOCUMENT);
+
+            DocumentController documentController = loaders[PaneType.DOCUMENT.ordinal()].getController();
+            documentController.updateTable();
         }
     }
 
@@ -60,6 +65,9 @@ public class  MainPaneController {
     private void OnUserButtonClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             switchPane(PaneType.USER);
+
+            UserController userController = loaders[PaneType.USER.ordinal()].getController();
+            userController.updateTable();
         }
     }
 

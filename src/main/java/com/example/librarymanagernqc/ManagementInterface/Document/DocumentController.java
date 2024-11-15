@@ -3,7 +3,8 @@ package com.example.librarymanagernqc.ManagementInterface.Document;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
-import com.example.librarymanagernqc.database.BookDAO;
+import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
+import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,13 +59,13 @@ public class DocumentController {
 
     private void deleteBookFromList(Book book) {
         BookDAO bookDAO = new BookDAO();
-        boolean isDeletedFromDb = bookDAO.deleteBookById(book.getId());  // Xóa khỏi database
+        boolean isDeletedFromDb = BookDatabaseController.deleteBookById(book.getId());  // Xóa khỏi database
 
         if (isDeletedFromDb) {
             booksList.remove(book);  // Xóa khỏi danh sách sau khi xóa thành công trong database
             updateTable();  // Cập nhật bảng để phản ánh sự thay đổi
         } else {
-            System.out.println("Failed to delete book from database.");  // Thông báo nếu xóa không thành công
+            System.out.println(BookDatabaseController.getErrorMessage());  // Thông báo nếu xóa không thành công
         }
     }
 
@@ -91,7 +92,7 @@ public class DocumentController {
         return null;
     }
 
-    private void updateTable() {
+    public void updateTable() {
         if (searchField.getText().isEmpty()) {
             addBooksListToTable(booksList);
         } else {

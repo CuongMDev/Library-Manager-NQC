@@ -1,9 +1,9 @@
-package com.example.librarymanagernqc.database;
+package com.example.librarymanagernqc.database.DAO;
 
 import com.example.librarymanagernqc.Objects.Book.Book;
-import com.example.librarymanagernqc.User.User;
+import com.example.librarymanagernqc.database.DatabaseHelper;
+
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,8 +18,8 @@ public class BookDAO {
     String query = "SELECT * FROM Book";  // Truy vấn để lấy tất cả sách
 
     try (Connection connection = DatabaseHelper.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query)) {
+         Statement statement = connection.createStatement();
+         ResultSet resultSet = statement.executeQuery(query)) {
 
       while (resultSet.next()) {
         // Lấy dữ liệu từ ResultSet và tạo đối tượng Book
@@ -39,7 +39,7 @@ public class BookDAO {
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      throw new SQLException("Can't connect to database");
+      throw new SQLException(e);
     }
 
     return booksList;
