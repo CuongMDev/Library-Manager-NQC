@@ -72,7 +72,7 @@ public class UserController {
         }
     }
 
-    public static void setAllBooksList(List<User> newUsersList) {
+    public static void setAllUsersList(List<User> newUsersList) {
         usersList = newUsersList;
     }
 
@@ -141,7 +141,7 @@ public class UserController {
 
                             AddUserController userInfoController = userInfoLoader.getController();
                             userInfoController.setUser(currentUser);
-                            userInfoController.setType(BookInformationController.Type.EDIT);
+                            userInfoController.setType(AddUserController.Type.EDIT);
 
                             //save button event
                             userInfoController.addButton.setOnMouseClicked(addMouseEvent -> {

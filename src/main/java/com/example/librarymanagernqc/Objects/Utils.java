@@ -14,6 +14,18 @@ import java.util.function.UnaryOperator;
 
 public class Utils {
     /**
+     * Định nghĩa UnaryOperator để loại bỏ dấu cách
+     */
+    public static final UnaryOperator<TextFormatter.Change> noSpaceFilter = change -> {
+        String newText = change.getText();
+        // Nếu văn bản chứa dấu cách, bỏ qua thay đổi
+        if (newText.contains(" ")) {
+            return null;
+        }
+        return change; // Cho phép các thay đổi khác
+    };
+
+    /**
     * Chỉ cho phép nhập số vào field
     */
     public static final UnaryOperator<TextFormatter.Change> numberFilter = change -> {

@@ -74,7 +74,7 @@ public class AddUserController {
         // Thêm lựa chọn vào ComboBox
         gender.getItems().addAll("Male", "Female", "Other");
 
-        username.setTextFormatter(new TextFormatter<>(Utils.alphabetNumberFilter));
+        username.setTextFormatter(new TextFormatter<>(Utils.noSpaceFilter));
         citizenId.setTextFormatter(new TextFormatter<>(Utils.alphabetNumberFilter));
 
         //chỉ cho phép nhập số
@@ -146,8 +146,10 @@ public class AddUserController {
         return valid;
     }
 
-    public void setType(BookInformationController.Type type) {
-        if (type == BookInformationController.Type.EDIT) {
+    public void setType(AddUserController.Type type) {
+        if (type == AddUserController.Type.EDIT) {
+            username.setEditable(false);
+            citizenId.setEditable(false);
             addButton.setText("Save");
         }
     }

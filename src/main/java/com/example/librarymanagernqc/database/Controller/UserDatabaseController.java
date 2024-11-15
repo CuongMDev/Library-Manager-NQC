@@ -19,7 +19,7 @@ public class UserDatabaseController extends HasError {
         try {
             List<User> usersFromDb = userDAO.getUserFromDatabase();
             //tải sách vào database
-            UserController.setAllBooksList(usersFromDb);
+            UserController.setAllUsersList(usersFromDb);
             return true;
         }
         catch (Exception e) {
