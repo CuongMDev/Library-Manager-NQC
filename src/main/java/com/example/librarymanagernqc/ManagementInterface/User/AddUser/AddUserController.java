@@ -3,6 +3,7 @@ package com.example.librarymanagernqc.ManagementInterface.User.AddUser;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.Objects.Utils;
+import com.example.librarymanagernqc.database.UserDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -36,10 +37,43 @@ public class AddUserController {
     @FXML
     private TextField phoneNumber;
 
+    // Khai báo UserDAO
+    private final UserDAO userDAO = new UserDAO();
+
+    @FXML
+    private void onAddButtonClicked() {
+        if (checkValidUser()) {
+            User user = getUser(); // Lấy thông tin người dùng từ các trường input
+
+            //kiểm tra xem user đã có trong database chưa
+            if(userDAO.isUserExists(user.getUsername(), user.getCitizenId())) {
+                System.out.println("User already exists");
+                return;
+            }
+
+//            // Kiểm tra người dùng đã có trong bảng chưa
+//            boolean userExistsInTable = userTable.getItems().stream()
+//                .anyMatch(existingUser -> existingUser.getUsername().equals(user.getUsername()) || existingUser.getCitizenId().equals(user.getCitizenId()));
+//
+//            if (userExistsInTable) {
+//                System.out.println("User already exists in the table");
+//                return;  // Không cho phép thêm người dùng vào bảng
+//            }
+            if (userDAO.addUser(user)) {
+                System.out.println("Thêm người dùng vào database thành công");
+                // Cập nhật giao diện nếu cần
+            } else {
+                System.out.println("Thêm người dùng vào database thất bại");
+            }
+        } else {
+            System.out.println("Thông tin người dùng không hợp lệ");
+        }
+    }
+
     @FXML
     private void initialize() {
         // Thêm lựa chọn vào ComboBox
-        gender.getItems().addAll("Male", "Female", "Other", "Duc Nhat");
+        gender.getItems().addAll("Male", "Female", "Other");
 
         username.setTextFormatter(new TextFormatter<>(Utils.alphabetNumberFilter));
         citizenId.setTextFormatter(new TextFormatter<>(Utils.alphabetNumberFilter));
@@ -49,9 +83,11 @@ public class AddUserController {
 
         // Thiết lập bộ chuyển đổi để thay đổi định dạng hiển thị
         Utils.setConvertToMyFormatter(dateOfBirth);
+
+        addButton.setOnAction(event -> onAddButtonClicked());
     }
 
-    public boolean checkValidBook() {
+    public boolean checkValidUser() {
         boolean valid = true;
 
         if (username.getText().isEmpty()) {

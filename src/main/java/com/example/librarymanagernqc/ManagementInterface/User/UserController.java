@@ -7,7 +7,10 @@ import com.example.librarymanagernqc.ManagementInterface.User.AddUser.AddUserCon
 import com.example.librarymanagernqc.ManagementInterface.User.RecordBookLoan.RecordBookLoanController;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.User.User;
+import com.example.librarymanagernqc.database.UserDAO;
 import com.jfoenix.controls.JFXButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -50,6 +53,17 @@ public class UserController {
     @FXML
     private TableView<User> userTable;
 
+    private UserDAO userDAO = new UserDAO();
+
+    // Phương thức tải member từ database
+    private void loadMemberFromDatabase(){
+        // Lấy danh sách người dùng từ UserDAO
+        ObservableList<User> users = FXCollections.observableArrayList(userDAO.getUserFromDatabase());
+
+        // Đặt dữ liệu vào userTable
+        userTable.setItems(users);
+    }
+
     @FXML
     private void initialize() {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -58,6 +72,11 @@ public class UserController {
         genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
         dateOfBirthColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+
+        userTable.refresh();
+        // Gọi loadMemberFromDatabase() khi khởi tạo để tải dữ liệu người dùng
+        loadMemberFromDatabase();
+//        userTable.refresh();
 
         optionColumn.setCellFactory(new Callback<>() {
             @Override
@@ -94,7 +113,7 @@ public class UserController {
                             //save button event
                             userInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    if (userInfoController.checkValidBook()) {
+                                    if (userInfoController.checkValidUser()) {
                                         currentUser.setUser(userInfoController.getUser());
                                         userTable.refresh();
 
@@ -131,8 +150,15 @@ public class UserController {
                             //lấy ô hiện tại đang chọn
                             User user = getTableView().getItems().get(getIndex());
 
-                            // Xóa ô khỏi TableView
-                            getTableView().getItems().remove(user);
+                            // Xóa người dùng khỏi database
+                            boolean isDeleted = userDAO.deleteUser(user);
+                            if (isDeleted) {
+                                // Nếu xóa thành công, xóa người dùng khỏi TableView
+                                getTableView().getItems().remove(user);
+                                System.out.println("User deleted successfully from database");
+                            } else {
+                                System.out.println("Failed to delete user from database");
+                            }
                         });
                     }
 
@@ -225,7 +251,18 @@ public class UserController {
             });
             addUserController.addButton.setOnMouseClicked(addUserMouseEvent -> {
                 if (addUserMouseEvent.getButton() == MouseButton.PRIMARY) {
-                    if (addUserController.checkValidBook()) {
+                    if (addUserController.checkValidUser()) {
+
+
+                        // Kiểm tra người dùng đã có trong bảng chưa
+                        boolean userExistsInTable = userTable.getItems().stream()
+                        .anyMatch(existingUser -> existingUser.getUsername().equals(addUserController.getUser().getUsername()) || existingUser.getCitizenId().equals(addUserController.getUser().getCitizenId()));
+                        // Không cho phép thêm người dùng vào bảng
+                        if (userExistsInTable) {
+                            System.out.println("User already exists in the table");
+                            return;  // Không cho phép thêm người dùng vào bảng
+                        }
+
                         mainStackPane.getChildren().removeLast();
                         mainStackPane.getChildren().add(savePane);
 

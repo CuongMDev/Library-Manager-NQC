@@ -53,6 +53,7 @@ public class AddBookController {
     private TableView<Book> booksTableView;
 
     private final BookDAO bookDAO = new BookDAO();
+
     @FXML
     private void initialize() {
         searchProgressIndicator.setVisible(false);
@@ -105,13 +106,19 @@ public class AddBookController {
                                     if (bookInfoController.checkValidBook()) {
                                         //lấy thông tin sách và thêm vào database
                                         Book newBook = bookInfoController.getBook();
-                                        boolean isInserted = bookDAO.insertBook(newBook);
-                                        if (isInserted) {
-                                            System.out.println("Book added to the database successfully.");
-                                            //add book
-                                            DocumentController.addBookToList(newBook);
-                                        } else {
-                                            System.out.println("Failed to add the book to the database.");
+                                        // kiểm tra book đã tồn tại chưa
+                                        if(bookDAO.isBookExists(newBook.getId())) {
+                                            System.out.println("Book with ID " + newBook.getId() + " already exists.");
+                                        }
+                                        else{
+                                            boolean isInserted = bookDAO.insertBook(newBook);
+                                            if (isInserted) {
+                                                System.out.println("Book added to the database successfully.");
+                                                //add book
+                                                DocumentController.addBookToList(newBook);
+                                            } else {
+                                                System.out.println("Failed to add the book to the database.");
+                                            }
                                         }
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);

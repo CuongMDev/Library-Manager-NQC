@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.database;
 
 import com.example.librarymanagernqc.Objects.Book.Book;
+import com.example.librarymanagernqc.User.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -42,6 +43,7 @@ public class BookDAO {
 
     return booksList;
   }
+
   // xóa sách khỏi database
   public boolean deleteBookById(String bookId) {
     String deleteQuery = "DELETE FROM Book WHERE book_id = ?";
@@ -77,7 +79,13 @@ public class BookDAO {
       }
       statement.setString(5, description);
       statement.setString(6, book.getPublisher());
-      statement.setDate(7, java.sql.Date.valueOf(book.getPublishedDate()));
+      String publishedDate = book.getPublishedDate();
+      if (publishedDate != null && !publishedDate.isEmpty()) {
+        statement.setDate(7, java.sql.Date.valueOf(publishedDate));
+      } else {
+        statement.setNull(7, java.sql.Types.DATE); // hoặc một cách xử lý khác tùy yêu cầu
+      }
+//      statement.setDate(7, java.sql.Date.valueOf(book.getPublishedDate()));
 
       int rowsInserted = statement.executeUpdate();
       return rowsInserted > 0;
@@ -87,4 +95,27 @@ public class BookDAO {
       return false;
     }
   }
+  // kiểm tra book_id đã tồn tại trong database chưa
+  public boolean isBookExists(String bookId) {
+    String sql = "SELECT COUNT(*) FROM Book WHERE book_id = ?";
+    try (Connection connection = DatabaseHelper.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, bookId);
+      ResultSet resultSet = statement.executeQuery();
+      if (resultSet.next()) {
+        return resultSet.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+//  //chỉnh sửa thông tin user
+//  public boolean updateUser(User user){
+//    String query = "UPDATE Member SET member_name = ?, citizen_id = ?, full_name = ?, gender = ?, phone_number = ? WHERE username = ?";
+//
+//  }
+
+
 }
