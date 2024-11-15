@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDAO {
-  public List<Book> getBooksFromDatabase() {
+  public List<Book> getBooksFromDatabase() throws SQLException {
     List<Book> booksList = new ArrayList<>();
 
     String query = "SELECT * FROM Book";  // Truy vấn để lấy tất cả sách
@@ -38,6 +38,7 @@ public class BookDAO {
       }
     } catch (SQLException e) {
       e.printStackTrace();
+      throw new SQLException("Can't connect to database");
     }
 
     return booksList;

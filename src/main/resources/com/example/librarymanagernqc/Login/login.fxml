@@ -46,8 +46,8 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </JFXButton>
-                        <PasswordField layoutX="26.0" layoutY="222.0" prefHeight="28.0" prefWidth="231.0" promptText="Password" styleClass="loginTextField" />
-                        <Text fill="RED" layoutX="25.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click Login to enter main screen" wrappingWidth="231.0" />
+                        <PasswordField fx:id="passwordField" layoutX="26.0" layoutY="222.0" prefHeight="28.0" prefWidth="231.0" promptText="Password" styleClass="loginTextField" />
+                        <Text fx:id="errorText" fill="RED" layoutX="26.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="231.0" />
                         <Button layoutX="145.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#OnForgotPasswordMouseClicked" styleClass="forgotButton" text="Forgot your password?">
                            <cursor>
                               <Cursor fx:constant="HAND" />
