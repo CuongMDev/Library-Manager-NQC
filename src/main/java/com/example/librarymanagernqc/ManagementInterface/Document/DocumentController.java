@@ -46,19 +46,14 @@ public class DocumentController {
     /**
      * all books list
      */
-    private static final List<Book> booksList = new LinkedList<>();
+    private static List<Book> booksList = new LinkedList<>();
 
     public static void addBookToList(Book book) {
         booksList.add(book);
-
     }
-    // Phương thức này được gọi để tải sách từ database
-    private void loadBooksFromDatabase() {
-        BookDAO bookDAO = new BookDAO();
-        List<Book> booksFromDb = bookDAO.getBooksFromDatabase();
-        booksList.clear();
-        booksList.addAll(booksFromDb);
-        updateTable();  // Cập nhật lại bảng sau khi tải dữ liệu từ database
+
+    public static void setAllBooksList(List<Book> newBooksList) {
+        booksList = newBooksList;
     }
 
     private void deleteBookFromList(Book book) {
@@ -73,14 +68,9 @@ public class DocumentController {
         }
     }
 
-    public static void decreaseBookQuantity(Book book, int decreaseQuantity) {
-        book.setQuantity(book.getQuantity() - decreaseQuantity);
-    }
     public static void changeBookQuantity(Book book, int changeQuantity) {
         book.setQuantity(book.getQuantity() + changeQuantity);
     }
-
-
 
     /**
      * search book by title, limit = 0 mean no limit
@@ -223,8 +213,6 @@ public class DocumentController {
         bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
         initOptionColumns();
-        //tải dữ liệu từ database
-        loadBooksFromDatabase();
         // Lắng nghe thay đổi của text
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             updateTable();
