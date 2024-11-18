@@ -111,12 +111,4 @@ public class BookDAO {
     }
     return false;
   }
-
-//  //chỉnh sửa thông tin user
-//  public boolean updateUser(User user){
-//    String query = "UPDATE Member SET member_name = ?, citizen_id = ?, full_name = ?, gender = ?, phone_number = ? WHERE username = ?";
-//
-//  }
-
-
 }

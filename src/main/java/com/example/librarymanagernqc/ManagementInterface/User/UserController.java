@@ -11,6 +11,7 @@ import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
+import com.example.librarymanagernqc.database.DAO.UserDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,6 +60,7 @@ public class UserController {
     @FXML
     private TextField searchField;
 
+    private UserDAO userDAO = new UserDAO();
 
     /**
      * all users list
@@ -148,6 +150,13 @@ public class UserController {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (userInfoController.checkValidUser()) {
                                         currentUser.setUser(userInfoController.getUser());
+
+                                        boolean isUpdated = userDAO.updateUser(currentUser);
+                                        if (isUpdated) {
+                                            System.out.println("User updated successfully in database");
+                                        } else {
+                                            System.out.println("Failed to update user in database");
+                                        }
                                         userTable.refresh();
 
                                         mainStackPane.getChildren().removeLast();
