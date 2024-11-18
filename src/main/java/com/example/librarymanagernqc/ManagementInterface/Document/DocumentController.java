@@ -44,6 +44,8 @@ public class DocumentController {
     @FXML
     private TextField searchField;
 
+    private BookDAO bookDAO = new BookDAO();
+
     /**
      * all books list
      */
@@ -139,6 +141,15 @@ public class DocumentController {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (bookInfoController.checkValidBook()) {
                                         currentBook.setQuantity(bookInfoController.getBook().getQuantity());
+
+                                        boolean isUpdated = bookDAO.updateBook(currentBook);
+
+                                        if(isUpdated) {
+                                            System.out.println("Book updated successfully in database");
+                                        }
+                                        else{
+                                            System.out.println("Failed to update book in database");
+                                        }
 
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);

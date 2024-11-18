@@ -111,4 +111,21 @@ public class BookDAO {
     }
     return false;
   }
+
+  // chỉnh sửa thông tin book
+  public boolean updateBook(Book book) {
+    String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
+    try (Connection connection = DatabaseHelper.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+      statement.setInt(1, book.getQuantity());
+      statement.setString(2, book.getId());
+
+      int rowsAffected = statement.executeUpdate();
+
+      return rowsAffected > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }

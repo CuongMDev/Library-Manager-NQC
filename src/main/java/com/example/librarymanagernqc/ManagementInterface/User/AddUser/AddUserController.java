@@ -50,14 +50,6 @@ public class AddUserController {
                 return;
             }
 
-//            // Kiểm tra người dùng đã có trong bảng chưa
-//            boolean userExistsInTable = userTable.getItems().stream()
-//                .anyMatch(existingUser -> existingUser.getUsername().equals(user.getUsername()) || existingUser.getCitizenId().equals(user.getCitizenId()));
-//
-//            if (userExistsInTable) {
-//                System.out.println("User already exists in the table");
-//                return;  // Không cho phép thêm người dùng vào bảng
-//            }
             if (userDAO.addUser(user)) {
                 System.out.println("Thêm người dùng vào database thành công");
                 // Cập nhật giao diện nếu cần

@@ -11,6 +11,7 @@ import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
+import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
 import com.example.librarymanagernqc.database.DAO.UserDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -61,6 +62,7 @@ public class UserController {
     private TextField searchField;
 
     private UserDAO userDAO = new UserDAO();
+    private BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
 
     /**
      * all users list
@@ -242,7 +244,15 @@ public class UserController {
                                 if (recordButtonMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (bookLoanInfoController.checkValidBookLoan()) {
                                         BookLoan getBookLoan = bookLoanInfoController.getBookLoan();
-                                        BorrowedListController.addBookLoanToList(getBookLoan);
+                                        boolean isInserted = borrowedListDAO.insertBookLoan(getBookLoan);
+                                        if (isInserted) {
+                                            System.out.println("Thêm sách mượn vào database thành công");
+                                            BorrowedListController.addBookLoanToList(getBookLoan);
+                                        }
+                                        else{
+                                            System.out.println("Thêm sách mượn vào database thất bại");
+                                        }
+
                                         //giảm số lượng sách
                                         DocumentController.changeBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(getBookLoan.getBookId())), -getBookLoan.getLoanQuantity());
                                         mainStackPane.getChildren().removeLast();

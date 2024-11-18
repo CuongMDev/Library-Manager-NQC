@@ -54,10 +54,14 @@ public class BorrowedListController {
     /**
      * all books list
      */
-    private static final List<BookLoan> bookLoansList = new LinkedList<>();
+    private static List<BookLoan> bookLoansList = new LinkedList<>();
 
     public static void addBookLoanToList(BookLoan bookLoan) {
         bookLoansList.add(bookLoan);
+    }
+
+    public static void setAllBookLoanList(List<BookLoan> newbookLoanList) {
+        bookLoansList = newbookLoanList;
     }
 
     public static void removeBookLoanFromList(BookLoan bookLoan) {
