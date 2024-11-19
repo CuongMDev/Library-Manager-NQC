@@ -60,7 +60,6 @@ public class DocumentController {
     }
 
     private void deleteBookFromList(Book book) {
-        BookDAO bookDAO = new BookDAO();
         boolean isDeletedFromDb = BookDatabaseController.deleteBookById(book.getId());  // Xóa khỏi database
 
         if (isDeletedFromDb) {
@@ -73,6 +72,8 @@ public class DocumentController {
 
     public static void changeBookQuantity(Book book, int changeQuantity) {
         book.setQuantity(book.getQuantity() + changeQuantity);
+        // cập nhật số lượng sách trng database
+        BookDAO.changeQuantityBook(book.getQuantity() + changeQuantity, book.getId());
     }
 
     /**

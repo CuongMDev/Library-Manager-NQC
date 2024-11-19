@@ -128,4 +128,21 @@ public class BookDAO {
       return false;
     }
   }
+
+  // chỉnh sửa số lượng sách sau khi mượn hoặc trả
+  public static boolean changeQuantityBook(int newQuantity, String bookId) {
+    String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
+    try (Connection connection = DatabaseHelper.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+      statement.setInt(1, newQuantity);
+      statement.setString(2, bookId);
+
+      int rowsAffected = statement.executeUpdate();
+
+      return rowsAffected > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }

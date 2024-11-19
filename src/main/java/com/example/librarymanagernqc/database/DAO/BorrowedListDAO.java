@@ -22,7 +22,7 @@ public class BorrowedListDAO {
 
       while (resultSet.next()) {
         // Lấy dữ liệu từ ResultSet và tạo đối tượng BookLoan
-        String loan_id = resultSet.getString("loan_id");
+        int loan_id = resultSet.getInt("loan_id");
         String username = resultSet.getString("member_name");
         String bookId = resultSet.getString("book_id");
         String bookTitle = resultSet.getString("bookTitle");
@@ -30,8 +30,7 @@ public class BorrowedListDAO {
         String dueDate = resultSet.getString("due_date");
         int loanQuantity = resultSet.getInt("loanQuantity");
 
-
-        BookLoan bookloan = new BookLoan(username,bookTitle,bookId,loanDate,dueDate,loanQuantity);
+        BookLoan bookloan = new BookLoan(loan_id, username,bookTitle,bookId,loanDate,dueDate,loanQuantity);
 
         bookLoanList.add(bookloan);  // Thêm vào danh sách
       }
@@ -43,32 +42,33 @@ public class BorrowedListDAO {
   }
   // thêm sách mượn vào cơ sở dữ liệu
   public boolean insertBookLoan(BookLoan bookLoan) {
-    String query = "INSERT INTO BorrowedList (member_name, book_id, loan_date, due_date, loanQuantity, status, fine, bookCondition, bookTitle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String query = "INSERT INTO BorrowedList (loan_id, member_name, book_id, loan_date, due_date, loanQuantity, status, fine, bookCondition, bookTitle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (Connection connection = DatabaseHelper.getConnection();
         PreparedStatement statement = connection.prepareStatement(query)) {
 
-      statement.setString(1, bookLoan.getUsername());
-      statement.setString(2, bookLoan.getBookId());
+      statement.setInt(1, bookLoan.getLoanId());
+      statement.setString(2, bookLoan.getUsername());
+      statement.setString(3, bookLoan.getBookId());
 
       String loanDate = bookLoan.getLoanDate();
       if(loanDate != null && !loanDate.isEmpty()) {
-        statement.setDate(3, java.sql.Date.valueOf(loanDate));
+        statement.setDate(4, java.sql.Date.valueOf(loanDate));
       } else{
-        statement.setNull(3, java.sql.Types.DATE);
+        statement.setNull(4, java.sql.Types.DATE);
       }
 
       String dueDate = bookLoan.getDueDate();
       if(dueDate != null && !dueDate.isEmpty()) {
-        statement.setDate(4, java.sql.Date.valueOf(dueDate));
+        statement.setDate(5, java.sql.Date.valueOf(dueDate));
       } else{
-        statement.setNull(4, java.sql.Types.DATE);
+        statement.setNull(5, java.sql.Types.DATE);
       }
-      statement.setInt(5, bookLoan.getLoanQuantity());
-      statement.setString(6, bookLoan.getStatus());
-      statement.setString(7, bookLoan.getFine());
-      statement.setString(8, bookLoan.getBookCondition());
-      statement.setString(9, bookLoan.getBookTitle());
+      statement.setInt(6, bookLoan.getLoanQuantity());
+      statement.setString(7, bookLoan.getStatus());
+      statement.setString(8, bookLoan.getFine());
+      statement.setString(9, bookLoan.getBookCondition());
+      statement.setString(10, bookLoan.getBookTitle());
 
       int rowsInserted = statement.executeUpdate();
       return rowsInserted > 0;
@@ -79,10 +79,23 @@ public class BorrowedListDAO {
     }
   }
 
-//  // xóa thông tin mượn sách khỏi database
-//  public boolean deleteBookLoan(BookLoan bookLoan) {
-//    String query = "DELETE FROM BorrowedList WHERE member_name = ? AND book_id = ? AND loan_date = ? AND due_date = ? AND loanQuantity = ? AND status = ?";
-//
-//
-//  }
+  // xóa thông tin mượn sách khỏi database
+  public boolean deleteBookLoanById(BookLoan bookLoan) {
+    String deleteQuery = "DELETE FROM BorrowedList WHERE loan_id = ?";
+
+    try (Connection conn = DatabaseHelper.getConnection();
+        PreparedStatement statement = conn.prepareStatement(deleteQuery)) {
+
+      statement.setInt(1, bookLoan.getLoanId());
+
+      int affectedRows = statement.executeUpdate();
+
+      // Trả về true nếu có dòng bị ảnh hưởng (xóa thành công)
+      return affectedRows > 0;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }

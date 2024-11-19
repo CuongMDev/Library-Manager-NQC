@@ -5,6 +5,7 @@ import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedLi
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn.RecordBookReturnController;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
+import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
 import com.example.librarymanagernqc.database.DAO.ReturnedListDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -52,7 +53,9 @@ public class BorrowedListController {
     @FXML
     private TableView<BookLoan> bookLoansTable;
 
+    private BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
     private ReturnedListDAO returnedListDAO = new ReturnedListDAO();
+
 
     /**
      * all books list
@@ -151,8 +154,16 @@ public class BorrowedListController {
                                         System.out.println("thêm thông tin trả sách vào database thất bại");
                                     }
 
-                                    //xóa sách khỏi danh sách mượn
-                                    removeBookLoanFromList(currentBookLoan);
+                                    boolean isDelete = borrowedListDAO.deleteBookLoanById(currentBookLoan);
+                                    if(isDelete){
+                                        System.out.println("xóa thông tin mượn sách khỏi database thành công");
+                                        //xóa sách khỏi danh sách mượn
+                                        removeBookLoanFromList(currentBookLoan);
+                                    }
+                                    else{
+                                        System.out.println("xóa thông tin mượn sách database thất bại");
+                                    }
+
 
                                     //add lại số lượng vào document
                                     DocumentController.changeBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(currentBookLoan.getBookId())), currentBookLoan.getLoanQuantity());
