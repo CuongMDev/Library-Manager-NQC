@@ -11,10 +11,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BorrowedListDAO {
-  public List<BookLoan> getBookLoanFromDatabase() throws SQLException {
-    List<BookLoan> bookLoanList = new ArrayList<BookLoan>();
-    String query = "SELECT * FROM BorrowedList";
+public class ReturnedListDAO {
+  public List<BookLoan> getBookReturnFromDatabase() throws SQLException {
+    List<BookLoan> bookReturnList = new ArrayList<BookLoan>();
+    String query = "SELECT * FROM ReturnList";
 
     try (Connection connection = DatabaseHelper.getConnection();
         Statement statement = connection.createStatement();
@@ -22,28 +22,28 @@ public class BorrowedListDAO {
 
       while (resultSet.next()) {
         // Lấy dữ liệu từ ResultSet và tạo đối tượng BookLoan
-        String loan_id = resultSet.getString("loan_id");
         String username = resultSet.getString("member_name");
         String bookId = resultSet.getString("book_id");
         String bookTitle = resultSet.getString("bookTitle");
         String loanDate = resultSet.getString("loan_date");
         String dueDate = resultSet.getString("due_date");
         int loanQuantity = resultSet.getInt("loanQuantity");
+        String fine = resultSet.getString("fine");
 
+        BookLoan bookloan = new BookLoan(username,bookTitle,bookId,loanDate,dueDate,loanQuantity, fine);
 
-        BookLoan bookloan = new BookLoan(username,bookTitle,bookId,loanDate,dueDate,loanQuantity);
-
-        bookLoanList.add(bookloan);  // Thêm vào danh sách
+        bookReturnList.add(bookloan);  // Thêm vào danh sách
       }
     } catch (SQLException e) {
       e.printStackTrace();
       throw new SQLException(e);
     }
-    return bookLoanList;
+    return bookReturnList;
   }
-  // thêm sách mượn vào cơ sở dữ liệu
-  public boolean insertBookLoan(BookLoan bookLoan) {
-    String query = "INSERT INTO BorrowedList (member_name, book_id, loan_date, due_date, loanQuantity, status, fine, bookCondition, bookTitle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+  // thêm sách trả vào cơ sở dữ liệu
+  public boolean insertBookReturn(BookLoan bookLoan) {
+    String query = "INSERT INTO ReturnList (member_name, book_id, loan_date, due_date, loanQuantity, status, fine, bookCondition, bookTitle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (Connection connection = DatabaseHelper.getConnection();
         PreparedStatement statement = connection.prepareStatement(query)) {
@@ -78,11 +78,4 @@ public class BorrowedListDAO {
       return false;
     }
   }
-
-//  // xóa thông tin mượn sách khỏi database
-//  public boolean deleteBookLoan(BookLoan bookLoan) {
-//    String query = "DELETE FROM BorrowedList WHERE member_name = ? AND book_id = ? AND loan_date = ? AND due_date = ? AND loanQuantity = ? AND status = ?";
-//
-//
-//  }
 }

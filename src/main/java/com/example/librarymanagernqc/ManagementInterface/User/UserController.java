@@ -246,15 +246,16 @@ public class UserController {
                                         BookLoan getBookLoan = bookLoanInfoController.getBookLoan();
                                         boolean isInserted = borrowedListDAO.insertBookLoan(getBookLoan);
                                         if (isInserted) {
-                                            System.out.println("Thêm sách mượn vào database thành công");
+                                            System.out.println("Thêm thông tin mượn sách vào database thành công");
                                             BorrowedListController.addBookLoanToList(getBookLoan);
                                         }
                                         else{
-                                            System.out.println("Thêm sách mượn vào database thất bại");
+                                            System.out.println("Thêm thông tin sách mượn vào database thất bại");
                                         }
 
                                         //giảm số lượng sách
                                         DocumentController.changeBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(getBookLoan.getBookId())), -getBookLoan.getLoanQuantity());
+
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);
                                     }

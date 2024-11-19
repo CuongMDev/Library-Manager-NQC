@@ -5,6 +5,7 @@ import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedLi
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn.RecordBookReturnController;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
+import com.example.librarymanagernqc.database.DAO.ReturnedListDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,18 +52,23 @@ public class BorrowedListController {
     @FXML
     private TableView<BookLoan> bookLoansTable;
 
+    private ReturnedListDAO returnedListDAO = new ReturnedListDAO();
+
     /**
      * all books list
      */
-    private static List<BookLoan> bookLoansList = new LinkedList<>();
+    private static final List<BookLoan> bookLoansList = new LinkedList<>();
 
     public static void addBookLoanToList(BookLoan bookLoan) {
         bookLoansList.add(bookLoan);
     }
 
     public static void setAllBookLoanList(List<BookLoan> newbookLoanList) {
-        bookLoansList = newbookLoanList;
+//        bookLoansList = newbookLoanList;
+        bookLoansList.clear();
+        bookLoansList.addAll(newbookLoanList);
     }
+
 
     public static void removeBookLoanFromList(BookLoan bookLoan) {
         bookLoansList.remove(bookLoan);
@@ -134,8 +140,16 @@ public class BorrowedListController {
                                     //cập nhật tình trạng sách và tiền fạt
                                     recordBookReturnController.updateBookLoan(currentBookLoan);
 
-                                    //thêm thông tin trả sách
-                                    ReturnedListController.addBookLoanToList(currentBookLoan);
+                                    // thêm thông tin trả sách vào database
+                                    boolean isInserted = returnedListDAO.insertBookReturn(currentBookLoan);
+                                    if (isInserted) {
+                                        System.out.println("thêm thông tin trả sách vào database thành công");
+                                        //thêm thông tin trả sách
+                                        ReturnedListController.addBookLoanToList(currentBookLoan);
+                                    }
+                                    else{
+                                        System.out.println("thêm thông tin trả sách vào database thất bại");
+                                    }
 
                                     //xóa sách khỏi danh sách mượn
                                     removeBookLoanFromList(currentBookLoan);

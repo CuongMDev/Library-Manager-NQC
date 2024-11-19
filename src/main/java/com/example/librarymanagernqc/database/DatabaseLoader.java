@@ -7,6 +7,7 @@ import com.example.librarymanagernqc.ManagementInterface.User.UserController;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
+import com.example.librarymanagernqc.database.Controller.ReturnedListDatabaseController;
 import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public class DatabaseLoader extends HasError {
             success = false;
         }
         else if(!BorrowedListDatabaseController.loadBookLoanFromDatabase()) {
+            success = false;
+        }
+        else if(!ReturnedListDatabaseController.loadBookReturnFromDatabase()) {
             success = false;
         }
 
