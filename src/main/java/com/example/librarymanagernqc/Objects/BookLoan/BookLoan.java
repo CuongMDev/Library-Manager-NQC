@@ -15,6 +15,9 @@ public class BookLoan {
     private String bookId;
     private String fine;
     private String bookCondition;
+    private int loanId;
+
+    private static int nextId = 0;
 
     public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, int loanQuantity) {
         this.username = username;
@@ -26,6 +29,7 @@ public class BookLoan {
         this.loanQuantity = loanQuantity;
         this.fine = "";
         this.bookCondition = "100%";
+        this.loanId = nextId++;
     }
 
     public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, int loanQuantity, String fine) {
@@ -37,6 +41,7 @@ public class BookLoan {
         this.status = "On Time";
         this.loanQuantity = loanQuantity;
         this.fine = fine;
+        this.loanId = nextId++;
     }
 
     public String getUsername() {
@@ -109,6 +114,10 @@ public class BookLoan {
 
     public String getBookCondition() {
         return bookCondition;
+    }
+
+    public int getLoanId() {
+        return loanId;
     }
 
     public void setBookLoan(BookLoan bookLoan) {
