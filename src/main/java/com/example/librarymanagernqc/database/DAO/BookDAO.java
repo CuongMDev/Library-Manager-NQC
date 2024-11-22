@@ -12,13 +12,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDAO {
+
+  private Connection connection;
+
+  // Khởi tạo kết nối một lần duy nhất từ DatabaseHelper
+  public BookDAO() {
+    try {
+      this.connection = DatabaseHelper.getConnection(); // Lấy kết nối từ DatabaseHelper
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private Connection getValidConnection() {
+    try {
+      if (connection == null || connection.isClosed()) {
+        connection = DatabaseHelper.getConnection();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return connection;
+  }
+
+  // Đảm bảo kết nối được đóng khi không còn sử dụng
+  public void closeConnection() {
+    try {
+      if (connection != null && !connection.isClosed()) {
+        connection.close(); // Đóng kết nối
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   public List<Book> getBooksFromDatabase() throws SQLException {
     List<Book> booksList = new ArrayList<>();
 
     String query = "SELECT * FROM Book";  // Truy vấn để lấy tất cả sách
 
-    try (Connection connection = DatabaseHelper.getConnection();
-         Statement statement = connection.createStatement();
+    try (Statement statement = getValidConnection().createStatement();
          ResultSet resultSet = statement.executeQuery(query)) {
 
       while (resultSet.next()) {
@@ -33,7 +66,6 @@ public class BookDAO {
         String publishedDate = resultSet.getString("published_date");
 
         Book book = new Book(bookId, title, authorName, publisher, publishedDate, description, quantity);
-//        book.setPublishedDate(publishedDate);  // Cập nhật ngày xuất bản nếu cần
 
         booksList.add(book);  // Thêm vào danh sách sách
       }
@@ -49,8 +81,7 @@ public class BookDAO {
   public boolean deleteBookById(String bookId) {
     String deleteQuery = "DELETE FROM Book WHERE book_id = ?";
 
-    try (Connection conn = DatabaseHelper.getConnection();
-        PreparedStatement preparedStatement = conn.prepareStatement(deleteQuery)) {
+    try (PreparedStatement preparedStatement = getValidConnection().prepareStatement(deleteQuery)) {
 
       preparedStatement.setString(1, bookId);
       int affectedRows = preparedStatement.executeUpdate();
@@ -67,8 +98,7 @@ public class BookDAO {
   public boolean insertBook(Book book) {
     String sql = "INSERT INTO Book (book_id, title, quantity, author_name, description, publisher, published_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+    try (PreparedStatement statement = getValidConnection().prepareStatement(sql)) {
 
       statement.setString(1, book.getId());
       statement.setString(2, book.getTitle());
@@ -82,11 +112,23 @@ public class BookDAO {
       statement.setString(6, book.getPublisher());
       String publishedDate = book.getPublishedDate();
       if (publishedDate != null && !publishedDate.isEmpty()) {
-        statement.setDate(7, java.sql.Date.valueOf(publishedDate));
+        try {
+          // Kiểm tra xem chỉ có năm hay không
+          if (publishedDate.length() == 4) { // Chỉ có năm
+            publishedDate = publishedDate + "-01-01"; // Thêm ngày 1 tháng 1 vào
+          }
+
+          // Kiểm tra và chuyển đổi ngày từ chuỗi sang java.sql.Date
+          java.sql.Date sqlDate = java.sql.Date.valueOf(publishedDate); // Ngày phải có định dạng "yyyy-MM-dd"
+          statement.setDate(7, sqlDate);
+        } catch (IllegalArgumentException e) {
+          // Xử lý trường hợp ngày không hợp lệ
+          System.out.println("Ngày không hợp lệ: " + publishedDate);
+          statement.setNull(7, java.sql.Types.DATE); // Nếu ngày không hợp lệ, set NULL
+        }
       } else {
-        statement.setNull(7, java.sql.Types.DATE); // hoặc một cách xử lý khác tùy yêu cầu
+        statement.setNull(7, java.sql.Types.DATE); // Nếu ngày là null hoặc rỗng, set NULL
       }
-//      statement.setDate(7, java.sql.Date.valueOf(book.getPublishedDate()));
 
       int rowsInserted = statement.executeUpdate();
       return rowsInserted > 0;
@@ -99,8 +141,7 @@ public class BookDAO {
   // kiểm tra book_id đã tồn tại trong database chưa
   public boolean isBookExists(String bookId) {
     String sql = "SELECT COUNT(*) FROM Book WHERE book_id = ?";
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql)) {
+    try (PreparedStatement statement = getValidConnection().prepareStatement(sql)) {
       statement.setString(1, bookId);
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next()) {
@@ -115,8 +156,7 @@ public class BookDAO {
   // chỉnh sửa thông tin book
   public boolean updateBook(Book book) {
     String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query)){
+    try (PreparedStatement statement = getValidConnection().prepareStatement(query)){
       statement.setInt(1, book.getQuantity());
       statement.setString(2, book.getId());
 
