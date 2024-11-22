@@ -131,4 +131,19 @@ public class BorrowedListDAO {
       return false;
     }
   }
+
+  // kiểm tra xem book_id có tồn tại trong BorrowedList chưa
+  public boolean isBookLoanExist(String bookId) {
+    String query = "SELECT COUNT(*) FROM BorrowedList WHERE book_id = ?";
+    try (PreparedStatement statement = getValidConnection().prepareStatement(query)) {
+      statement.setString(1, bookId);
+      ResultSet resultSet = statement.executeQuery();
+      if (resultSet.next()) {
+        return resultSet.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
 }
