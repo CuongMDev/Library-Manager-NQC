@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.Objects.AccountChecker;
 
 import com.example.librarymanagernqc.AbstractClass.HasError;
+import com.example.librarymanagernqc.database.DAO.AdminDAO;
 
 public class AccountChecker extends HasError {
     private static String errorMessage = null;
@@ -10,10 +11,10 @@ public class AccountChecker extends HasError {
     }
 
     public static boolean checkValidAccount(String username, String password) {
-        if (username.equals("nqc") && password.equals("nqc")) {
+        AdminDAO adminDAO = new AdminDAO();
+        if(adminDAO.isAcountExists(username, password)) {
             return true;
         }
-
         setErrorMessage("Invalid username or password");
         return false;
     }
