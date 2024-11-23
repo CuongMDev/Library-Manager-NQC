@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -241,6 +242,16 @@ public class BorrowedListController {
 
         initOptionColumn();
         initStatusColumn();
+    }
+
+    public static List<BookLoan> getOverdueList() {
+        List<BookLoan> overdueList = new ArrayList<>();
+        for (BookLoan bookLoan : bookLoansList) {
+            if (bookLoan.getStatus().equals("Overdue")) {
+                overdueList.add(bookLoan);
+            }
+        }
+        return overdueList;
     }
 
 }

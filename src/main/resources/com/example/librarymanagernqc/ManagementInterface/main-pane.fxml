@@ -81,7 +81,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="infoButton" layoutY="555.0" onMouseClicked="#OnDocumentButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Information">
+            <JFXButton fx:id="infoButton" layoutY="555.0" onMouseClicked="#OnOverdueButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Overdue List">
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>

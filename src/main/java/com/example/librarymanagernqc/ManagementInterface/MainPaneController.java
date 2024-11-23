@@ -2,6 +2,7 @@ package com.example.librarymanagernqc.ManagementInterface;
 
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
+import com.example.librarymanagernqc.ManagementInterface.OverdueList.OverdueListController;
 import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
 import com.example.librarymanagernqc.ManagementInterface.User.UserController;
 import com.jfoenix.controls.JFXButton;
@@ -20,7 +21,8 @@ public class  MainPaneController {
         DOCUMENT,
         USER,
         BORROWED_LIST,
-        RETURNED_LIST
+        RETURNED_LIST,
+        OVERDUE_LIST
     }
 
     @FXML
@@ -39,6 +41,7 @@ public class  MainPaneController {
         loaders[PaneType.USER.ordinal()] = new FXMLLoader(getClass().getResource("User/user.fxml"));
         loaders[PaneType.BORROWED_LIST.ordinal()] = new FXMLLoader(getClass().getResource("BorrowedList/borrowed-list.fxml"));
         loaders[PaneType.RETURNED_LIST.ordinal()] = new FXMLLoader(getClass().getResource("ReturnedList/returned-list.fxml"));
+        loaders[PaneType.OVERDUE_LIST.ordinal()] = new FXMLLoader(getClass().getResource("OverdueList/overdue-list.fxml"));
 
         for (int i = 0; i < PaneType.values().length; i++) {
             panes[i] = loaders[i].load();
@@ -88,6 +91,16 @@ public class  MainPaneController {
 
             ReturnedListController returnedListController = loaders[PaneType.RETURNED_LIST.ordinal()].getController();
             returnedListController.updateTable();
+        }
+    }
+
+    @FXML
+    public void OnOverdueButtonClicked(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+            switchPane(PaneType.OVERDUE_LIST);
+
+            OverdueListController overdueListController = loaders[PaneType.OVERDUE_LIST.ordinal()].getController();
+            overdueListController.updateTable();
         }
     }
 }
