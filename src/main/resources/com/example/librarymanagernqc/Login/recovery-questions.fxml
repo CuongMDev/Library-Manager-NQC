@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="515.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.Login.recovery-questions">
+   <children>
+      <Label layoutX="115.0" layoutY="54.0" prefHeight="36.0" prefWidth="404.0" text="Question 1:" />
+      <ComboBox layoutX="115.0" layoutY="100.0" prefHeight="26.0" prefWidth="404.0" />
+      <Label layoutX="115.0" layoutY="155.0" prefHeight="36.0" prefWidth="404.0" text="Question 2:" />
+      <ComboBox layoutX="115.0" layoutY="196.0" prefHeight="26.0" prefWidth="404.0" />
+      <ComboBox layoutX="115.0" layoutY="288.0" prefHeight="26.0" prefWidth="404.0" />
+      <Label layoutX="115.0" layoutY="250.0" prefHeight="26.0" prefWidth="404.0" text="Question 3:" />
+      <Button layoutX="506.0" layoutY="419.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="66.0" text="Button" />
+      <Button layoutX="89.0" layoutY="415.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="66.0" text="Button" />
+   </children>
+</AnchorPane>
