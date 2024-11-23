@@ -12,6 +12,8 @@ public class Book {
     private String publishedDate;
     private String description;
     private int quantity;
+    private String thumbnailUrl;
+    private String infoLink;
 
 //    public Book() {
 //        this.id = "";
@@ -32,6 +34,18 @@ public class Book {
         this.publishedDate = publishedDate;
         this.description = description;
         this.quantity = quantity;
+    }
+
+    public Book(String id, String title, String authors, String publisher, String publishedDate, String description, int quantity, String thumbnailUrl, String infoLink) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.publisher = publisher;
+        this.publishedDate = publishedDate;
+        this.description = description;
+        this.quantity = quantity;
+        this.thumbnailUrl = thumbnailUrl;
+        this.infoLink = infoLink;
     }
 
     // Getters and Setters
@@ -55,6 +69,12 @@ public class Book {
 
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public String getThumbnailUrl() { return thumbnailUrl; }
+    public void setThumbnailUrl(String thumbnailUrl) { this.thumbnailUrl = thumbnailUrl; }
+
+    public String getInfoLink() { return infoLink; }
+    public void setInfoLink(String infoLink) { this.infoLink = infoLink; }
 
     /**
      * search book by title, limit = 0 mean no limit
