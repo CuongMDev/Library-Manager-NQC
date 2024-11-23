@@ -3,6 +3,7 @@ package com.example.librarymanagernqc.ManagementInterface.Document.BookInformati
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.Utils;
 import com.jfoenix.controls.JFXButton;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -88,13 +89,19 @@ public class BookInformationController {
         bookPublisher.setText(book.getPublisher());
         bookPublishedDate.setText(book.getPublishedDate());
         bookDescription.setText(book.getDescription());
-        if (book.getThumbnailUrl() != null) {
-            bookImage.setImage(new Image(book.getThumbnailUrl()));
-        }
-        try {
-            bookQrImage.setImage(Utils.generateQRCode(book.getInfoLink()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        new Thread(() -> {
+            if (book.getThumbnailUrl() != null) {
+                Image thumnailImage = new Image(book.getThumbnailUrl());
+                javafx.application.Platform.runLater(() -> bookImage.setImage(thumnailImage));
+            }
+            try {
+                Image qrImage = Utils.generateQRCode(book.getInfoLink());
+                javafx.application.Platform.runLater(() -> bookQrImage.setImage(qrImage));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
