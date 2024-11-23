@@ -27,4 +27,12 @@ public class ReturnedListDatabaseController extends HasError {
       return false;
     }
   }
+
+  public static boolean insertBookReturn(BookLoan bookLoan) {
+    if(!returnedListDAO.insertBookReturn(bookLoan)){
+      setErrorMessage("Error inserting book return");
+      return false;
+    }
+    return true;
+  }
 }

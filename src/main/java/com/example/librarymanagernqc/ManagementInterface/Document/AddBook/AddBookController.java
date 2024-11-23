@@ -4,6 +4,7 @@ import com.example.librarymanagernqc.ManagementInterface.Document.DocumentContro
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.Book.BookJsonHandler;
 import com.example.librarymanagernqc.Objects.Book.GoogleBooksAPI;
+import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.jfoenix.controls.JFXButton;
@@ -51,8 +52,6 @@ public class AddBookController {
     private TableColumn<Book, Void> optionColumn;
     @FXML
     private TableView<Book> booksTableView;
-
-    private final BookDAO bookDAO = new BookDAO();
 
     @FXML
     private void initialize() {
@@ -107,11 +106,11 @@ public class AddBookController {
                                         //lấy thông tin sách và thêm vào database
                                         Book newBook = bookInfoController.getBook();
                                         // kiểm tra book đã tồn tại chưa
-                                        if(bookDAO.isBookExists(newBook.getId())) {
+                                        if(BookDatabaseController.isBookExists(newBook.getId())) {
                                             System.out.println("Book with ID " + newBook.getId() + " already exists.");
                                         }
                                         else{
-                                            boolean isInserted = bookDAO.insertBook(newBook);
+                                            boolean isInserted = BookDatabaseController.insertBook(newBook);
                                             if (isInserted) {
                                                 System.out.println("Book added to the database successfully.");
                                                 //add book
