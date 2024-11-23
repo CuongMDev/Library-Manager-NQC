@@ -1,6 +1,5 @@
 package com.example.librarymanagernqc.database.DAO;
 
-import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.database.DatabaseHelper;
 import java.sql.Connection;

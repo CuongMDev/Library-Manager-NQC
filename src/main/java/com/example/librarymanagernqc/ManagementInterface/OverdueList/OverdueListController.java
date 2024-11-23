@@ -6,8 +6,8 @@ import com.example.librarymanagernqc.ManagementInterface.Document.DocumentContro
 import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
-import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
-import com.example.librarymanagernqc.database.DAO.ReturnedListDAO;
+import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
+import com.example.librarymanagernqc.database.Controller.ReturnedListDatabaseController;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,8 +53,6 @@ public class OverdueListController {
     @FXML
     private TableView<BookLoan> overdueListTable;
 
-    private BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
-    private ReturnedListDAO returnedListDAO = new ReturnedListDAO();
 
     private static final List<BookLoan> overdueList = new ArrayList<>();
 
@@ -141,7 +139,7 @@ public class OverdueListController {
                                     recordBookReturnController.updateBookLoan(currentBookLoan);
 
                                     // thêm thông tin trả sách vào database
-                                    boolean isInserted = returnedListDAO.insertBookReturn(currentBookLoan);
+                                    boolean isInserted = ReturnedListDatabaseController.insertBookReturn(currentBookLoan);
                                     if (isInserted) {
                                         System.out.println("thêm thông tin trả sách vào database thành công");
                                         //thêm thông tin trả sách
@@ -151,7 +149,7 @@ public class OverdueListController {
                                         System.out.println("thêm thông tin trả sách vào database thất bại");
                                     }
 
-                                    boolean isDelete = borrowedListDAO.deleteBookLoanById(currentBookLoan);
+                                    boolean isDelete = BorrowedListDatabaseController.deleteBookLoanById(currentBookLoan);
                                     if(isDelete){
                                         System.out.println("xóa thông tin mượn sách khỏi database thành công");
                                         //xóa sách khỏi danh sách mượn

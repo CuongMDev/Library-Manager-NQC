@@ -62,10 +62,11 @@ public class BookDAO {
         String authorName = resultSet.getString("author_name");
         String description = resultSet.getString("description");
         String publisher = resultSet.getString("publisher");
-//        Date publishedDate = resultSet.getDate("published_date");
         String publishedDate = resultSet.getString("published_date");
+        String thumbnailUrl = resultSet.getString("thumbnailUrl");
+        String infoLink = resultSet.getString("infoLink");
 
-        Book book = new Book(bookId, title, authorName, publisher, publishedDate, description, quantity);
+        Book book = new Book(bookId, title, authorName, publisher, publishedDate, description, quantity, thumbnailUrl, infoLink);
 
         booksList.add(book);  // Thêm vào danh sách sách
       }
@@ -96,7 +97,7 @@ public class BookDAO {
   }
   // thêm sách vào cơ sở dữ liệu
   public boolean insertBook(Book book) {
-    String sql = "INSERT INTO Book (book_id, title, quantity, author_name, description, publisher, published_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO Book (book_id, title, quantity, author_name, description, publisher, published_date, thumbnailUrl, infoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement statement = getValidConnection().prepareStatement(sql)) {
 
@@ -129,6 +130,8 @@ public class BookDAO {
       } else {
         statement.setNull(7, java.sql.Types.DATE); // Nếu ngày là null hoặc rỗng, set NULL
       }
+      statement.setString(8, book.getThumbnailUrl());
+      statement.setString(9, book.getInfoLink());
 
       int rowsInserted = statement.executeUpdate();
       return rowsInserted > 0;

@@ -5,7 +5,6 @@ import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.Book.BookJsonHandler;
 import com.example.librarymanagernqc.Objects.Book.GoogleBooksAPI;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
-import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;

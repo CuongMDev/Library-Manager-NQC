@@ -15,26 +15,6 @@ public class Book {
     private String thumbnailUrl;
     private String infoLink;
 
-//    public Book() {
-//        this.id = "";
-//        this.title = "";
-//        this.authors = "";
-//        this.publisher = "";
-//        this.publishedDate = "";
-//        this.description = "";
-//        this.count = 0;
-//    }
-
-    // Constructor
-    public Book(String id, String title, String authors, String publisher, String publishedDate, String description, int quantity) {
-        this.id = id;
-        this.title = title;
-        this.authors = authors;
-        this.publisher = publisher;
-        this.publishedDate = publishedDate;
-        this.description = description;
-        this.quantity = quantity;
-    }
 
     public Book(String id, String title, String authors, String publisher, String publishedDate, String description, int quantity, String thumbnailUrl, String infoLink) {
         this.id = id;

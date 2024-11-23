@@ -1,10 +1,6 @@
 package com.example.librarymanagernqc.database;
 
 import com.example.librarymanagernqc.AbstractClass.HasError;
-import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
-import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
-import com.example.librarymanagernqc.ManagementInterface.User.UserController;
-import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
 import com.example.librarymanagernqc.database.Controller.ReturnedListDatabaseController;

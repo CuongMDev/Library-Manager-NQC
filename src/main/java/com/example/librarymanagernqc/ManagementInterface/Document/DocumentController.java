@@ -6,7 +6,6 @@ import com.example.librarymanagernqc.ManagementInterface.Document.BookInformatio
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
-import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
