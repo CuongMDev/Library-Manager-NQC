@@ -35,4 +35,31 @@ public class UserDatabaseController extends HasError {
         }
         return true;
     }
+
+    // update user
+    public static boolean updateUser(User user) {
+        if (!userDAO.updateUser(user)) {
+            setErrorMessage("Error updating user");
+            return false;
+        }
+        return true;
+    }
+
+    //kiểm tra user đã tồn tại chưa
+    public static boolean isUserExists(String username, String citizenId) {
+        if(!userDAO.isUserExists(username, citizenId)) {
+            setErrorMessage("User not found");
+            return false;
+        }
+        return true;
+    }
+
+    //add user
+    public static boolean addUser(User user) {
+        if (!userDAO.addUser(user)) {
+            setErrorMessage("Error adding user");
+            return false;
+        }
+        return true;
+    }
 }

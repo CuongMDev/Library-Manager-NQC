@@ -3,6 +3,7 @@ package com.example.librarymanagernqc.ManagementInterface.User.AddUser;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.Objects.Utils;
+import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 import com.example.librarymanagernqc.database.DAO.UserDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -36,8 +37,6 @@ public class AddUserController {
     @FXML
     private TextField phoneNumber;
 
-    // Khai báo UserDAO
-    private final UserDAO userDAO = new UserDAO();
 
     @FXML
     private void onAddButtonClicked() {
@@ -45,12 +44,12 @@ public class AddUserController {
             User user = getUser(); // Lấy thông tin người dùng từ các trường input
 
             //kiểm tra xem user đã có trong database chưa
-            if(userDAO.isUserExists(user.getUsername(), user.getCitizenId())) {
+            if(UserDatabaseController.isUserExists(user.getUsername(), user.getCitizenId())) {
                 System.out.println("User already exists");
                 return;
             }
 
-            if (userDAO.addUser(user)) {
+            if (UserDatabaseController.addUser(user)) {
                 System.out.println("Thêm người dùng vào database thành công");
                 // Cập nhật giao diện nếu cần
             } else {

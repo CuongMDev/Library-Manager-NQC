@@ -4,6 +4,7 @@ import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
+import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
 import com.jfoenix.controls.JFXButton;
@@ -44,9 +45,6 @@ public class DocumentController {
     private StackPane mainStackPane;
     @FXML
     private TextField searchField;
-
-    private BookDAO bookDAO = new BookDAO();
-    private BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
 
     /**
      * all books list
@@ -146,7 +144,7 @@ public class DocumentController {
                                     if (bookInfoController.checkValidBook()) {
                                         currentBook.setQuantity(bookInfoController.getBook().getQuantity());
 
-                                        boolean isUpdated = bookDAO.updateBook(currentBook);
+                                        boolean isUpdated = BookDatabaseController.updateBook(currentBook);
 
                                         if(isUpdated) {
                                             System.out.println("Book updated successfully in database");
@@ -190,7 +188,7 @@ public class DocumentController {
                             Book book = getTableView().getItems().get(getIndex());
 
                             // Kiểm tra nếu sách đang được mượn
-                            if (borrowedListDAO.isBookLoanExist(book.getId())) {
+                            if (BorrowedListDatabaseController.isBookLoanExist(book.getId())) {
                                 // Hiển thị thông báo
                                 Alert alert = new Alert(Alert.AlertType.WARNING);
                                 alert.setTitle("Can't delete a book");
