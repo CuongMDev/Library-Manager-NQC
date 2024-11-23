@@ -83,9 +83,9 @@
             </JFXButton>
             <JFXButton fx:id="infoButton" layoutY="555.0" onMouseClicked="#OnOverdueButtonClicked" prefHeight="66.0" prefWidth="230.0" styleClass="menuButton" text="Overdue List">
                <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="32.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/information.png" />
+                        <Image url="@images/overdue.jpg" />
                      </image>
                   </ImageView>
                </graphic>
