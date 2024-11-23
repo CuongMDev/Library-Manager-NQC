@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class BookInformationController {
     public enum Type {
@@ -14,7 +16,12 @@ public class BookInformationController {
         EDIT
     }
 
-    private String bookId;
+    @FXML
+    private ImageView bookImage;
+    @FXML
+    private ImageView bookQrImage;
+
+    private Book book;
     @FXML
     private TextField bookTitle;
     @FXML
@@ -69,18 +76,25 @@ public class BookInformationController {
     }
 
     public Book getBook() {
-        return new Book(bookId, bookTitle.getText(), bookAuthor.getText(),
-                bookPublisher.getText(), bookPublishedDate.getText(), bookDescription.getText(),
-                Integer.parseInt(bookQuantity.getText()));
+        book.setQuantity(Integer.parseInt(bookQuantity.getText()));
+        return book;
     }
 
     public void setBook(Book book) {
-        bookId = book.getId();
+        this.book = book;
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthors());
         bookQuantity.setText(String.valueOf(book.getQuantity()));
         bookPublisher.setText(book.getPublisher());
         bookPublishedDate.setText(book.getPublishedDate());
         bookDescription.setText(book.getDescription());
+        if (book.getThumbnailUrl() != null) {
+            bookImage.setImage(new Image(book.getThumbnailUrl()));
+        }
+        try {
+            bookQrImage.setImage(Utils.generateQRCode(book.getInfoLink()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
+import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
 import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
@@ -60,9 +61,6 @@ public class UserController {
     private TableView<User> userTable;
     @FXML
     private TextField searchField;
-
-    private UserDAO userDAO = new UserDAO();
-    private BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
 
     /**
      * all users list
@@ -153,7 +151,7 @@ public class UserController {
                                     if (userInfoController.checkValidUser()) {
                                         currentUser.setUser(userInfoController.getUser());
 
-                                        boolean isUpdated = userDAO.updateUser(currentUser);
+                                        boolean isUpdated = UserDatabaseController.updateUser(currentUser);
                                         if (isUpdated) {
                                             System.out.println("User updated successfully in database");
                                         } else {
@@ -244,7 +242,7 @@ public class UserController {
                                 if (recordButtonMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (bookLoanInfoController.checkValidBookLoan()) {
                                         BookLoan getBookLoan = bookLoanInfoController.getBookLoan();
-                                        boolean isInserted = borrowedListDAO.insertBookLoan(getBookLoan);
+                                        boolean isInserted = BorrowedListDatabaseController.insertBookLoan(getBookLoan);
                                         if (isInserted) {
                                             System.out.println("Thêm thông tin mượn sách vào database thành công");
                                             BorrowedListController.addBookLoanToList(getBookLoan);

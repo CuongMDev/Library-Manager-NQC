@@ -37,8 +37,14 @@ public class BookJsonHandler {
         String publisher = volumeInfo.optString("publisher", "Unknown");
         String publishedDate = volumeInfo.optString("publishedDate", "Unknown");
         String description = volumeInfo.optString("description", "No description");
+        String thumbnailUrl = null;
+        if (volumeInfo.has("imageLinks")) {
+            JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
+            thumbnailUrl = imageLinks.getString("thumbnail");
+        }
+        String infoLink = volumeInfo.optString("infoLink");
 
-        return new Book(id, title, authors.toString(), publisher, publishedDate, description, 0);
+        return new Book(id, title, authors.toString(), publisher, publishedDate, description, 0, thumbnailUrl, infoLink);
     }
 
     static public List<Book> parseBookTitles(String jsonResponse) {
