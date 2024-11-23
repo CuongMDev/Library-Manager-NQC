@@ -1,10 +1,13 @@
 package com.example.librarymanagernqc.database;
 
 import com.example.librarymanagernqc.AbstractClass.HasError;
+import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.ManagementInterface.User.UserController;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
+import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
+import com.example.librarymanagernqc.database.Controller.ReturnedListDatabaseController;
 import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 
 import java.util.List;
@@ -23,6 +26,12 @@ public class DatabaseLoader extends HasError {
         if (!BookDatabaseController.loadBooksFromDatabase()) {
             success = false;
         } else if (!UserDatabaseController.loadMemberFromDatabase()) {
+            success = false;
+        }
+        else if(!BorrowedListDatabaseController.loadBookLoanFromDatabase()) {
+            success = false;
+        }
+        else if(!ReturnedListDatabaseController.loadBookReturnFromDatabase()) {
             success = false;
         }
 

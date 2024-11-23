@@ -11,6 +11,8 @@ import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
+import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
+import com.example.librarymanagernqc.database.DAO.UserDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,6 +61,8 @@ public class UserController {
     @FXML
     private TextField searchField;
 
+    private UserDAO userDAO = new UserDAO();
+    private BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
 
     /**
      * all users list
@@ -148,6 +152,13 @@ public class UserController {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (userInfoController.checkValidUser()) {
                                         currentUser.setUser(userInfoController.getUser());
+
+                                        boolean isUpdated = userDAO.updateUser(currentUser);
+                                        if (isUpdated) {
+                                            System.out.println("User updated successfully in database");
+                                        } else {
+                                            System.out.println("Failed to update user in database");
+                                        }
                                         userTable.refresh();
 
                                         mainStackPane.getChildren().removeLast();
@@ -233,9 +244,18 @@ public class UserController {
                                 if (recordButtonMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (bookLoanInfoController.checkValidBookLoan()) {
                                         BookLoan getBookLoan = bookLoanInfoController.getBookLoan();
-                                        BorrowedListController.addBookLoanToList(getBookLoan);
+                                        boolean isInserted = borrowedListDAO.insertBookLoan(getBookLoan);
+                                        if (isInserted) {
+                                            System.out.println("Thêm thông tin mượn sách vào database thành công");
+                                            BorrowedListController.addBookLoanToList(getBookLoan);
+                                        }
+                                        else{
+                                            System.out.println("Thêm thông tin sách mượn vào database thất bại");
+                                        }
+
                                         //giảm số lượng sách
                                         DocumentController.changeBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(getBookLoan.getBookId())), -getBookLoan.getLoanQuantity());
+
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);
                                     }

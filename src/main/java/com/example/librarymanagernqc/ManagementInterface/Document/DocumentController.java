@@ -5,6 +5,7 @@ import com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBoo
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
+import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +45,9 @@ public class DocumentController {
     @FXML
     private TextField searchField;
 
+    private BookDAO bookDAO = new BookDAO();
+    private BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
+
     /**
      * all books list
      */
@@ -58,7 +62,7 @@ public class DocumentController {
     }
 
     private void deleteBookFromList(Book book) {
-        BookDAO bookDAO = new BookDAO();
+
         boolean isDeletedFromDb = BookDatabaseController.deleteBookById(book.getId());  // Xóa khỏi database
 
         if (isDeletedFromDb) {
@@ -71,6 +75,8 @@ public class DocumentController {
 
     public static void changeBookQuantity(Book book, int changeQuantity) {
         book.setQuantity(book.getQuantity() + changeQuantity);
+        // cập nhật số lượng sách trng database
+        BookDAO.changeQuantityBook(book.getQuantity(), book.getId());
     }
 
     /**
@@ -140,6 +146,15 @@ public class DocumentController {
                                     if (bookInfoController.checkValidBook()) {
                                         currentBook.setQuantity(bookInfoController.getBook().getQuantity());
 
+                                        boolean isUpdated = bookDAO.updateBook(currentBook);
+
+                                        if(isUpdated) {
+                                            System.out.println("Book updated successfully in database");
+                                        }
+                                        else{
+                                            System.out.println("Failed to update book in database");
+                                        }
+
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);
                                     }
@@ -171,12 +186,23 @@ public class DocumentController {
                         deleteButton.setCursor(Cursor.HAND);
                         deleteButton.setGraphic(deleteImage);
                         deleteButton.setOnAction(event -> {
-                            //lấy ô hiện tại đang chọn
+                            // Lấy sách hiện tại đang được chọn
                             Book book = getTableView().getItems().get(getIndex());
 
-                            // Xóa ô khỏi book list
-                            deleteBookFromList(book);
+                            // Kiểm tra nếu sách đang được mượn
+                            if (borrowedListDAO.isBookLoanExist(book.getId())) {
+                                // Hiển thị thông báo
+                                Alert alert = new Alert(Alert.AlertType.WARNING);
+                                alert.setTitle("Can't delete a book");
+                                alert.setHeaderText(null);
+                                alert.setContentText("The book cannot be deleted because it is being borrowed.");
+                                alert.showAndWait();
+                            } else {
+                                // Xóa sách khỏi danh sách và database
+                                deleteBookFromList(book);
+                            }
                         });
+
                     }
 
                     private final HBox buttonsBox = new HBox(10, editButton, deleteButton);

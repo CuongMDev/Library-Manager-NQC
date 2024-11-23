@@ -3,6 +3,7 @@ package com.example.librarymanagernqc.Objects.BookLoan;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.Utils;
 
+import com.example.librarymanagernqc.database.DAO.IdGeneratorDAO;
 import java.util.List;
 
 public class BookLoan {
@@ -15,8 +16,29 @@ public class BookLoan {
     private String bookId;
     private String fine;
     private String bookCondition;
+    private int loanId;
 
+    private IdGeneratorDAO idGeneratorDAO = new IdGeneratorDAO();
+
+
+    // dùng cho borrowed list
     public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, int loanQuantity) {
+        this.username = username;
+        this.bookTitle = bookTitle;
+        this.bookId = bookId;
+        this.loanDate = loanDate;
+        this.dueDate = dueDate;
+        this.status = "On Time";
+        this.loanQuantity = loanQuantity;
+        this.fine = "";
+        this.bookCondition = "100%";
+        this.loanId = idGeneratorDAO.getNextId();
+        idGeneratorDAO.updateNextId(loanId + 1);
+    }
+
+    // dùng khi lấy dữ liệu từ database
+    public BookLoan(int loanId, String username, String bookTitle, String bookId, String loanDate, String dueDate, int loanQuantity) {
+        this.loanId = loanId;
         this.username = username;
         this.bookTitle = bookTitle;
         this.bookId = bookId;
@@ -28,6 +50,7 @@ public class BookLoan {
         this.bookCondition = "100%";
     }
 
+    // dùng cho return list
     public BookLoan(String username, String bookTitle, String bookId, String loanDate, String dueDate, int loanQuantity, String fine) {
         this.username = username;
         this.bookTitle = bookTitle;
@@ -109,6 +132,10 @@ public class BookLoan {
 
     public String getBookCondition() {
         return bookCondition;
+    }
+
+    public int getLoanId() {
+        return loanId;
     }
 
     public void setBookLoan(BookLoan bookLoan) {

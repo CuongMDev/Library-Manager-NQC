@@ -95,4 +95,24 @@ public class UserDAO {
       return false; // Nếu có lỗi, trả về false
     }
   }
+
+    //chỉnh sửa thông tin user
+  public boolean updateUser(User user){
+    String query = "UPDATE Member SET full_name = ?, gender = ?, phone_number = ?, date_of_birth = ? WHERE member_name = ?";
+    try (Connection connection = DatabaseHelper.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)){
+        statement.setString(1, user.getFullName());
+        statement.setString(2, user.getGender());
+        statement.setString(3, user.getPhoneNumber());
+        statement.setString(4, user.getDateOfBirth());
+        statement.setString(5, user.getUsername());
+
+        int rowsAffected = statement.executeUpdate();
+
+        return rowsAffected > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }

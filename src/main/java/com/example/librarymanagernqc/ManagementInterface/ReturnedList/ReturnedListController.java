@@ -52,10 +52,15 @@ public class ReturnedListController {
     /**
      * all books list
      */
-    private static final List<BookLoan> bookLoansList = new LinkedList<>();
+    private static final List<BookLoan> bookReturnsList = new LinkedList<>();
 
     public static void addBookLoanToList(BookLoan bookLoan) {
-        bookLoansList.add(bookLoan);
+        bookReturnsList.add(bookLoan);
+    }
+
+    public static void setAllBookReturnList(List<BookLoan> newbookReturnList) {
+        bookReturnsList.clear();
+        bookReturnsList.addAll(newbookReturnList);
     }
 
     public void addBookLoansListToTable(List<BookLoan> bookLoansList) {
@@ -73,12 +78,12 @@ public class ReturnedListController {
      * search book loan by title, limit = 0 mean no limit
      */
     private  List<BookLoan> searchBookLoansList(String title) {
-        return BookLoan.fuzzySearch(bookLoansList, title, 0, 0);
+        return BookLoan.fuzzySearch(bookReturnsList, title, 0, 0);
     }
 
     public  void updateTable() {
         if (searchTitleField.getText().isEmpty()) {
-            addBookLoansListToTable(bookLoansList);
+            addBookLoansListToTable(bookReturnsList);
         } else {
             addBookLoansListToTable(searchBookLoansList(searchTitleField.getText()));
         }
