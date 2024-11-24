@@ -76,7 +76,6 @@ The application is designed to manage library operations efficiently. The applic
 3. Add analytics to track library usage statistics.
 4. Integrate email notifications for overdue reminders.
 5. Develop a mobile-friendly version.
-6. Add barcode scanning for books and users.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

@@ -139,7 +139,7 @@ public class Utils {
     }
 
     /**
-     * Hàm tạo QR code từ link
+     * Creating QR Code from Link
      */
     public static Image generateQRCode(String text) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();

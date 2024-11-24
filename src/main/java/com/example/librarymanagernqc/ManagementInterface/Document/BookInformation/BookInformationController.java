@@ -90,18 +90,22 @@ public class BookInformationController {
         bookPublishedDate.setText(book.getPublishedDate());
         bookDescription.setText(book.getDescription());
 
-        new Thread(() -> {
-            if (book.getThumbnailUrl() != null) {
-                Image thumnailImage = new Image(book.getThumbnailUrl());
-                javafx.application.Platform.runLater(() -> bookImage.setImage(thumnailImage));
-            }
-            try {
-                Image qrImage = Utils.generateQRCode(book.getInfoLink());
-                javafx.application.Platform.runLater(() -> bookQrImage.setImage(qrImage));
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        //book image loading
+        if (book.getThumbnailUrl() != null) {
+            Image thumbnailImage = new Image(book.getThumbnailUrl(), true);
+            // Lắng nghe hoàn tất tải ảnh
+            thumbnailImage.progressProperty().addListener((observable, oldProgress, newProgress) -> {
+                if (newProgress.doubleValue() == 1.0) { //if loading image successfully
+                    bookImage.setImage(thumbnailImage);
+                }
+            });
+        }
+        //qr loading
+        try {
+            Image qrImage = Utils.generateQRCode(book.getInfoLink());
+            bookQrImage.setImage(qrImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
