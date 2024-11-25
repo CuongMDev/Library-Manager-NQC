@@ -12,44 +12,11 @@ import java.util.List;
 
 public class BorrowedListDAO {
 
-  private Connection connection;
-
-  // Khởi tạo kết nối một lần duy nhất từ DatabaseHelper
-  public BorrowedListDAO() {
-    try {
-      this.connection = DatabaseHelper.getConnection(); // Lấy kết nối từ DatabaseHelper
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private Connection getValidConnection() {
-    try {
-      if (connection == null || connection.isClosed()) {
-        connection = DatabaseHelper.getConnection();
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return connection;
-  }
-
-  // Đảm bảo kết nối được đóng khi không còn sử dụng
-  public void closeConnection() {
-    try {
-      if (connection != null && !connection.isClosed()) {
-        connection.close(); // Đóng kết nối
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
   public List<BookLoan> getBookLoanFromDatabase() throws SQLException {
     List<BookLoan> bookLoanList = new ArrayList<BookLoan>();
     String query = "SELECT * FROM BorrowedList";
 
-    try (Statement statement = getValidConnection().createStatement();
+    try (Statement statement = DatabaseHelper.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(query)) {
 
       while (resultSet.next()) {
@@ -78,7 +45,7 @@ public class BorrowedListDAO {
   public boolean insertBookLoan(BookLoan bookLoan) {
     String query = "INSERT INTO BorrowedList (loan_id, member_name, book_id, loan_date, due_date, loanQuantity, status, fine, bookCondition, bookTitle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    try (PreparedStatement statement = getValidConnection().prepareStatement(query)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
 
       statement.setInt(1, bookLoan.getLoanId());
       statement.setString(2, bookLoan.getUsername());
@@ -116,7 +83,7 @@ public class BorrowedListDAO {
   public boolean deleteBookLoanById(BookLoan bookLoan) {
     String deleteQuery = "DELETE FROM BorrowedList WHERE loan_id = ?";
 
-    try (PreparedStatement statement = getValidConnection().prepareStatement(deleteQuery)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(deleteQuery)) {
 
       statement.setInt(1, bookLoan.getLoanId());
 
@@ -134,7 +101,7 @@ public class BorrowedListDAO {
   // kiểm tra xem book_id có tồn tại trong BorrowedList chưa
   public boolean isBookLoanExist(String bookId) {
     String query = "SELECT COUNT(*) FROM BorrowedList WHERE book_id = ?";
-    try (PreparedStatement statement = getValidConnection().prepareStatement(query)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
       statement.setString(1, bookId);
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next()) {

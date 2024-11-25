@@ -12,8 +12,7 @@ public class IdGeneratorDAO {
     int nextid = 0;
     String query = "SELECT * FROM IdGenerator";
 
-    try (Connection connection = DatabaseHelper.getConnection();
-        Statement statement = connection.createStatement();
+    try (Statement statement = DatabaseHelper.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(query)) {
 
       while (resultSet.next()) {
@@ -29,8 +28,7 @@ public class IdGeneratorDAO {
 
   public boolean updateNextId(int id) {
     String query = "UPDATE IdGenerator SET nextId = ? WHERE finalId = 1";
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query)){
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)){
       statement.setInt(1, id);
 
       int rowsAffected = statement.executeUpdate();

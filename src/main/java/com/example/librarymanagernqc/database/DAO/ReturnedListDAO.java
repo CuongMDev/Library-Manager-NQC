@@ -15,8 +15,7 @@ public class ReturnedListDAO {
     List<BookLoan> bookReturnList = new ArrayList<BookLoan>();
     String query = "SELECT * FROM ReturnList";
 
-    try (Connection connection = DatabaseHelper.getConnection();
-        Statement statement = connection.createStatement();
+    try (Statement statement = DatabaseHelper.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(query)) {
 
       while (resultSet.next()) {
@@ -44,8 +43,7 @@ public class ReturnedListDAO {
   public boolean insertBookReturn(BookLoan bookLoan) {
     String query = "INSERT INTO ReturnList (member_name, book_id, loan_date, due_date, loanQuantity, status, fine, bookCondition, bookTitle) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
 
       statement.setString(1, bookLoan.getUsername());
       statement.setString(2, bookLoan.getBookId());

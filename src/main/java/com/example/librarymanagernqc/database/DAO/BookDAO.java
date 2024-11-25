@@ -13,45 +13,13 @@ import java.util.List;
 
 public class BookDAO {
 
-  private Connection connection;
-
-  // Khởi tạo kết nối một lần duy nhất từ DatabaseHelper
-  public BookDAO() {
-    try {
-      this.connection = DatabaseHelper.getConnection(); // Lấy kết nối từ DatabaseHelper
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private Connection getValidConnection() {
-    try {
-      if (connection == null || connection.isClosed()) {
-        connection = DatabaseHelper.getConnection();
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return connection;
-  }
-
-  // Đảm bảo kết nối được đóng khi không còn sử dụng
-  public void closeConnection() {
-    try {
-      if (connection != null && !connection.isClosed()) {
-        connection.close(); // Đóng kết nối
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
 
   public List<Book> getBooksFromDatabase() throws SQLException {
     List<Book> booksList = new ArrayList<>();
 
     String query = "SELECT * FROM Book";  // Truy vấn để lấy tất cả sách
 
-    try (Statement statement = getValidConnection().createStatement();
+    try (Statement statement = DatabaseHelper.getConnection().createStatement();
          ResultSet resultSet = statement.executeQuery(query)) {
 
       while (resultSet.next()) {
@@ -82,7 +50,7 @@ public class BookDAO {
   public boolean deleteBookById(String bookId) {
     String deleteQuery = "DELETE FROM Book WHERE book_id = ?";
 
-    try (PreparedStatement preparedStatement = getValidConnection().prepareStatement(deleteQuery)) {
+    try (PreparedStatement preparedStatement = DatabaseHelper.getConnection().prepareStatement(deleteQuery)) {
 
       preparedStatement.setString(1, bookId);
       int affectedRows = preparedStatement.executeUpdate();
@@ -99,7 +67,7 @@ public class BookDAO {
   public boolean insertBook(Book book) {
     String sql = "INSERT INTO Book (book_id, title, quantity, author_name, description, publisher, published_date, thumbnailUrl, infoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    try (PreparedStatement statement = getValidConnection().prepareStatement(sql)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(sql)) {
 
       statement.setString(1, book.getId());
       statement.setString(2, book.getTitle());
@@ -144,7 +112,7 @@ public class BookDAO {
   // kiểm tra book_id đã tồn tại trong database chưa
   public boolean isBookExists(String bookId) {
     String sql = "SELECT COUNT(*) FROM Book WHERE book_id = ?";
-    try (PreparedStatement statement = getValidConnection().prepareStatement(sql)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(sql)) {
       statement.setString(1, bookId);
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next()) {
@@ -159,7 +127,7 @@ public class BookDAO {
   // chỉnh sửa thông tin book
   public boolean updateBook(Book book) {
     String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
-    try (PreparedStatement statement = getValidConnection().prepareStatement(query)){
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)){
       statement.setInt(1, book.getQuantity());
       statement.setString(2, book.getId());
 

@@ -16,8 +16,7 @@ public class UserDAO {
   public List<User> getUserFromDatabase() throws SQLException {
     List<User> users = new ArrayList<User>();
     String query = "SELECT * FROM Member";
-    try (Connection connection = DatabaseHelper.getConnection();
-         Statement statement = connection.createStatement();
+    try (Statement statement = DatabaseHelper.getConnection().createStatement();
          ResultSet resultSet = statement.executeQuery(query)) {
 
       while (resultSet.next()) {
@@ -41,8 +40,7 @@ public class UserDAO {
   public boolean addUser(User user) {
     String insertUserSQL = "INSERT INTO Member (member_name, citizen_id, full_name, gender, phone_number, date_of_birth) VALUES (?, ?, ?, ?, ?, ?)";
 
-    try (Connection conn = DatabaseHelper.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(insertUserSQL)) {
+    try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(insertUserSQL)) {
 
       stmt.setString(1, user.getUsername());
       stmt.setString(2, user.getCitizenId());
@@ -63,8 +61,7 @@ public class UserDAO {
   //kiểm tra member_name đã tồn tại trong database chưa
   public boolean isUserExists(String username, String citizenId) {
     String query = "SELECT COUNT(*) FROM Member WHERE member_name = ? OR citizen_id = ?";
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
       statement.setString(1, username);  // Kiểm tra username
       statement.setString(2, citizenId); // Kiểm tra citizen_id
       ResultSet resultSet = statement.executeQuery();
@@ -82,8 +79,7 @@ public class UserDAO {
   public boolean deleteUser(User user) {
     String query = "DELETE FROM Member WHERE member_name = ?"; // Hoặc bạn có thể sử dụng citizenId
 
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
 
       statement.setString(1, user.getUsername()); // Hoặc sử dụng user.getCitizenId() nếu bạn xóa theo citizenId
 
@@ -99,8 +95,7 @@ public class UserDAO {
     //chỉnh sửa thông tin user
   public boolean updateUser(User user){
     String query = "UPDATE Member SET full_name = ?, gender = ?, phone_number = ?, date_of_birth = ? WHERE member_name = ?";
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query)){
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)){
         statement.setString(1, user.getFullName());
         statement.setString(2, user.getGender());
         statement.setString(3, user.getPhoneNumber());

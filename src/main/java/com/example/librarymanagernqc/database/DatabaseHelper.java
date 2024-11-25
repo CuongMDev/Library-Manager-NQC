@@ -11,7 +11,9 @@ public class DatabaseHelper {
 
   // Biến static duy nhất cho kết nối
   private static Connection connection;
+  private DatabaseHelper() {
 
+  }
   // Hàm getConnection sẽ kiểm tra nếu kết nối đã tồn tại, nếu chưa thì tạo mới
   public static Connection getConnection() throws SQLException {
     // Kiểm tra xem kết nối đã được tạo chưa
