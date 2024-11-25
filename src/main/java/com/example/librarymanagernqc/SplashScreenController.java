@@ -48,7 +48,7 @@ public class SplashScreenController {
                 fetchTimeTask.setOnFailed(event -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
-                    alert.setHeaderText("Please Recheck your Internet Connection");
+                    alert.setHeaderText("Please recheck your Internet Connection");
                     alert.setContentText(fetchTimeTask.getException().getMessage());
                     alert.showAndWait();
 

@@ -23,11 +23,9 @@ public class DatabaseLoader extends HasError {
             success = false;
         } else if (!UserDatabaseController.loadMemberFromDatabase()) {
             success = false;
-        }
-        else if(!BorrowedListDatabaseController.loadBookLoanFromDatabase()) {
+        } else if(!BorrowedListDatabaseController.loadBookLoanFromDatabase()) {
             success = false;
-        }
-        else if(!ReturnedListDatabaseController.loadBookReturnFromDatabase()) {
+        } else if(!ReturnedListDatabaseController.loadBookReturnFromDatabase()) {
             success = false;
         }
 

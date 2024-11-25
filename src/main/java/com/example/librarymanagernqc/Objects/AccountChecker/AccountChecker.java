@@ -12,9 +12,16 @@ public class AccountChecker extends HasError {
 
     public static boolean checkValidAccount(String username, String password) {
         AdminDAO adminDAO = new AdminDAO();
-        if(adminDAO.isAcountExists(username, password)) {
-            return true;
+        try {
+            if (adminDAO.isAcountExists(username, password)) {
+                return true;
+            }
+        } catch (Exception e) {
+            setErrorMessage("Please recheck your Internet Connection");
+            e.printStackTrace();
+            return false;
         }
+        
         setErrorMessage("Invalid username or password");
         return false;
     }
