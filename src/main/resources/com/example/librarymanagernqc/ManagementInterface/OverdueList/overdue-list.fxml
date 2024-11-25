@@ -48,7 +48,7 @@
                </font>
             </Label>
             <TextField fx:id="searchTitleField1" layoutX="107.0" layoutY="147.0" prefHeight="29.0" prefWidth="297.0" promptText="Book Title" styleClass="searchField" stylesheets="@style.css" />
-            <TableView fx:id="overdueListTable1" layoutX="51.0" layoutY="241.0" prefHeight="526.0" prefWidth="777.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
+            <TableView fx:id="overdueListTable" layoutX="51.0" layoutY="241.0" prefHeight="526.0" prefWidth="777.0" styleClass="tableView" stylesheets="@../../common/images/style.css">
                <columns>
                   <TableColumn fx:id="usernameColumn1" prefWidth="100.79996490478516" text="Username " />
                   <TableColumn fx:id="bookTitleColumn1" prefWidth="289.6000213623047" text="Book Title" />

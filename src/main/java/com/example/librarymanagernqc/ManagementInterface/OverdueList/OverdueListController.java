@@ -73,11 +73,7 @@ public class OverdueListController {
 
     private void addOverdueListToTable(List<BookLoan> overdueList) {
         overdueListTable.getItems().clear();
-        LocalDate currentTime = TimeGetter.getCurrentTime().toLocalDate();
         for (BookLoan bookLoan : OverdueListController.overdueList) {
-            if (currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).compareTo(bookLoan.getDueDate()) > 0) {
-                bookLoan.setStatus("Overdue");
-            }
             overdueListTable.getItems().add(bookLoan);
         }
     }
