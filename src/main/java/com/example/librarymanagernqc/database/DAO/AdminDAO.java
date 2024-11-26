@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class AdminDAO {
 
   // kiểm tra thông tin đăng nhập có đúng không
-  public boolean isAcountExists(String username, String password) {
+  public static boolean isAcountExists(String username, String password) {
     String sql = "SELECT COUNT(*) FROM Admins WHERE admin_user_name = ? AND password = ?";
     try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(sql)) {
       statement.setString(1, username);

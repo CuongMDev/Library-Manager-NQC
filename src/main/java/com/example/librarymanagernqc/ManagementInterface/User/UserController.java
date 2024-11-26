@@ -20,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -78,16 +79,6 @@ public class UserController {
         usersList = newUsersList;
     }
 
-    private void deleteUserFromList(User user) {
-        boolean isDeletedFromDb = UserDatabaseController.deleteUser(user);  // Xóa khỏi database
-
-        if (isDeletedFromDb) {
-            usersList.remove(user);  // Xóa khỏi danh sách sau khi xóa thành công trong database
-            updateTable();  // Cập nhật bảng để phản ánh sự thay đổi
-        } else {
-            System.out.println("Failed to delete book from database.");  // Thông báo nếu xóa không thành công
-        }
-    }
 
     /**
      * search book by title, limit = 0 mean no limit
@@ -192,14 +183,23 @@ public class UserController {
                             //lấy ô hiện tại đang chọn
                             User user = getTableView().getItems().get(getIndex());
 
-                            // Xóa người dùng khỏi database
-                            boolean isDeleted = UserDatabaseController.deleteUser(user);
-                            if (isDeleted) {
-                                // Nếu xóa thành công, xóa người dùng khỏi TableView
-                                getTableView().getItems().remove(user);
+                            // kiểm tra nếu người dùng đang mượn sách thì không được xóa
+                            if(BorrowedListDatabaseController.isBookLoanExistBymemberName(user.getUsername())) {
+                                // Hiển thị thông báo
+                                Alert alert = new Alert(Alert.AlertType.WARNING);
+                                alert.setTitle("Can't delete a user");
+                                alert.setHeaderText(null);
+                                alert.setContentText("Unable to delete a user because the user is borrowing a book");
+                                alert.showAndWait();
                             }
-
-                            System.out.println(UserDatabaseController.deleteUser(user));
+                            else{
+                                // Xóa người dùng khỏi database
+                                boolean isDeleted = UserDatabaseController.deleteUser(user);
+                                if (isDeleted) {
+                                    // Nếu xóa thành công, xóa người dùng khỏi TableView
+                                    getTableView().getItems().remove(user);
+                                }
+                            }
                         });
                     }
 

@@ -37,9 +37,18 @@ public class BorrowedListDatabaseController extends HasError {
         return true;
     }
 
-    // kiểm tra book loan có tồn tại không
-    public static boolean isBookLoanExist(String bookId) {
-        if (!borrowedListDAO.isBookLoanExist(bookId)) {
+    // kiểm tra book loan có tồn tại không với bookId không
+    public static boolean isBookLoanExistBybookId(String bookId) {
+        if (!borrowedListDAO.isBookLoanExistBybookId(bookId)) {
+            setErrorMessage("Book Loan not found");
+            return false;
+        }
+        return true;
+    }
+
+    // kiểm tra book loan có tồn tại không với member_name không
+    public static boolean isBookLoanExistBymemberName(String member_name) {
+        if (!borrowedListDAO.isBookLoanExistBymemberName(member_name)) {
             setErrorMessage("Book Loan not found");
             return false;
         }

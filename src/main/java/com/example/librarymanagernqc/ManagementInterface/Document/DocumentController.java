@@ -187,7 +187,7 @@ public class DocumentController {
                             Book book = getTableView().getItems().get(getIndex());
 
                             // Kiểm tra nếu sách đang được mượn
-                            if (BorrowedListDatabaseController.isBookLoanExist(book.getId())) {
+                            if (BorrowedListDatabaseController.isBookLoanExistBybookId(book.getId())) {
                                 // Hiển thị thông báo
                                 Alert alert = new Alert(Alert.AlertType.WARNING);
                                 alert.setTitle("Can't delete a book");

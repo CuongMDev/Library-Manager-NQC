@@ -100,10 +100,25 @@ public class BorrowedListDAO {
     }
 
     // kiểm tra xem book_id có tồn tại trong BorrowedList chưa
-    public boolean isBookLoanExist(String bookId) {
+    public boolean isBookLoanExistBybookId(String bookId) {
         String query = "SELECT COUNT(*) FROM BorrowedList WHERE book_id = ?";
         try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
             statement.setString(1, bookId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // kiểm tra xem member_name có tồn tại trong BorrowedList chưa
+    public boolean isBookLoanExistBymemberName(String member_name) {
+        String query = "SELECT COUNT(*) FROM BorrowedList WHERE member_name = ?";
+        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
+            statement.setString(1, member_name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt(1) > 0;
