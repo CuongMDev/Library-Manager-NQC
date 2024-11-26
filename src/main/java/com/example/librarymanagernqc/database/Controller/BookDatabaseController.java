@@ -21,8 +21,7 @@ public class BookDatabaseController extends HasError {
             //tải sách vào database
             DocumentController.setAllBooksList(booksFromDb);
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             setErrorMessage("Error loading Books from database");
             return false;
         }
@@ -39,7 +38,7 @@ public class BookDatabaseController extends HasError {
 
     //kiểm tra sách đã tồn tại chưa
     public static boolean isBookExists(String bookId) {
-        if(!bookDAO.isBookExists(bookId)) {
+        if (!bookDAO.isBookExists(bookId)) {
             setErrorMessage("Book does not exist");
             return false;
         }
@@ -47,8 +46,8 @@ public class BookDatabaseController extends HasError {
     }
 
     // thêm sách
-    public static boolean insertBook(Book newBook){
-        if(!bookDAO.insertBook(newBook)) {
+    public static boolean insertBook(Book newBook) {
+        if (!bookDAO.insertBook(newBook)) {
             setErrorMessage("Error inserting book");
             return false;
         }
@@ -57,7 +56,7 @@ public class BookDatabaseController extends HasError {
 
     // update sách
     public static boolean updateBook(Book updatedBook) {
-        if(!bookDAO.updateBook(updatedBook)) {
+        if (!bookDAO.updateBook(updatedBook)) {
             setErrorMessage("Error updating book");
             return false;
         }

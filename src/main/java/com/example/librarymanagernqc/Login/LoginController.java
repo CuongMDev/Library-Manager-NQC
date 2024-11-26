@@ -26,9 +26,6 @@ public class LoginController {
     private TextField passwordField;
     @FXML
     private StackPane rightFormStackPane;
-
-    private Pane saveLoginPane;
-
     @FXML
     private Text errorText;
 
@@ -85,7 +82,7 @@ public class LoginController {
     @FXML
     private void OnForgotPasswordMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            saveLoginPane = (Pane) rightFormStackPane.getChildren().removeLast();
+            Pane saveLoginPane = (Pane) rightFormStackPane.getChildren().removeLast();
             FXMLLoader forgotPasswordLoader = new FXMLLoader(getClass().getResource("forgot-password.fxml"));
             try {
                 rightFormStackPane.getChildren().add(forgotPasswordLoader.load());

@@ -15,14 +15,13 @@ public class UserDatabaseController extends HasError {
     }
 
     // Phương thức tải member từ database
-    public static boolean loadMemberFromDatabase(){
+    public static boolean loadMemberFromDatabase() {
         try {
             List<User> usersFromDb = userDAO.getUserFromDatabase();
             //tải sách vào database
             UserController.setAllUsersList(usersFromDb);
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             setErrorMessage("Error loading users from database");
             return false;
         }
@@ -47,7 +46,7 @@ public class UserDatabaseController extends HasError {
 
     //kiểm tra user đã tồn tại chưa
     public static boolean isUserExists(String username, String citizenId) {
-        if(!userDAO.isUserExists(username, citizenId)) {
+        if (!userDAO.isUserExists(username, citizenId)) {
             setErrorMessage("User not found");
             return false;
         }

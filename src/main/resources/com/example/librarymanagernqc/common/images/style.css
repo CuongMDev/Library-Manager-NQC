@@ -17,6 +17,8 @@
 .imageButton {
     -fx-border-color: gray;
     -fx-cursor: HAND;
+    -fx-padding: 0;
+    -fx-content-display: GRAPHIC_ONLY;
 }
 
 .imageButton:hover {
