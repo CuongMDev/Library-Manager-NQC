@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.Objects.AccountChecker;
 
 import com.example.librarymanagernqc.AbstractClass.HasError;
+import com.example.librarymanagernqc.database.Controller.AdminDatabaseController;
 import com.example.librarymanagernqc.database.DAO.AdminDAO;
 
 public class AccountChecker extends HasError {
@@ -9,9 +10,8 @@ public class AccountChecker extends HasError {
     }
 
     public static boolean checkValidUsername(String username) {
-        AdminDAO adminDAO = new AdminDAO();
         try {
-            if (adminDAO.isUserExists(username)) {
+            if (AdminDatabaseController.checkValidUsername(username)) {
                 return true;
             }
         } catch (Exception e) {
@@ -19,15 +19,12 @@ public class AccountChecker extends HasError {
             e.printStackTrace();
             return false;
         }
-
-        setErrorMessage("Username not exist");
         return false;
     }
 
     public static boolean checkValidAccount(String username, String password) {
-        AdminDAO adminDAO = new AdminDAO();
         try {
-            if (adminDAO.isAcountExists(username, password)) {
+            if (AdminDatabaseController.checkValidAccount(username, password)) {
                 return true;
             }
         } catch (Exception e) {
@@ -35,15 +32,12 @@ public class AccountChecker extends HasError {
             e.printStackTrace();
             return false;
         }
-        
-        setErrorMessage("Invalid username or password");
         return false;
     }
 
     public static boolean checkValidKey(String username, String key) {
-        AdminDAO adminDAO = new AdminDAO();
         try {
-            if (adminDAO.isKeyExists(username, key)) {
+            if (AdminDatabaseController.checkValidKey(username, key)) {
                 return true;
             }
         } catch (Exception e) {
@@ -51,8 +45,6 @@ public class AccountChecker extends HasError {
             e.printStackTrace();
             return false;
         }
-
-        setErrorMessage("Invalid key");
         return false;
     }
 

@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.Login;
 
 import com.example.librarymanagernqc.Objects.AccountChecker.AccountChecker;
+import com.example.librarymanagernqc.database.Controller.AdminDatabaseController;
 import com.example.librarymanagernqc.database.DAO.AdminDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -29,9 +30,8 @@ public class NewPassword {
     private void onSetMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             if (AccountChecker.checkMatchPassword(newPasswordField1.getText(), newPasswordField2.getText())) {
-                AdminDAO adminDAO = new AdminDAO();
                 try {
-                    adminDAO.setPassword(username, newPasswordField1.getText());
+                    AdminDatabaseController.setPassword(username, newPasswordField1.getText());
                 } catch (Exception e) {
                     errorText.setText("Please recheck your Internet Connection");
                     e.printStackTrace();
