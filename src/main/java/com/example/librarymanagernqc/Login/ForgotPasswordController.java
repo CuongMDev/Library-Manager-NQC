@@ -17,6 +17,8 @@ public class ForgotPasswordController {
     @FXML
     public Button backToLoginButton;
     @FXML
+    public Button recoverButton;
+    @FXML
     private TextField usernameField;
     @FXML
     private Text errorText;
@@ -34,9 +36,10 @@ public class ForgotPasswordController {
                     throw new RuntimeException(e);
                 }
 
-                RecoveryKey recoveryKeyController = recoveryKey.getController();
+                RecoveryKeyController recoveryKeyController = recoveryKey.getController();
                 //set username
                 recoveryKeyController.setUsername(usernameField.getText());
+
                 recoveryKeyController.backToLoginButton.setOnMouseClicked(backToLoginMouseEvent -> {
                     if (backToLoginMouseEvent.getButton() == MouseButton.PRIMARY) {
                         mainStackPane.getChildren().removeLast();

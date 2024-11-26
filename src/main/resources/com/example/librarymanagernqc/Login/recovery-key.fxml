@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<StackPane fx:id="mainStackPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.Login.RecoveryKey">
+<StackPane fx:id="mainStackPane" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagernqc.Login.RecoveryKeyController">
    <children>
       <AnchorPane prefHeight="427.0" prefWidth="290.0" styleClass="rightForm" stylesheets="@style.css">
          <children>

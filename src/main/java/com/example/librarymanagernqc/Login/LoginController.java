@@ -67,11 +67,31 @@ public class LoginController {
     @FXML
     private void onLoginMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            if (AccountChecker.checkValidAccount(usernameField.getText(), passwordField.getText())) { //account valid
-                if (DatabaseLoader.loadDataFromDatabase()) { //load data successfully
-                    enterApp();
+            if (AccountChecker.checkValidAccount(usernameField.getText(), passwordField.getText())) {//account valid
+                if (AccountChecker.checkDefaultPassword(passwordField.getText())) {
+                    Pane saveLoginPane = (Pane) rightFormStackPane.getChildren().removeLast();
+                    FXMLLoader recoveryKeyLoader = new FXMLLoader(getClass().getResource("recovery-key.fxml"));
+                    try {
+                        rightFormStackPane.getChildren().add(recoveryKeyLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    RecoveryKeyController recoveryKeyController = recoveryKeyLoader.getController();
+                    recoveryKeyController.setType(RecoveryKeyController.Type.GIVE_KEY);
+
+                    recoveryKeyController.backToLoginButton.setOnMouseClicked(backToLoginMouseEvent -> {
+                        if (backToLoginMouseEvent.getButton() == MouseButton.PRIMARY) {
+                            rightFormStackPane.getChildren().removeLast();
+                            rightFormStackPane.getChildren().add(saveLoginPane);
+                        }
+                    });
                 } else {
-                    errorText.setText(DatabaseLoader.getErrorMessage());
+                    if (DatabaseLoader.loadDataFromDatabase()) { //load data successfully
+                        enterApp();
+                    } else {
+                        errorText.setText(DatabaseLoader.getErrorMessage());
+                    }
                 }
             } else {
                 errorText.setText(AccountChecker.getErrorMessage());

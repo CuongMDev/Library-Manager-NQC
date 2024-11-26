@@ -14,7 +14,11 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class RecoveryKey {
+public class RecoveryKeyController {
+    public enum Type {
+        GIVE_KEY,
+        SET_KEY
+    }
     @FXML
     public Button backToLoginButton;
     @FXML
@@ -35,13 +39,29 @@ public class RecoveryKey {
     private TextField key7;
     @FXML
     private TextField key8;
-
+    @FXML
+    public JFXButton recoverButton;
     @FXML
     private StackPane mainStackPane;
     @FXML
     public JFXButton backButton;
 
     private String username;
+
+    public void setType(Type type) {
+        if (type == Type.GIVE_KEY) {
+            recoverButton.setText("Confirm");
+
+            key1.setEditable(false);
+            key2.setEditable(false);
+            key3.setEditable(false);
+            key4.setEditable(false);
+            key5.setEditable(false);
+            key6.setEditable(false);
+            key7.setEditable(false);
+            key8.setEditable(false);
+        }
+    }
 
     @FXML
     private void onRecoverMouseClicked(MouseEvent mouseEvent) {
@@ -56,7 +76,7 @@ public class RecoveryKey {
                     throw new RuntimeException(e);
                 }
 
-                NewPassword newPasswordController = newPassword.getController();
+                NewPasswordController newPasswordController = newPassword.getController();
                 //set username
                 newPasswordController.setUsername(username);
                 newPasswordController.backToLoginButton.setOnMouseClicked(backToLoginMouseEvent -> {
