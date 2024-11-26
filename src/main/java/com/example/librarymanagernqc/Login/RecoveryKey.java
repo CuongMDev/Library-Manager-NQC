@@ -46,7 +46,7 @@ public class RecoveryKey {
     @FXML
     private void onRecoverMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            String key = String.format("%s-%s-%s-%s-%s-%s-%s-%s", key1, key2, key3, key4, key5, key6, key7, key8);
+            String key = String.format("%s-%s-%s-%s-%s-%s-%s-%s", key1.getText(), key2.getText(), key3.getText(), key4.getText(), key5.getText(), key6.getText(), key7.getText(), key8.getText());
             if (AccountChecker.checkValidKey(username, key)) {
                 Pane saveLoginPane = (Pane) mainStackPane.getChildren().removeLast();
                 FXMLLoader newPassword = new FXMLLoader(getClass().getResource("new-password.fxml"));

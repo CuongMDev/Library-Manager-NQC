@@ -14,148 +14,151 @@ import java.util.List;
 public class BookDAO {
 
 
-    public List<Book> getBooksFromDatabase() throws SQLException {
-        List<Book> booksList = new ArrayList<>();
+  public List<Book> getBooksFromDatabase() throws SQLException {
+    List<Book> booksList = new ArrayList<>();
 
-        String query = "SELECT * FROM Book";  // Truy vấn để lấy tất cả sách
+    String query = "SELECT * FROM Book";  // Truy vấn để lấy tất cả sách
 
-        try (Statement statement = DatabaseHelper.getConnection().createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+    try (Statement statement = DatabaseHelper.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(query)) {
 
-            while (resultSet.next()) {
-                // Lấy dữ liệu từ ResultSet và tạo đối tượng Book
-                String bookId = resultSet.getString("book_id");
-                String title = resultSet.getString("title");
-                int quantity = resultSet.getInt("quantity");
-                String authorName = resultSet.getString("author_name");
-                String description = resultSet.getString("description");
-                String publisher = resultSet.getString("publisher");
-                String publishedDate = resultSet.getString("published_date");
-                String thumbnailUrl = resultSet.getString("thumbnailUrl");
-                String infoLink = resultSet.getString("infoLink");
+      while (resultSet.next()) {
+        // Lấy dữ liệu từ ResultSet và tạo đối tượng Book
+        String bookId = resultSet.getString("book_id");
+        String title = resultSet.getString("title");
+        int quantity = resultSet.getInt("quantity");
+        String authorName = resultSet.getString("author_name");
+        String description = resultSet.getString("description");
+        String publisher = resultSet.getString("publisher");
+        String publishedDate = resultSet.getString("published_date");
+        String thumbnailUrl = resultSet.getString("thumbnailUrl");
+        String infoLink = resultSet.getString("infoLink");
 
-                Book book = new Book(bookId, title, authorName, publisher, publishedDate, description, quantity, thumbnailUrl, infoLink);
+        Book book = new Book(bookId, title, authorName, publisher, publishedDate, description,
+            quantity, thumbnailUrl, infoLink);
 
-                booksList.add(book);  // Thêm vào danh sách sách
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException(e);
-        }
-
-        return booksList;
+        booksList.add(book);  // Thêm vào danh sách sách
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      throw new SQLException(e);
     }
 
-    // xóa sách khỏi database
-    public boolean deleteBookById(String bookId) {
-        String deleteQuery = "DELETE FROM Book WHERE book_id = ?";
+    return booksList;
+  }
 
-        try (PreparedStatement preparedStatement = DatabaseHelper.getConnection().prepareStatement(deleteQuery)) {
+  // xóa sách khỏi database
+  public boolean deleteBookById(String bookId) {
+    String deleteQuery = "DELETE FROM Book WHERE book_id = ?";
 
-            preparedStatement.setString(1, bookId);
-            int affectedRows = preparedStatement.executeUpdate();
+    try (PreparedStatement preparedStatement = DatabaseHelper.getConnection()
+        .prepareStatement(deleteQuery)) {
 
-            // Trả về true nếu có dòng bị ảnh hưởng (xóa thành công)
-            return affectedRows > 0;
+      preparedStatement.setString(1, bookId);
+      int affectedRows = preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+      // Trả về true nếu có dòng bị ảnh hưởng (xóa thành công)
+      return affectedRows > 0;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
     }
+  }
 
-    // thêm sách vào cơ sở dữ liệu
-    public boolean insertBook(Book book) {
-        String sql = "INSERT INTO Book (book_id, title, quantity, author_name, description, publisher, published_date, thumbnailUrl, infoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  // thêm sách vào cơ sở dữ liệu
+  public boolean insertBook(Book book) {
+    String sql = "INSERT INTO Book (book_id, title, quantity, author_name, description, publisher, published_date, thumbnailUrl, infoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(sql)) {
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(sql)) {
 
-            statement.setString(1, book.getId());
-            statement.setString(2, book.getTitle());
-            statement.setInt(3, book.getQuantity());
-            statement.setString(4, book.getAuthors());
-            String description = book.getDescription();
-            if (description.length() > 255) { // Giả sử giới hạn là 255 ký tự
-                description = description.substring(0, 255);
-            }
-            statement.setString(5, description);
-            statement.setString(6, book.getPublisher());
-            String publishedDate = book.getPublishedDate();
-            if (publishedDate != null && !publishedDate.isEmpty()) {
-                try {
-                    // Kiểm tra xem chỉ có năm hay không
-                    if (publishedDate.length() == 4) { // Chỉ có năm
-                        publishedDate = publishedDate + "-01-01"; // Thêm ngày 1 tháng 1 vào
-                    }
+      statement.setString(1, book.getId());
+      statement.setString(2, book.getTitle());
+      statement.setInt(3, book.getQuantity());
+      statement.setString(4, book.getAuthors());
+      String description = book.getDescription();
+      if (description.length() > 255) { // Giả sử giới hạn là 255 ký tự
+        description = description.substring(0, 255);
+      }
+      statement.setString(5, description);
+      statement.setString(6, book.getPublisher());
+      String publishedDate = book.getPublishedDate();
+      if (publishedDate != null && !publishedDate.isEmpty()) {
+        try {
+          // Kiểm tra xem chỉ có năm hay không
+          if (publishedDate.length() == 4) { // Chỉ có năm
+            publishedDate = publishedDate + "-01-01"; // Thêm ngày 1 tháng 1 vào
+          }
 
-                    // Kiểm tra và chuyển đổi ngày từ chuỗi sang java.sql.Date
-                    java.sql.Date sqlDate = java.sql.Date.valueOf(publishedDate); // Ngày phải có định dạng "yyyy-MM-dd"
-                    statement.setDate(7, sqlDate);
-                } catch (IllegalArgumentException e) {
-                    // Xử lý trường hợp ngày không hợp lệ
-                    System.out.println("Ngày không hợp lệ: " + publishedDate);
-                    statement.setNull(7, java.sql.Types.DATE); // Nếu ngày không hợp lệ, set NULL
-                }
-            } else {
-                statement.setNull(7, java.sql.Types.DATE); // Nếu ngày là null hoặc rỗng, set NULL
-            }
-            statement.setString(8, book.getThumbnailUrl());
-            statement.setString(9, book.getInfoLink());
-
-            int rowsInserted = statement.executeUpdate();
-            return rowsInserted > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+          // Kiểm tra và chuyển đổi ngày từ chuỗi sang java.sql.Date
+          java.sql.Date sqlDate = java.sql.Date.valueOf(
+              publishedDate); // Ngày phải có định dạng "yyyy-MM-dd"
+          statement.setDate(7, sqlDate);
+        } catch (IllegalArgumentException e) {
+          // Xử lý trường hợp ngày không hợp lệ
+          System.out.println("Ngày không hợp lệ: " + publishedDate);
+          statement.setNull(7, java.sql.Types.DATE); // Nếu ngày không hợp lệ, set NULL
         }
+      } else {
+        statement.setNull(7, java.sql.Types.DATE); // Nếu ngày là null hoặc rỗng, set NULL
+      }
+      statement.setString(8, book.getThumbnailUrl());
+      statement.setString(9, book.getInfoLink());
+
+      int rowsInserted = statement.executeUpdate();
+      return rowsInserted > 0;
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
     }
+  }
 
-    // kiểm tra book_id đã tồn tại trong database chưa
-    public boolean isBookExists(String bookId) {
-        String sql = "SELECT COUNT(*) FROM Book WHERE book_id = ?";
-        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(sql)) {
-            statement.setString(1, bookId);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+  // kiểm tra book_id đã tồn tại trong database chưa
+  public boolean isBookExists(String bookId) {
+    String sql = "SELECT COUNT(*) FROM Book WHERE book_id = ?";
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(sql)) {
+      statement.setString(1, bookId);
+      ResultSet resultSet = statement.executeQuery();
+      if (resultSet.next()) {
+        return resultSet.getInt(1) > 0;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
+    return false;
+  }
 
-    // chỉnh sửa thông tin book
-    public boolean updateBook(Book book) {
-        String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
-        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
-            statement.setInt(1, book.getQuantity());
-            statement.setString(2, book.getId());
+  // chỉnh sửa thông tin book
+  public boolean updateBook(Book book) {
+    String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
+      statement.setInt(1, book.getQuantity());
+      statement.setString(2, book.getId());
 
-            int rowsAffected = statement.executeUpdate();
+      int rowsAffected = statement.executeUpdate();
 
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+      return rowsAffected > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
     }
+  }
 
-    // chỉnh sửa số lượng sách sau khi mượn hoặc trả
-    public static boolean changeQuantityBook(int newQuantity, String bookId) {
-        String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
-        try (Connection connection = DatabaseHelper.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, newQuantity);
-            statement.setString(2, bookId);
+  // chỉnh sửa số lượng sách sau khi mượn hoặc trả
+  public static boolean changeQuantityBook(int newQuantity, String bookId) {
+    String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
+    try (Connection connection = DatabaseHelper.getConnection();
+        PreparedStatement statement = connection.prepareStatement(query)) {
+      statement.setInt(1, newQuantity);
+      statement.setString(2, bookId);
 
-            int rowsAffected = statement.executeUpdate();
+      int rowsAffected = statement.executeUpdate();
 
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+      return rowsAffected > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
     }
+  }
 }
