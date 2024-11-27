@@ -12,3 +12,12 @@
 .searchField:focused {
     -fx-border-color: #bab8b8;
 }
+
+.bookScrollPane {
+    -fx-background-color: transparent; /* Make background transparent */
+    -fx-border-color: #cccccc; /* Add a line under the TextField */
+}
+
+.bookScrollPane:focused {
+    -fx-border-color: #cccccc;
+}

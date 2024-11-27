@@ -19,9 +19,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -42,105 +45,116 @@ public class AddBookController {
     @FXML
     private ProgressIndicator searchProgressIndicator;
     @FXML
-    private TableColumn<Book, String> idColumn;
-    @FXML
-    private TableColumn<Book, String> bookTitleColumn;
-    @FXML
-    private TableColumn<Book, String> authorColumn;
-    @FXML
-    private TableColumn<Book, Void> optionColumn;
-    @FXML
-    private TableView<Book> booksTableView;
+    private FlowPane bookFlowPane;
 
     @FXML
     private void initialize() {
         searchProgressIndicator.setVisible(false);
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
+        bookFlowPane.setHgap(45);
+        bookFlowPane.setVgap(20);
+    }
 
-        optionColumn.setCellFactory(new Callback<>() {
-            @Override
-            public TableCell<Book, Void> call(TableColumn<Book, Void> param) {
-                return new TableCell<>() {
-                    private final JFXButton addButton = new JFXButton();
-                    {
-                        //create add Image
-                        ImageView addImage = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/add.png")))); // Đường dẫn tới ảnh
-                        addImage.setFitWidth(20); // Đặt kích thước cho ảnh
-                        addImage.setFitHeight(20);
+    private void addBookToFlowPane(Book book) {
+        final JFXButton bookButton = new JFXButton();
+        {
+            //create add Image
+            //set default unknown book image
+            ImageView bookImageView = new ImageView(new Image(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/image/unknown_book.png").toExternalForm()));
+            // Đặt kích thước cho ảnh
+            bookImageView.setFitWidth(145);
+            bookImageView.setFitHeight(214);
+            //set book image
+            if (book.getThumbnailUrl() != null) {
+                // Lắng nghe hoàn tất tải ảnh
+                Image bookImage = new Image(book.getThumbnailUrl(), true);
+                bookImage.progressProperty().addListener((observable, oldProgress, newProgress) -> {
+                    if (newProgress.doubleValue() == 1.0) { //if loading image successfully
+                        bookImageView.setImage(bookImage);
+                    }
+                });
+            }
 
-                        //set addButton
-                        addButton.setPadding(Insets.EMPTY);
-                        addButton.setRipplerFill(Color.WHITE);
-                        addButton.setCursor(Cursor.HAND);
-                        addButton.setGraphic(addImage);
-                        addButton.setOnAction(event -> {
-                            //lấy ô hiện tại đang chọn
-                            Book book = getTableView().getItems().get(getIndex());
-                            //load book information
-                            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                            FXMLLoader bookInfoLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
-                            try {
-                                mainStackPane.getChildren().add(bookInfoLoader.load());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+            //set bookButton
+            bookButton.setStyle(
+                    "-fx-border-color: gray;" +
+                    "-fx-cursor: HAND;" +
+                    "-fx-padding: 0;"
+            );
+            bookButton.setRipplerFill(Color.WHITE);
+            bookButton.setGraphic(bookImageView);
+            // Gắn sự kiện thay đổi khi hower
+            bookButton.hoverProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    // Khi hower
+                    bookButton.setOpacity(0.7);
+                } else {
+                    // Khi mất hower
+                    bookButton.setOpacity(1);
+                }
+            });
 
-                            BookInformationController bookInfoController = bookInfoLoader.getController();
-                            bookInfoController.setBook(book);
+            //mouse click
+            bookButton.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                    //load book information
+                    Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
+                    FXMLLoader bookInfoLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
+                    try {
+                        mainStackPane.getChildren().add(bookInfoLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
-                            //cancel button event
-                            bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
-                                if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
-                                }
-                            });
+                    BookInformationController bookInfoController = bookInfoLoader.getController();
+                    bookInfoController.setBook(book);
 
-                            //add button event
-                            bookInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
-                                if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    if (bookInfoController.checkValidBook()) {
-                                        //lấy thông tin sách và thêm vào database
-                                        Book newBook = bookInfoController.getBook();
-                                        // kiểm tra book đã tồn tại chưa
-                                        if(BookDatabaseController.isBookExists(newBook.getId())) {
-                                            System.out.println("Book with ID " + newBook.getId() + " already exists.");
-                                        }
-                                        else{
-                                            boolean isInserted = BookDatabaseController.insertBook(newBook);
-                                            if (isInserted) {
-                                                System.out.println("Book added to the database successfully.");
-                                                //add book
-                                                DocumentController.addBookToList(newBook);
-                                            } else {
-                                                System.out.println("Failed to add the book to the database.");
-                                            }
-                                        }
-                                        mainStackPane.getChildren().removeLast();
-                                        mainStackPane.getChildren().add(savePane);
+                    //cancel button event
+                    bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
+                        if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
+                            mainStackPane.getChildren().removeLast();
+                            mainStackPane.getChildren().add(savePane);
+                        }
+                    });
+
+                    //add button event
+                    bookInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
+                        if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
+                            if (bookInfoController.checkValidBook()) {
+                                //lấy thông tin sách và thêm vào database
+                                Book newBook = bookInfoController.getBook();
+                                // kiểm tra book đã tồn tại chưa
+                                if (BookDatabaseController.isBookExists(newBook.getId())) {
+                                    System.out.println("Book with ID " + newBook.getId() + " already exists.");
+                                } else {
+                                    boolean isInserted = BookDatabaseController.insertBook(newBook);
+                                    if (isInserted) {
+                                        System.out.println("Book added to the database successfully.");
+                                        //add book
+                                        DocumentController.addBookToList(newBook);
+                                    } else {
+                                        System.out.println("Failed to add the book to the database.");
                                     }
                                 }
-                            });
-                        });
-                    }
-
-                    @Override
-                    protected void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(addButton);
+                                mainStackPane.getChildren().removeLast();
+                                mainStackPane.getChildren().add(savePane);
+                            }
                         }
+                    });
+                }
+            });
+        }
 
-                        // Căn giữa ảnh trong ô
-                        setStyle("-fx-alignment: CENTER;");
-                    }
-                };
-            }
-        });
+        //title text
+        TextArea bookTitleText = new TextArea(book.getTitle());
+        bookTitleText.setEditable(false);
+        bookTitleText.setWrapText(true);
+        bookTitleText.setPrefSize(145, 20);
+        bookTitleText.getStylesheets().add(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/style.css").toExternalForm());
+        bookTitleText.getStyleClass().add("longInfoField");
+
+        VBox bookBox = new VBox(bookButton, bookTitleText);
+        //add to flow pane
+        bookFlowPane.getChildren().add(bookBox);
     }
 
     @FXML
@@ -153,7 +167,7 @@ public class AddBookController {
 
             if (!id.isEmpty() || !title.isEmpty() || !author.isEmpty()) {
                 searchProgressIndicator.setVisible(true);
-                booksTableView.getItems().clear();
+                bookFlowPane.getChildren().clear();
 
                 Task<String> searchTask = null;
                 if (!id.isEmpty()) {
@@ -166,7 +180,7 @@ public class AddBookController {
                 searchTask.setOnSucceeded(event -> {
                     List<Book> books = BookJsonHandler.parseBookTitles(finalSearchTask.getValue());
                     for (Book book : books) {
-                        booksTableView.getItems().add(book);
+                        addBookToFlowPane(book);
                     }
                     searchProgressIndicator.setVisible(false);
                 });

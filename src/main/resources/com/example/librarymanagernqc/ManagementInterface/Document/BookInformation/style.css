@@ -10,16 +10,6 @@
     -fx-padding: 5px; /* Padding to control spacing */
 }
 
-.longInfoField {
-    -fx-background-color: transparent; /* Make background transparent */
-    -fx-border-color: #cccccc; /* Add a line under the TextField */
-    -fx-padding: 0;                      /* Xóa padding */
-}
-
-.longInfoField .content {
-    -fx-background-color: white;
-}
-
 .infoField.invalid {
     -fx-border-color: #ff6363;
 }
@@ -30,6 +20,16 @@
 
 .infoField:focused {
     -fx-border-color: #bab8b8;
+}
+
+.longInfoField {
+    -fx-background-color: transparent; /* Make background transparent */
+    -fx-border-color: #cccccc; /* Add a line under the TextField */
+    -fx-padding: 0;                      /* Xóa padding */
+}
+
+.longInfoField .content {
+    -fx-background-color: white;
 }
 
 .longInfoField:focused {
