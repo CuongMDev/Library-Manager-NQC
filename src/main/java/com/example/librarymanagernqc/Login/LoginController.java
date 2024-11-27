@@ -80,7 +80,7 @@ public class LoginController {
 
                     RecoveryKeyController recoveryKeyController = recoveryKeyLoader.getController();
                     recoveryKeyController.setType(RecoveryKeyController.Type.GIVE_KEY);
-                    recoveryKeyController.giveKey();
+                    recoveryKeyController.giveKey(usernameField.getText());
 
                     recoveryKeyController.backToLoginButton.setOnMouseClicked(backToLoginMouseEvent -> {
                         if (backToLoginMouseEvent.getButton() == MouseButton.PRIMARY) {

@@ -71,4 +71,20 @@ public class AdminDAO {
     }
     return false;
   }
+
+  //set recoveryKey
+  public boolean setRecoveryKey(String username, String check_key) {
+    String query = "UPDATE Admins SET check_key = ? WHERE admin_user_name = ?";
+    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
+      statement.setString(1, check_key);
+      statement.setString(2, username);
+
+      int rowsAffected = statement.executeUpdate();
+
+      return rowsAffected > 0;
+    } catch (SQLException e){
+      e.printStackTrace();
+    }
+    return false;
+  }
 }

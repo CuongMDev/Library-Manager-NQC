@@ -38,4 +38,10 @@ public class AdminDatabaseController extends HasError {
   public static void setPassword(String username, String password){
     adminDAO.setPassword(username, password);
   }
+
+  public static void setRecoveryKey(String username, String key){
+    if(adminDAO.setRecoveryKey(username, key)){
+      System.out.println("Successfully set recovery key");
+    }
+  }
 }

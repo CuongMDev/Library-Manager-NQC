@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.Login;
 
 import com.example.librarymanagernqc.Objects.AccountChecker.AccountChecker;
+import com.example.librarymanagernqc.database.Controller.AdminDatabaseController;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ public class RecoveryKeyController {
         GIVE_KEY,
         SET_KEY
     }
+    private Type currentType = Type.SET_KEY;
     @FXML
     public Button backToLoginButton;
     @FXML
@@ -52,6 +54,7 @@ public class RecoveryKeyController {
     public void setType(Type type) {
         if (type == Type.GIVE_KEY) {
             recoverButton.setText("Confirm");
+            currentType = Type.GIVE_KEY;
 
             key1.setEditable(false);
             key2.setEditable(false);
@@ -61,11 +64,13 @@ public class RecoveryKeyController {
             key6.setEditable(false);
             key7.setEditable(false);
             key8.setEditable(false);
+        } else {
+            currentType = Type.SET_KEY;
         }
     }
 
     @FXML
-    public void giveKey() {
+    public void giveKey(String username) {
         ArrayList<String> keys = KeyController.getShuffleKeys();
         key1.setText(keys.get(0));
         key2.setText(keys.get(1));
@@ -75,13 +80,20 @@ public class RecoveryKeyController {
         key6.setText(keys.get(5));
         key7.setText(keys.get(6));
         key8.setText(keys.get(7));
+        String key = String.format("%s-%s-%s-%s-%s-%s-%s-%s", key1.getText(), key2.getText(), key3.getText(), key4.getText(), key5.getText(), key6.getText(), key7.getText(), key8.getText());
+        try{
+            AdminDatabaseController.setRecoveryKey(username, key);
+        } catch (Exception e){
+            errorText.setText("unable to save key");
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void onRecoverMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             String key = String.format("%s-%s-%s-%s-%s-%s-%s-%s", key1.getText(), key2.getText(), key3.getText(), key4.getText(), key5.getText(), key6.getText(), key7.getText(), key8.getText());
-            if (AccountChecker.checkValidKey(username, key)) {
+            if (AccountChecker.checkValidKey(username, key) || currentType == Type.GIVE_KEY) {
                 Pane saveLoginPane = (Pane) mainStackPane.getChildren().removeLast();
                 FXMLLoader newPassword = new FXMLLoader(getClass().getResource("new-password.fxml"));
                 try {

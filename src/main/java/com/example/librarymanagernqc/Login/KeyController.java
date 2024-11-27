@@ -22,6 +22,4 @@ public class KeyController {
         Collections.shuffle(recoveryKeys);
         return recoveryKeys;
     }
-
-    public static void setRecoveryKeys () {}
 }
