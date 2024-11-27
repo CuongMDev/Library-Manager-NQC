@@ -78,8 +78,8 @@ public class AccountChecker extends HasError {
     public static boolean checkDefaultPassword(String password) {
         if (password.equals("00000000")) {
             setErrorMessage("Password should not be defaults password");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }
