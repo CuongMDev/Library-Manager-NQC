@@ -68,6 +68,7 @@ public class LoginController {
     private void onLoginMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             if (AccountChecker.checkValidAccount(usernameField.getText(), passwordField.getText())) {//account valid
+                //Kiểm tra đăng nhập lần đầu
                 if (AccountChecker.checkDefaultPassword(passwordField.getText())) {
                     Pane saveLoginPane = (Pane) rightFormStackPane.getChildren().removeLast();
                     FXMLLoader recoveryKeyLoader = new FXMLLoader(getClass().getResource("recovery-key.fxml"));
@@ -79,6 +80,7 @@ public class LoginController {
 
                     RecoveryKeyController recoveryKeyController = recoveryKeyLoader.getController();
                     recoveryKeyController.setType(RecoveryKeyController.Type.GIVE_KEY);
+                    recoveryKeyController.giveKey();
 
                     recoveryKeyController.backToLoginButton.setOnMouseClicked(backToLoginMouseEvent -> {
                         if (backToLoginMouseEvent.getButton() == MouseButton.PRIMARY) {
@@ -86,6 +88,15 @@ public class LoginController {
                             rightFormStackPane.getChildren().add(saveLoginPane);
                         }
                     });
+
+                    recoveryKeyController.backButton.setOnMouseClicked(backMouseEvent -> {
+                        if (backMouseEvent.getButton() == MouseButton.PRIMARY) {
+                            rightFormStackPane.getChildren().removeLast();
+                            rightFormStackPane.getChildren().add(saveLoginPane);
+                        }
+                    });
+                } else if (AccountChecker.checkValidPassword(passwordField.getText())) {
+                    errorText.setText(AccountChecker.getErrorMessage());
                 } else {
                     if (DatabaseLoader.loadDataFromDatabase()) { //load data successfully
                         enterApp();

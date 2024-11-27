@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class RecoveryKeyController {
     public enum Type {
@@ -61,6 +62,19 @@ public class RecoveryKeyController {
             key7.setEditable(false);
             key8.setEditable(false);
         }
+    }
+
+    @FXML
+    public void giveKey() {
+        ArrayList<String> keys = KeyController.getShuffleKeys();
+        key1.setText(keys.get(0));
+        key2.setText(keys.get(1));
+        key3.setText(keys.get(2));
+        key4.setText(keys.get(3));
+        key5.setText(keys.get(4));
+        key6.setText(keys.get(5));
+        key7.setText(keys.get(6));
+        key8.setText(keys.get(7));
     }
 
     @FXML
