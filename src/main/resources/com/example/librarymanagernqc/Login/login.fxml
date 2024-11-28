@@ -32,12 +32,14 @@
                <children>
                   <AnchorPane prefHeight="427.0" prefWidth="290.0" styleClass="rightForm">
                      <children>
-                        <TextField fx:id="usernameField" focusTraversable="false" layoutX="26.0" layoutY="181.0" prefHeight="25.0" prefWidth="231.0" promptText="Username" styleClass="loginTextField" />
                         <Text fill="#fffafa" layoutX="26.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In">
                            <font>
                               <Font size="27.0" />
                            </font>
                         </Text>
+                        <Text fx:id="errorText" fill="RED" layoutX="26.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="231.0" />
+                        <TextField fx:id="usernameField" layoutX="26.0" layoutY="181.0" prefHeight="25.0" prefWidth="231.0" promptText="Username" styleClass="loginTextField" />
+                        <PasswordField fx:id="passwordField" layoutX="26.0" layoutY="222.0" prefHeight="28.0" prefWidth="231.0" promptText="Password" styleClass="loginTextField" />
                         <JFXButton fx:id="loginButton" alignment="TOP_LEFT" buttonType="RAISED" defaultButton="true" layoutX="26.0" layoutY="317.0" onMouseClicked="#onLoginMouseClicked" prefHeight="25.0" prefWidth="114.0" ripplerFill="#ff0303" styleClass="loginButton" stylesheets="@style.css" text="  Login               &gt;" textFill="#fffcff">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -46,13 +48,17 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </JFXButton>
-                        <PasswordField fx:id="passwordField" layoutX="26.0" layoutY="222.0" prefHeight="28.0" prefWidth="231.0" promptText="Password" styleClass="loginTextField" />
-                        <Text fx:id="errorText" fill="RED" layoutX="26.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="231.0" />
-                        <Button layoutX="145.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#OnForgotPasswordMouseClicked" styleClass="forgotButton" text="Forgot your password?">
+                        <Button layoutX="150.0" layoutY="321.0" mnemonicParsing="false" onMouseClicked="#OnForgotPasswordMouseClicked" styleClass="forgotButton" text="Forgot your password?">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+                        <Button layoutX="181.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#OnForgotPasswordMouseClicked" styleClass="signUpButton" text="Sign Up">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Text fx:id="" fill="#868686" layoutX="51.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" wrappingWidth="126.199951171875" />
                      </children>
                   </AnchorPane>
                </children>

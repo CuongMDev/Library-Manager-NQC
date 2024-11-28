@@ -22,13 +22,25 @@
 
 .forgotButton {
     -fx-background-color: transparent;
-    -fx-text-fill: #8f858a;
+    -fx-text-fill: #a9a9a9;
+    -fx-padding: 0;
     -fx-underline: true;
 }
 
 .forgotButton:hover {
     -fx-text-fill: white; /* Màu khi di chuột vào */
 }
+
+.signUpButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ff4aa4;
+    -fx-padding: 0;
+}
+
+.signUpButton:hover {
+    -fx-text-fill: #ffb0d7; /* Màu khi di chuột vào */
+}
+
 
 .loginTextField {
     -fx-background-color: transparent; /* Make background transparent */
