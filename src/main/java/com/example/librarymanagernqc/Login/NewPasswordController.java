@@ -31,6 +31,7 @@ public class NewPasswordController {
                 if (AccountChecker.checkValidPassword(newPasswordField1.getText())) {
                     try {
                         AdminDatabaseController.setPassword(username, newPasswordField1.getText());
+                        System.out.println(username);
                     } catch (Exception e) {
                         errorText.setText("Please recheck your Internet Connection");
                         e.printStackTrace();

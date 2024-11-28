@@ -79,6 +79,7 @@ public class LoginController {
                     }
 
                     RecoveryKeyController recoveryKeyController = recoveryKeyLoader.getController();
+                    recoveryKeyController.setUsername(usernameField.getText());
                     recoveryKeyController.setType(RecoveryKeyController.Type.GIVE_KEY);
                     recoveryKeyController.giveKey(usernameField.getText());
 
@@ -95,7 +96,7 @@ public class LoginController {
                             rightFormStackPane.getChildren().add(saveLoginPane);
                         }
                     });
-                } else if (AccountChecker.checkValidPassword(passwordField.getText())) {
+                } else if (!AccountChecker.checkValidPassword(passwordField.getText())) {
                     errorText.setText(AccountChecker.getErrorMessage());
                 } else {
                     if (DatabaseLoader.loadDataFromDatabase()) { //load data successfully

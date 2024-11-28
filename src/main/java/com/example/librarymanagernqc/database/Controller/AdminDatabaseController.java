@@ -36,7 +36,12 @@ public class AdminDatabaseController extends HasError {
   }
 
   public static void setPassword(String username, String password){
-    adminDAO.setPassword(username, password);
+    if(adminDAO.setPassword(username, password)){
+      System.out.println("Successfully set password");
+    }
+    else{
+      System.out.println("Failed to set password");
+    }
   }
 
   public static void setRecoveryKey(String username, String key){
