@@ -54,4 +54,5 @@ module com.example.librarymanagernqc {
     opens com.example.librarymanagernqc.ManagementInterface.ReturnedList to javafx.fxml;
     exports com.example.librarymanagernqc.ManagementInterface.OverdueList;
     opens com.example.librarymanagernqc.ManagementInterface.OverdueList to javafx.fxml;
+    exports com.example.librarymanagernqc.database.DAO;
 }

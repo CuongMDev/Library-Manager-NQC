@@ -93,7 +93,7 @@ public class RecoveryKeyController {
     private void onRecoverMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             String key = String.format("%s-%s-%s-%s-%s-%s-%s-%s", key1.getText(), key2.getText(), key3.getText(), key4.getText(), key5.getText(), key6.getText(), key7.getText(), key8.getText());
-            if (AccountChecker.checkValidKey(username, key) || currentType == Type.GIVE_KEY) {
+            if (currentType == Type.GIVE_KEY || AccountChecker.checkValidKey(username, key)) {
                 Pane saveLoginPane = (Pane) mainStackPane.getChildren().removeLast();
                 FXMLLoader newPassword = new FXMLLoader(getClass().getResource("new-password.fxml"));
                 try {

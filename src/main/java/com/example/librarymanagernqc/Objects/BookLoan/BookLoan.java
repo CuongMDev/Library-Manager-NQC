@@ -138,16 +138,6 @@ public class BookLoan {
         return loanId;
     }
 
-    public void setBookLoan(BookLoan bookLoan) {
-        this.bookId = bookLoan.getBookId();
-        this.bookTitle = bookLoan.getBookTitle();
-        this.loanDate = bookLoan.getLoanDate();
-        this.dueDate = bookLoan.getDueDate();
-        this.status = bookLoan.getStatus();
-        this.loanQuantity = bookLoan.getLoanQuantity();
-        this.fine = bookLoan.getFine();
-    }
-
     /**
      * search book loan by title, limit = 0 mean no limit
      */

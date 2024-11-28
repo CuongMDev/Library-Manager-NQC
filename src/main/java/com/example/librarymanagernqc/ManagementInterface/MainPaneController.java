@@ -12,9 +12,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
 import java.io.IOException;
-import java.util.Objects;
 
 public class  MainPaneController {
     private enum PaneType {
