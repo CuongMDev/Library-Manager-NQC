@@ -7,6 +7,8 @@ import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -21,8 +23,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -44,6 +48,10 @@ public class DocumentController {
     private StackPane mainStackPane;
     @FXML
     private TextField searchField;
+    @FXML
+    private ScrollPane recentScrollPane;
+    @FXML
+    private VBox recentVBox;
 
     /**
      * all books list
@@ -224,11 +232,101 @@ public class DocumentController {
         });
     }
 
+    private void addBookToRecentList(Book book) {
+        final JFXButton bookButton = new JFXButton();
+        {
+            //create add Image
+            //set default unknown book image
+            ImageView bookImageView = new ImageView(new Image(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/image/unknown_book.png").toExternalForm()));
+            // Đặt kích thước cho ảnh
+            bookImageView.setFitWidth(145);
+            bookImageView.setFitHeight(214);
+            //set book image
+            if (book.getThumbnailUrl() != null) {
+                // Lắng nghe hoàn tất tải ảnh
+                Image bookImage = new Image(book.getThumbnailUrl(), true);
+                bookImage.progressProperty().addListener((observable, oldProgress, newProgress) -> {
+                    if (newProgress.doubleValue() == 1.0) { //if loading image successfully
+                        bookImageView.setImage(bookImage);
+                    }
+                });
+            }
+
+            //set bookButton
+            bookButton.setStyle(
+                    "-fx-cursor: HAND;" +
+                    "-fx-padding: 0;"
+            );
+            bookButton.setRipplerFill(Color.WHITE);
+            bookButton.setGraphic(bookImageView);
+            // Gắn sự kiện thay đổi khi hower
+            bookButton.hoverProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    // Khi hower
+                    bookButton.setOpacity(0.7);
+                } else {
+                    // Khi mất hower
+                    bookButton.setOpacity(1);
+                }
+            });
+        }
+        //title text
+        TextArea bookTitleText = new TextArea(book.getTitle());
+        bookTitleText.setEditable(false);
+        bookTitleText.setWrapText(true);
+        bookTitleText.setPrefSize(145, 20);
+        bookTitleText.getStylesheets().add(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/style.css").toExternalForm());
+        bookTitleText.getStyleClass().add("longInfoField");
+
+        VBox bookBox = new VBox(bookButton, bookTitleText);
+        //add to flow pane
+        recentVBox.getChildren().add(bookBox);
+    }
+
     private void addBooksListToTable(List<Book> booksList) {
         booksTableView.getItems().clear();
         for (Book book : booksList) {
             booksTableView.getItems().add(book);
+            addBookToRecentList(book);
         }
+    }
+
+    private void initRecentScrollPane() {
+        // Tính toán tỷ lệ cuộn ổn định
+        double scrollSpeed = 0.005;  // Tốc độ cuộn cố định
+
+        // Tự động cuộn
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(20), e -> {
+                    // Tính toán tỷ lệ chiều cao của VBox và ScrollPane
+                    double contentHeight = recentVBox.getHeight();
+                    double viewportHeight = recentScrollPane.getViewportBounds().getHeight();
+
+                    // Tính toán tỷ lệ cuộn phù hợp dựa trên chiều cao
+                    double ratio = contentHeight / viewportHeight;
+
+                    // Điều chỉnh tốc độ cuộn dựa trên tỷ lệ này
+                    double adjustedScrollSpeed = scrollSpeed / ratio;  // Điều chỉnh tốc độ
+
+                    double currentValue = recentScrollPane.getVvalue();
+                    recentScrollPane.setVvalue(currentValue + adjustedScrollSpeed); // Tăng giá trị cuộn dọc
+                    if (recentScrollPane.getVvalue() >= 1.0) {
+                        recentScrollPane.setVvalue(0.0); // Quay lại đầu nếu cuộn xong
+                    }
+                })
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+
+        // Thiết lập hành động khi di chuột vào
+        recentScrollPane.setOnMouseEntered(event -> {
+            timeline.stop();
+        });
+
+        // Thiết lập hành động khi chuột rời đi
+        recentScrollPane.setOnMouseExited(event -> {
+            timeline.play();
+        });
     }
 
     @FXML
@@ -241,6 +339,9 @@ public class DocumentController {
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             updateTable();
         });
+
+        initRecentScrollPane();
+        recentVBox.setSpacing(10);
     }
 
     @FXML

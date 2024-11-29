@@ -24,3 +24,40 @@
 .imageButton:hover {
     -fx-background-color: rgba(0, 0, 0, 0.1);
 }
+
+.scrollPane {
+    -fx-background-color: transparent; /* Make background transparent */
+    -fx-border-color: #cccccc;
+}
+
+.scrollPane:focused {
+    -fx-border-color: #cccccc;
+}
+
+.scrollPane .scroll-bar:vertical {
+    -fx-pref-width: 5px; /* Chiều rộng thanh cuộn dọc */
+}
+
+.scrollPane .scroll-bar:horizontal {
+    -fx-pref-height: 5px; /* Chiều cao thanh cuộn ngang */
+}
+
+.scrollPane .thumb {
+    -fx-background-color: #989c99; /* Màu của thanh kéo */
+    -fx-background-insets: 0;
+    -fx-background-radius: 5px; /* Góc bo tròn */
+}
+
+.scrollPane .track {
+    -fx-background-color: #ccc; /* Màu rãnh của thanh cuộn */
+    -fx-background-radius: 5px;
+    -fx-padding: 0;
+}
+
+.scrollPane .increment-button,
+.scrollPane .decrement-button {
+    -fx-padding: 0;       /* Loại bỏ khoảng cách */
+    -fx-max-width: 0;     /* Ẩn nút */
+    -fx-max-height: 0;    /* Ẩn nút */
+    -fx-opacity: 0;       /* Làm chúng trong suốt */
+}

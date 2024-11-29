@@ -36,9 +36,9 @@
                </graphic>
             </JFXButton>
             <ImageView fitHeight="26.0" fitWidth="28.0" layoutX="762.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
-            <ScrollPane layoutX="62.0" layoutY="229.0" prefHeight="520.0" prefWidth="742.0" styleClass="bookScrollPane">
+            <ScrollPane layoutX="62.0" layoutY="229.0" prefHeight="520.0" prefWidth="742.0" styleClass="scrollPane" stylesheets="@../../../common/images/style.css">
                <content>
-                  <FlowPane fx:id="bookFlowPane" prefHeight="514.0" prefWidth="725.0" />
+                  <FlowPane fx:id="bookFlowPane" prefHeight="514.0" prefWidth="738.0" />
                </content>
             </ScrollPane>
          </children>

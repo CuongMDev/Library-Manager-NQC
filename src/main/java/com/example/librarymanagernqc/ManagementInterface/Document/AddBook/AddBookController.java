@@ -50,7 +50,7 @@ public class AddBookController {
     @FXML
     private void initialize() {
         searchProgressIndicator.setVisible(false);
-        bookFlowPane.setHgap(45);
+        bookFlowPane.setHgap(48);
         bookFlowPane.setVgap(20);
     }
 

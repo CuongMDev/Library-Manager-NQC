@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -17,11 +18,19 @@
             <Label layoutX="35.0" layoutY="207.0" styleClass="infoFieldFont" text="Book Title:" />
             <TextField fx:id="bookTitle" focusTraversable="false" layoutX="121.0" layoutY="202.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
             <Label layoutX="35.0" layoutY="271.0" styleClass="infoFieldFont" text="Author:" />
-            <TextArea fx:id="bookAuthor" focusTraversable="false" layoutX="120.0" layoutY="271.0" prefHeight="187.0" prefWidth="217.0" styleClass="longInfoField" text="Label" />
+            <TextArea fx:id="bookAuthor" focusTraversable="false" layoutX="120.0" layoutY="271.0" prefHeight="187.0" prefWidth="217.0" stylesheets="@../../../common/images/style.css" text="Label">
+               <styleClass>
+                  <String fx:value="longInfoField" />
+                  <String fx:value="scrollPane" />
+               </styleClass></TextArea>
             <Label layoutX="370.0" layoutY="207.0" styleClass="infoFieldFont" text="Quantity:" />
             <TextField fx:id="bookQuantity" layoutX="480.0" layoutY="202.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
             <Label layoutX="370.0" layoutY="271.0" styleClass="infoFieldFont" text="Description:" />
-            <TextArea fx:id="bookDescription" focusTraversable="false" layoutX="480.0" layoutY="271.0" prefHeight="187.0" prefWidth="217.0" styleClass="longInfoField" text="Label" />
+            <TextArea fx:id="bookDescription" focusTraversable="false" layoutX="480.0" layoutY="271.0" prefHeight="187.0" prefWidth="217.0" stylesheets="@../../../common/images/style.css" text="Label">
+               <styleClass>
+                  <String fx:value="longInfoField" />
+                  <String fx:value="scrollPane" />
+               </styleClass></TextArea>
             <Label layoutX="370.0" layoutY="501.0" styleClass="infoFieldFont" text="Published Date:" />
             <Label layoutX="35.0" layoutY="501.0" styleClass="infoFieldFont" text="Publisher:" />
             <TextField fx:id="bookPublishedDate" focusTraversable="false" layoutX="480.0" layoutY="496.0" prefHeight="29.0" prefWidth="217.0" styleClass="infoField" text="Label" />
