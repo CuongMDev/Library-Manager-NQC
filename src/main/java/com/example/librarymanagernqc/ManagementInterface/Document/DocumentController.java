@@ -20,10 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -51,7 +48,7 @@ public class DocumentController {
     @FXML
     private ScrollPane recentScrollPane;
     @FXML
-    private VBox recentVBox;
+    private FlowPane recentFlowPane;
 
     /**
      * all books list
@@ -280,7 +277,7 @@ public class DocumentController {
 
         VBox bookBox = new VBox(bookButton, bookTitleText);
         //add to flow pane
-        recentVBox.getChildren().add(bookBox);
+        recentFlowPane.getChildren().add(bookBox);
     }
 
     private void addBooksListToTable(List<Book> booksList) {
@@ -299,7 +296,7 @@ public class DocumentController {
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(20), e -> {
                     // Tính toán tỷ lệ chiều cao của VBox và ScrollPane
-                    double contentHeight = recentVBox.getHeight();
+                    double contentHeight = recentFlowPane.getHeight();
                     double viewportHeight = recentScrollPane.getViewportBounds().getHeight();
 
                     // Tính toán tỷ lệ cuộn phù hợp dựa trên chiều cao
@@ -341,7 +338,7 @@ public class DocumentController {
         });
 
         initRecentScrollPane();
-        recentVBox.setSpacing(10);
+        recentFlowPane.setVgap(10);
     }
 
     @FXML
