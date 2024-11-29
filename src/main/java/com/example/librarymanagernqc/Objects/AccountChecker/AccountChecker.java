@@ -15,11 +15,19 @@ public class AccountChecker extends HasError {
                 return true;
             }
         } catch (Exception e) {
-            setErrorMessage("Please recheck your Internet Connection");
+            setErrorMessage("Please recheck your Internet Connection!");
             e.printStackTrace();
             return false;
         }
         return false;
+    }
+
+    public static boolean checkUsernameCondition(String username) {
+        if (username.equals("")) {
+            setErrorMessage("Name cannot be empty!");
+            return false;
+        }
+        return true;
     }
 
     public static boolean checkValidAccount(String username, String password) {
@@ -28,7 +36,7 @@ public class AccountChecker extends HasError {
                 return true;
             }
         } catch (Exception e) {
-            setErrorMessage("Please recheck your Internet Connection");
+            setErrorMessage("Please recheck your Internet Connection!");
             e.printStackTrace();
             return false;
         }
@@ -41,7 +49,7 @@ public class AccountChecker extends HasError {
                 return true;
             }
         } catch (Exception e) {
-            setErrorMessage("Please recheck your Internet Connection");
+            setErrorMessage("Please recheck your Internet Connection!");
             e.printStackTrace();
             return false;
         }
@@ -54,7 +62,7 @@ public class AccountChecker extends HasError {
             return false;
         }
         if (!password1.equals(password2)) {
-            setErrorMessage("Passwords do not match");
+            setErrorMessage("Passwords do not match!");
             return false;
         }
 
@@ -63,13 +71,13 @@ public class AccountChecker extends HasError {
 
     public static boolean checkValidPassword(String password) {
         if (password.isEmpty()) {
-            setErrorMessage("Empty password");
+            setErrorMessage("Empty password!");
             return false;
         } else if (password.length() < 8 || password.length() > 20) {
-            setErrorMessage("Password length should be between 8 and 20 characters");
+            setErrorMessage("Password length should be between 8 and 20 characters!");
             return false;
         } else if (password.equals("00000000")) {
-            setErrorMessage("Password should not be defaults password");
+            setErrorMessage("Password should not be defaults password!");
             return false;
         }
         return true;
@@ -77,7 +85,7 @@ public class AccountChecker extends HasError {
 
     public static boolean checkDefaultPassword(String password) {
         if (password.equals("00000000")) {
-            setErrorMessage("Password should not be defaults password");
+            setErrorMessage("Password should not be defaults password!");
             return true;
         }
         return false;

@@ -21,6 +21,8 @@ public class NewPasswordController {
     private TextField newPasswordField2;
     @FXML
     public JFXButton backButton;
+    @FXML
+    private Text title;
 
     private String username;
 

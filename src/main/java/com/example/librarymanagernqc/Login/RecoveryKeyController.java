@@ -48,12 +48,15 @@ public class RecoveryKeyController {
     private StackPane mainStackPane;
     @FXML
     public JFXButton backButton;
+    @FXML
+    private Text title;
 
     private String username;
 
     public void setType(Type type) {
         if (type == Type.GIVE_KEY) {
             recoverButton.setText("Confirm");
+            title.setText("Recovery Key");
             currentType = Type.GIVE_KEY;
 
             key1.setEditable(false);
@@ -103,6 +106,7 @@ public class RecoveryKeyController {
                 }
 
                 NewPasswordController newPasswordController = newPassword.getController();
+
                 //set username
                 newPasswordController.setUsername(username);
                 newPasswordController.backToLoginButton.setOnMouseClicked(backToLoginMouseEvent -> {

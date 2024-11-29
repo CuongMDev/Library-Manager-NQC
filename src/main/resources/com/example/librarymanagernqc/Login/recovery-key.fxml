@@ -16,7 +16,7 @@
       <AnchorPane prefHeight="427.0" prefWidth="290.0" styleClass="rightForm" stylesheets="@style.css">
          <children>
             <TextField fx:id="key5" focusTraversable="false" layoutX="24.0" layoutY="190.0" prefHeight="28.0" prefWidth="108.0" promptText="Key 5" styleClass="loginTextField" />
-            <Text fill="#fffafa" layoutX="26.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Key Recovery" wrappingWidth="240.29833984375">
+            <Text fx:id="title" fill="#fffafa" layoutX="26.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Recovery Key" wrappingWidth="240.29833984375">
                <font>
                   <Font size="27.0" />
                </font>

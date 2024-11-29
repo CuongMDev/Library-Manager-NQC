@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -20,6 +21,8 @@ import java.io.IOException;
 public class LoginController {
     @FXML
     private JFXButton loginButton;
+    @FXML
+    private Button SignUpButtton;
     @FXML
     private TextField usernameField;
     @FXML
@@ -128,6 +131,28 @@ public class LoginController {
                     rightFormStackPane.getChildren().removeLast();
                     rightFormStackPane.getChildren().add(saveLoginPane);
                 }
+            });
+        }
+    }
+
+    @FXML
+    private void onSignUpMouseClicked(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+            Pane saveLoginPane = (Pane) rightFormStackPane.getChildren().removeLast();
+            FXMLLoader signUpLoader = new FXMLLoader(getClass().getResource("sign-up.fxml"));
+            try {
+                rightFormStackPane.getChildren().add(signUpLoader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            SignUpController signUpController = signUpLoader.getController();
+
+            signUpController.backToLoginButton.setOnMouseClicked(backToLoginMouseEvent -> {
+               if (backToLoginMouseEvent.getButton() == MouseButton.PRIMARY) {
+                   rightFormStackPane.getChildren().removeLast();
+                   rightFormStackPane.getChildren().add(saveLoginPane);
+               }
             });
         }
     }
