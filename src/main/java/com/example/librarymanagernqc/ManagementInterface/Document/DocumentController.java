@@ -26,6 +26,7 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -49,6 +50,10 @@ public class DocumentController {
     private ScrollPane recentScrollPane;
     @FXML
     private FlowPane recentFlowPane;
+
+    private static final List<Book> recentList = new ArrayList<>();
+
+    public static final int LIMIT_RECENT_BOOK = 20;
 
     /**
      * all books list
@@ -106,6 +111,7 @@ public class DocumentController {
         } else {
             addBooksListToTable(searchBooksList(searchField.getText(), 0));
         }
+        addRecentListToTable();
     }
 
     private void initOptionColumns() {
@@ -229,7 +235,12 @@ public class DocumentController {
         });
     }
 
-    private void addBookToRecentList(Book book) {
+    public static void addBookToRecentList(Book book) {
+        recentList.remove(book);
+        recentList.addFirst(book);
+    }
+
+    private void addBookToRecentListTable(Book book) {
         final JFXButton bookButton = new JFXButton();
         {
             //create add Image
@@ -280,11 +291,18 @@ public class DocumentController {
         recentFlowPane.getChildren().add(bookBox);
     }
 
+    private void addRecentListToTable() {
+        recentFlowPane.getChildren().clear();
+        int count = Math.min(recentList.size(), LIMIT_RECENT_BOOK);
+        for (int i = 0; i < count; i++) {
+            addBookToRecentListTable(recentList.get(i));
+        }
+    }
+
     private void addBooksListToTable(List<Book> booksList) {
         booksTableView.getItems().clear();
         for (Book book : booksList) {
             booksTableView.getItems().add(book);
-            addBookToRecentList(book);
         }
     }
 

@@ -95,6 +95,24 @@ public class UserController {
         }
     }
 
+    public void recordBookLoan(BookLoan bookLoan) {
+        boolean isInserted = BorrowedListDatabaseController.insertBookLoan(bookLoan);
+        if (isInserted) {
+            System.out.println("Thêm thông tin mượn sách vào database thành công");
+            BorrowedListController.addBookLoanToList(bookLoan);
+
+            Book getBook = Objects.requireNonNull(DocumentController.searchBookById(bookLoan.getBookId()));
+
+            //giảm số lượng sách
+            DocumentController.changeBookQuantity(getBook, -bookLoan.getLoanQuantity());
+
+            DocumentController.addBookToRecentList(getBook);
+        }
+        else{
+            System.out.println("Thêm thông tin sách mượn vào database thất bại");
+        }
+    }
+
     @FXML
     private void initialize() {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -242,17 +260,8 @@ public class UserController {
                                 if (recordButtonMouseEvent.getButton() == MouseButton.PRIMARY) {
                                     if (bookLoanInfoController.checkValidBookLoan()) {
                                         BookLoan getBookLoan = bookLoanInfoController.getBookLoan();
-                                        boolean isInserted = BorrowedListDatabaseController.insertBookLoan(getBookLoan);
-                                        if (isInserted) {
-                                            System.out.println("Thêm thông tin mượn sách vào database thành công");
-                                            BorrowedListController.addBookLoanToList(getBookLoan);
-                                        }
-                                        else{
-                                            System.out.println("Thêm thông tin sách mượn vào database thất bại");
-                                        }
 
-                                        //giảm số lượng sách
-                                        DocumentController.changeBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(getBookLoan.getBookId())), -getBookLoan.getLoanQuantity());
+                                        recordBookLoan(getBookLoan);
 
                                         mainStackPane.getChildren().removeLast();
                                         mainStackPane.getChildren().add(savePane);
