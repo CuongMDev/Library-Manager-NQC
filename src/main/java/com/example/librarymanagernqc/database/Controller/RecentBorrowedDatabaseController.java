@@ -3,6 +3,7 @@ package com.example.librarymanagernqc.database.Controller;
 import com.example.librarymanagernqc.AbstractClass.HasError;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.Objects.Book.Book;
+import com.example.librarymanagernqc.Objects.Book.BookInfo;
 import com.example.librarymanagernqc.database.DAO.RecentBorrowedDAO;
 import java.lang.ModuleLayer.Controller;
 import java.util.Collections;
@@ -18,7 +19,7 @@ public class RecentBorrowedDatabaseController extends HasError {
   // tải recent book từ database
   public static boolean loadRecentBorrowedFromDatabase() {
     try{
-      List<Book> recentBorrowedFromDb = recentBorrowedDAO.getRecentBorrowedFromDatabase();
+      List<BookInfo> recentBorrowedFromDb = recentBorrowedDAO.getRecentBorrowedFromDatabase();
       DocumentController.setAllRecentList(recentBorrowedFromDb.reversed());
       return true;
     } catch (Exception e){

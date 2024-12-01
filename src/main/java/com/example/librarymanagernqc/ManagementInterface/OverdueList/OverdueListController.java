@@ -157,7 +157,7 @@ public class OverdueListController {
 
 
                                     //add lại số lượng vào document
-                                    DocumentController.changeBookQuantity(Objects.requireNonNull(DocumentController.searchBookById(currentBookLoan.getBookId())), currentBookLoan.getLoanQuantity());
+                                    DocumentController.changeBookQuantity(currentBookLoan.getBookId(), currentBookLoan.getLoanQuantity());
 
                                     mainStackPane.getChildren().removeLast();
                                     mainStackPane.getChildren().add(savePane);

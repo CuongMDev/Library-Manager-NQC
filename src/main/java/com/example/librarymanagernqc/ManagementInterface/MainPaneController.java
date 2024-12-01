@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import java.io.IOException;
 
-public class  MainPaneController {
+public class MainPaneController {
     private enum PaneType {
         DOCUMENT,
         USER,
@@ -44,8 +44,17 @@ public class  MainPaneController {
         for (int i = 0; i < PaneType.values().length; i++) {
             panes[i] = loaders[i].load();
         }
-        //setDefault
-        switchPane(PaneType.DOCUMENT);
+    }
+
+    public void init() {
+        OnDocumentButtonClicked(new MouseEvent(
+                MouseEvent.MOUSE_CLICKED,
+                0, 0, 0, 0, // Tọa độ x, y
+                MouseButton.PRIMARY, // Nút chuột
+                1, // Số lần nhấn
+                false, false, false, false, // Modifier keys (Shift, Ctrl, Alt, Meta)
+                true, false, false, false, false, false, null
+        ));
     }
 
     public void switchPane(PaneType paneType) {

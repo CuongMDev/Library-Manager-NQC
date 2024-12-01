@@ -105,7 +105,7 @@ public class UserController {
             Book getBook = Objects.requireNonNull(DocumentController.searchBookById(bookLoan.getBookId()));
 
             //giảm số lượng sách
-            DocumentController.changeBookQuantity(getBook, -bookLoan.getLoanQuantity());
+            DocumentController.changeBookQuantity(getBook.getId(), -bookLoan.getLoanQuantity());
 
             if(!RecentBorrowedDatabaseController.isRecentBookExists(getBook.getId())) {
                 boolean isInsertRecentBorrowed = RecentBorrowedDatabaseController.insertRecentBorrowed(getBook);

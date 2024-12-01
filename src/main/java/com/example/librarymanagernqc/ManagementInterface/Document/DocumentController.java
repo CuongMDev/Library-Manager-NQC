@@ -3,11 +3,11 @@ package com.example.librarymanagernqc.ManagementInterface.Document;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
+import com.example.librarymanagernqc.Objects.Book.BookInfo;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.jfoenix.controls.JFXButton;
-import java.util.Collections;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -52,7 +52,7 @@ public class DocumentController {
     @FXML
     private FlowPane recentFlowPane;
 
-    private static List<Book> recentList = new ArrayList<>();
+    private static List<BookInfo> recentList = new ArrayList<>();
 
     public static final int LIMIT_RECENT_BOOK = 20;
 
@@ -65,7 +65,7 @@ public class DocumentController {
         booksList.add(book);
     }
 
-    public static void setAllRecentList(List<Book> newRecentList) {
+    public static void setAllRecentList(List<BookInfo> newRecentList) {
         recentList = newRecentList;
     }
 
@@ -73,8 +73,8 @@ public class DocumentController {
         booksList = newBooksList;
     }
 
-    private void deleteBookFromList(Book book) {
-
+    private void deleteBookFromList(String id) {
+        Book book = searchBookById(id);
         boolean isDeletedFromDb = BookDatabaseController.deleteBookById(book.getId());  // Xóa khỏi database
 
         if (isDeletedFromDb) {
@@ -85,10 +85,20 @@ public class DocumentController {
         }
     }
 
-    public static void changeBookQuantity(Book book, int changeQuantity) {
-        book.setQuantity(book.getQuantity() + changeQuantity);
-        // cập nhật số lượng sách trng database
-        BookDAO.changeQuantityBook(book.getQuantity(), book.getId());
+    public static void changeBookQuantity(String bookId, int changeQuantity) {
+        Book book = searchBookById(bookId);
+        if (BookDAO.changeQuantityBook(book.getQuantity(), book.getId())) {
+            book.setQuantity(book.getQuantity() + changeQuantity);
+            // cập nhật số lượng sách trng database
+        }
+    }
+
+    public static int getBookQuantity(String id) {
+        Book searchBook = searchBookById(id);
+        if (searchBook == null) {
+            return 0;
+        }
+        return searchBook.getQuantity();
     }
 
     /**
@@ -212,7 +222,7 @@ public class DocumentController {
                                 alert.showAndWait();
                             } else {
                                 // Xóa sách khỏi danh sách và database
-                                deleteBookFromList(book);
+                                deleteBookFromList(book.getId());
                             }
                         });
 
@@ -245,19 +255,20 @@ public class DocumentController {
         recentList.addFirst(book);
     }
 
-    private void addBookToRecentListTable(Book book) {
+    private void addBookToRecentListTable(BookInfo bookInfo) {
         final JFXButton bookButton = new JFXButton();
         {
             //create add Image
             //set default unknown book image
             ImageView bookImageView = new ImageView(new Image(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/image/unknown_book.png").toExternalForm()));
             // Đặt kích thước cho ảnh
-            bookImageView.setFitWidth(145);
-            bookImageView.setFitHeight(214);
+            bookImageView.setFitWidth(151);
+            bookImageView.setPreserveRatio(true); // Giữ tỷ lệ
+
             //set book image
-            if (book.getThumbnailUrl() != null) {
+            if (bookInfo.getThumbnailUrl() != null) {
                 // Lắng nghe hoàn tất tải ảnh
-                Image bookImage = new Image(book.getThumbnailUrl(), true);
+                Image bookImage = new Image(bookInfo.getThumbnailUrl(), true);
                 bookImage.progressProperty().addListener((observable, oldProgress, newProgress) -> {
                     if (newProgress.doubleValue() == 1.0) { //if loading image successfully
                         bookImageView.setImage(bookImage);
@@ -282,9 +293,62 @@ public class DocumentController {
                     bookButton.setOpacity(1);
                 }
             });
+
+            bookButton.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                    //load book information
+                    Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
+                    FXMLLoader bookInfoLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
+                    try {
+                        mainStackPane.getChildren().add(bookInfoLoader.load());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    BookInformationController bookInfoController = bookInfoLoader.getController();
+                    bookInfoController.setBook(new Book(bookInfo, getBookQuantity(bookInfo.getId())));
+                    if (searchBookById(bookInfo.getId()) != null) {
+                        bookInfoController.setType(BookInformationController.Type.EDIT);
+                    }
+
+                    //cancel button event
+                    bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
+                        if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
+                            mainStackPane.getChildren().removeLast();
+                            mainStackPane.getChildren().add(savePane);
+                        }
+                    });
+
+                    //add button event
+                    bookInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
+                        if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
+                            if (bookInfoController.checkValidBook()) {
+                                //lấy thông tin sách và thêm vào database
+                                Book newBook = bookInfoController.getBook();
+                                // kiểm tra book đã tồn tại chưa
+                                if (BookDatabaseController.isBookExists(newBook.getId())) {
+                                    System.out.println("Book with ID " + newBook.getId() + " already exists.");
+                                } else {
+                                    boolean isInserted = BookDatabaseController.insertBook(newBook);
+                                    if (isInserted) {
+                                        System.out.println("Book added to the database successfully.");
+                                        //add book
+                                        DocumentController.addBookToList(newBook);
+                                    } else {
+                                        System.out.println("Failed to add the book to the database.");
+                                    }
+                                }
+                                mainStackPane.getChildren().removeLast();
+                                mainStackPane.getChildren().add(savePane);
+                            }
+                        }
+                        updateTable();
+                    });
+                }
+            });
         }
         //title text
-        TextArea bookTitleText = new TextArea(book.getTitle());
+        TextArea bookTitleText = new TextArea(bookInfo.getTitle());
         bookTitleText.setEditable(false);
         bookTitleText.setWrapText(true);
         bookTitleText.setPrefSize(145, 20);
@@ -312,6 +376,8 @@ public class DocumentController {
     }
 
     private void initRecentScrollPane() {
+        recentScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         // Tính toán tỷ lệ cuộn ổn định
         double scrollSpeed = 0.005;  // Tốc độ cuộn cố định
 

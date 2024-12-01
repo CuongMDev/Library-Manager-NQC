@@ -46,6 +46,7 @@ public class LoginController {
             stage.centerOnScreen();
 
             MainPaneController mainPaneController = mainPaneLoader.getController();
+            mainPaneController.init();
             mainPaneController.logoutButton.setOnMouseClicked(logoutMouseEvent -> {
                 if (logoutMouseEvent.getButton() == MouseButton.PRIMARY) {
                     // Close the current stage
