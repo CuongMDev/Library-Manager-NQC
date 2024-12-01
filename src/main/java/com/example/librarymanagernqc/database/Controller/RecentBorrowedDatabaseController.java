@@ -5,6 +5,7 @@ import com.example.librarymanagernqc.ManagementInterface.Document.DocumentContro
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.database.DAO.RecentBorrowedDAO;
 import java.lang.ModuleLayer.Controller;
+import java.util.Collections;
 import java.util.List;
 
 public class RecentBorrowedDatabaseController extends HasError {
@@ -18,7 +19,7 @@ public class RecentBorrowedDatabaseController extends HasError {
   public static boolean loadRecentBorrowedFromDatabase() {
     try{
       List<Book> recentBorrowedFromDb = recentBorrowedDAO.getRecentBorrowedFromDatabase();
-      DocumentController.setAllRecentList(recentBorrowedFromDb);
+      DocumentController.setAllRecentList(recentBorrowedFromDb.reversed());
       return true;
     } catch (Exception e){
       setErrorMessage("Error loading Recent Borrowed from database");
