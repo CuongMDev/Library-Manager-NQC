@@ -2,27 +2,36 @@ package com.example.librarymanagernqc.database.Controller;
 
 import com.example.librarymanagernqc.AbstractClass.HasError;
 import com.example.librarymanagernqc.database.DAO.AdminDAO;
-import java.security.PublicKey;
 
 public class AdminDatabaseController extends HasError {
 
   private static AdminDAO adminDAO = new AdminDAO();
 
-  // Private constructor to prevent instantiation
-  private AdminDatabaseController() {
+  protected AdminDatabaseController() {
   }
 
   public static boolean checkValidAccount(String username, String password) {
-    if (adminDAO.isAcountExists(username, password)) {
-      return true;
+    try {
+      if(adminDAO.isAcountExists(username, password)) {
+        return true;
+      }
+    } catch (Exception e){
+      setErrorMessage("Please recheck your Internet Connection!");
+      e.printStackTrace();
+      return false;
     }
     setErrorMessage("Invalid username or password");
     return false;
   }
 
   public static boolean checkValidUsername(String username) {
-    if(adminDAO.isUserExists(username)){
-      return true;
+    try{
+      if(adminDAO.isUserExists(username)) {
+        return true;
+      }
+    } catch (Exception e){
+      setErrorMessage("Please recheck your Internet Connection!");
+      return false;
     }
     setErrorMessage("Username not exist");
     return false;
@@ -46,8 +55,14 @@ public class AdminDatabaseController extends HasError {
   }
 
   public static boolean checkValidKey(String username, String key){
-    if(adminDAO.isKeyExists(username, key)){
-      return true;
+    try {
+      if(adminDAO.isKeyExists(username, key)) {
+        return true;
+      }
+    } catch (Exception e){
+      setErrorMessage("Please recheck your Internet Connection!");
+      e.printStackTrace();
+      return false;
     }
     setErrorMessage("Invalid key");
     return false;
