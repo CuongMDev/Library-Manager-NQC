@@ -2,6 +2,7 @@ package com.example.librarymanagernqc.database.Controller;
 
 import com.example.librarymanagernqc.AbstractClass.HasError;
 import com.example.librarymanagernqc.database.DAO.AdminDAO;
+import java.security.PublicKey;
 
 public class AdminDatabaseController extends HasError {
 
@@ -24,6 +25,23 @@ public class AdminDatabaseController extends HasError {
       return true;
     }
     setErrorMessage("Username not exist");
+    return false;
+  }
+
+  public static boolean insertAdminAcount(String username, String password) {
+    if (adminDAO.insertAdminAcount(username, password)) {
+      return true;
+    }
+    setErrorMessage("Username already exist");
+    return false;
+  }
+
+  //sign up
+  public static boolean isUserExists(String username) {
+    if(adminDAO.isUserExists(username)){
+      setErrorMessage("Username exist");
+      return true;
+    }
     return false;
   }
 

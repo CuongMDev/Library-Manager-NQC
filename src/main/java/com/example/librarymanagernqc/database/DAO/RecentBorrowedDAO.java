@@ -2,8 +2,6 @@ package com.example.librarymanagernqc.database.DAO;
 
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.database.DatabaseHelper;
-
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,19 +9,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDAO {
+public class RecentBorrowedDAO {
 
+  //lấy recent borrowed từ database
+  public List<Book> getRecentBorrowedFromDatabase() throws SQLException {
+    List<Book> recentBooks = new ArrayList<>();
 
-  public List<Book> getBooksFromDatabase() throws SQLException {
-    List<Book> booksList = new ArrayList<>();
+    String query = "SELECT * FROM RecentBorrowed";
 
-    String query = "SELECT * FROM Book";  // Truy vấn để lấy tất cả sách
-
-    try (Statement statement = DatabaseHelper.getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(query)) {
-
+    try(Statement statement = DatabaseHelper.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(query)){
       while (resultSet.next()) {
-        // Lấy dữ liệu từ ResultSet và tạo đối tượng Book
         String bookId = resultSet.getString("book_id");
         String title = resultSet.getString("title");
         int quantity = resultSet.getInt("quantity");
@@ -37,38 +33,19 @@ public class BookDAO {
         Book book = new Book(bookId, title, authorName, publisher, publishedDate, description,
             quantity, thumbnailUrl, infoLink);
 
-        booksList.add(book);  // Thêm vào danh sách sách
+        recentBooks.add(book);
       }
-    } catch (SQLException e) {
+    } catch (SQLException e){
       e.printStackTrace();
       throw new SQLException(e);
     }
 
-    return booksList;
+    return recentBooks;
   }
 
-  // xóa sách khỏi database
-  public boolean deleteBookById(String bookId) {
-    String deleteQuery = "DELETE FROM Book WHERE book_id = ?";
-
-    try (PreparedStatement preparedStatement = DatabaseHelper.getConnection()
-        .prepareStatement(deleteQuery)) {
-
-      preparedStatement.setString(1, bookId);
-      int affectedRows = preparedStatement.executeUpdate();
-
-      // Trả về true nếu có dòng bị ảnh hưởng (xóa thành công)
-      return affectedRows > 0;
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
-
-  // thêm sách vào cơ sở dữ liệu
-  public boolean insertBook(Book book) {
-    String query = "INSERT INTO Book (book_id, title, quantity, author_name, description, publisher, published_date, thumbnailUrl, infoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  //insert new borrowed in database
+  public boolean insertRecentBorrowed(Book book) {
+    String query = "INSERT INTO RecentBorrowed (book_id, title, quantity, author_name, description, publisher, published_date, thumbnailUrl, infoLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
 
@@ -114,9 +91,9 @@ public class BookDAO {
     }
   }
 
-  // kiểm tra book_id đã tồn tại trong database chưa
-  public boolean isBookExists(String bookId) {
-    String sql = "SELECT COUNT(*) FROM Book WHERE book_id = ?";
+  // kiểm tra book_id đã tồn tại trong book recent database chưa
+  public boolean isRecentBookExists(String bookId) {
+    String sql = "SELECT COUNT(*) FROM RecentBorrowed WHERE book_id = ?";
     try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(sql)) {
       statement.setString(1, bookId);
       ResultSet resultSet = statement.executeQuery();
@@ -127,38 +104,5 @@ public class BookDAO {
       e.printStackTrace();
     }
     return false;
-  }
-
-  // chỉnh sửa thông tin book
-  public boolean updateBook(Book book) {
-    String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
-    try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
-      statement.setInt(1, book.getQuantity());
-      statement.setString(2, book.getId());
-
-      int rowsAffected = statement.executeUpdate();
-
-      return rowsAffected > 0;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
-  }
-
-  // chỉnh sửa số lượng sách sau khi mượn hoặc trả
-  public static boolean changeQuantityBook(int newQuantity, String bookId) {
-    String query = "UPDATE Book SET quantity = ? WHERE book_id = ?";
-    try (Connection connection = DatabaseHelper.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query)) {
-      statement.setInt(1, newQuantity);
-      statement.setString(2, bookId);
-
-      int rowsAffected = statement.executeUpdate();
-
-      return rowsAffected > 0;
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return false;
-    }
   }
 }

@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.Login;
 
 import com.example.librarymanagernqc.Objects.AccountChecker.AccountChecker;
+import com.example.librarymanagernqc.database.Controller.AdminDatabaseController;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +30,8 @@ public class SignUpController {
     @FXML
     private void onNextButtonMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            if (AccountChecker.checkUsernameCondition(usernameField.getText())) {
+            boolean checkUserNameExists = AdminDatabaseController.isUserExists(usernameField.getText());
+            if (AccountChecker.checkUsernameCondition(usernameField.getText()) && !checkUserNameExists) {
                 Pane saveLoginPane = (Pane) mainStackPane.getChildren().removeLast();
                 FXMLLoader recoveryKeyLoader = new FXMLLoader(getClass().getResource("recovery-key.fxml"));
                 try {
@@ -37,6 +39,8 @@ public class SignUpController {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
+                AdminDatabaseController.insertAdminAcount(usernameField.getText(), "00000000");
 
                 RecoveryKeyController recoveryKeyController = recoveryKeyLoader.getController();
                 recoveryKeyController.setUsername(usernameField.getText());

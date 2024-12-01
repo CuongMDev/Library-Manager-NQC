@@ -23,6 +23,23 @@ public class AdminDAO {
     return false;
   }
 
+  //insert username
+  public static boolean insertAdminAcount(String username, String password) {
+    String query = "INSERT INTO Admins(admin_user_name, password) VALUES(?, ?)";
+    try(PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)){
+
+      statement.setString(1, username);
+      statement.setString(2, password);
+
+      int rowsAffected = statement.executeUpdate();
+      return rowsAffected > 0;
+
+    } catch(SQLException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
   // kiểm tra username có tồn tại không
   public boolean isUserExists(String username) {
     String query = "SELECT COUNT(*) FROM Admins WHERE admin_user_name = ?";

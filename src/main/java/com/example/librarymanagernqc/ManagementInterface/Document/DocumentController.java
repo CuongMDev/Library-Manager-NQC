@@ -51,7 +51,7 @@ public class DocumentController {
     @FXML
     private FlowPane recentFlowPane;
 
-    private static final List<Book> recentList = new ArrayList<>();
+    private static List<Book> recentList = new ArrayList<>();
 
     public static final int LIMIT_RECENT_BOOK = 20;
 
@@ -62,6 +62,10 @@ public class DocumentController {
 
     public static void addBookToList(Book book) {
         booksList.add(book);
+    }
+
+    public static void setAllRecentList(List<Book> newRecentList) {
+        recentList = newRecentList;
     }
 
     public static void setAllBooksList(List<Book> newBooksList) {

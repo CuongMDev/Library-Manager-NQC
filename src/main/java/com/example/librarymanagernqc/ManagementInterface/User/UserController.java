@@ -10,6 +10,7 @@ import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
+import com.example.librarymanagernqc.database.Controller.RecentBorrowedDatabaseController;
 import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 import com.example.librarymanagernqc.database.DAO.BookDAO;
 import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
@@ -96,8 +97,8 @@ public class UserController {
     }
 
     public void recordBookLoan(BookLoan bookLoan) {
-        boolean isInserted = BorrowedListDatabaseController.insertBookLoan(bookLoan);
-        if (isInserted) {
+        boolean isInsertedBookLoan = BorrowedListDatabaseController.insertBookLoan(bookLoan);
+        if (isInsertedBookLoan) {
             System.out.println("Thêm thông tin mượn sách vào database thành công");
             BorrowedListController.addBookLoanToList(bookLoan);
 
@@ -106,7 +107,17 @@ public class UserController {
             //giảm số lượng sách
             DocumentController.changeBookQuantity(getBook, -bookLoan.getLoanQuantity());
 
-            DocumentController.addBookToRecentList(getBook);
+            if(!RecentBorrowedDatabaseController.isRecentBookExists(getBook.getId())) {
+                boolean isInsertRecentBorrowed = RecentBorrowedDatabaseController.insertRecentBorrowed(getBook);
+
+                if (isInsertRecentBorrowed) {
+                    DocumentController.addBookToRecentList(getBook);
+                }
+                else{
+                    System.out.println("Thêm thông tin sách mượn gần nhất vào database thất bại");
+                }
+            }
+
         }
         else{
             System.out.println("Thêm thông tin sách mượn vào database thất bại");

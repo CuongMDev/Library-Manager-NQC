@@ -3,6 +3,7 @@ package com.example.librarymanagernqc.database;
 import com.example.librarymanagernqc.AbstractClass.HasError;
 import com.example.librarymanagernqc.database.Controller.BookDatabaseController;
 import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
+import com.example.librarymanagernqc.database.Controller.RecentBorrowedDatabaseController;
 import com.example.librarymanagernqc.database.Controller.ReturnedListDatabaseController;
 import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 
@@ -26,6 +27,8 @@ public class DatabaseLoader extends HasError {
         } else if(!BorrowedListDatabaseController.loadBookLoanFromDatabase()) {
             success = false;
         } else if(!ReturnedListDatabaseController.loadBookReturnFromDatabase()) {
+            success = false;
+        } else if (!RecentBorrowedDatabaseController.loadRecentBorrowedFromDatabase()) {
             success = false;
         }
 
