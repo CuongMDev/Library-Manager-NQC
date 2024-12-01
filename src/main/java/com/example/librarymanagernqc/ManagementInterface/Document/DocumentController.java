@@ -386,7 +386,8 @@ public class DocumentController {
                 new KeyFrame(Duration.millis(20), e -> {
                     // Tính toán tỷ lệ chiều cao của VBox và ScrollPane
                     double contentHeight = recentFlowPane.getHeight();
-                    double viewportHeight = recentScrollPane.getViewportBounds().getHeight();
+                    //max with 1 to avoid viewportHeight = 0
+                    double viewportHeight = Math.max(1, recentScrollPane.getViewportBounds().getHeight());
 
                     // Tính toán tỷ lệ cuộn phù hợp dựa trên chiều cao
                     double ratio = contentHeight / viewportHeight;
@@ -396,6 +397,7 @@ public class DocumentController {
 
                     double currentValue = recentScrollPane.getVvalue();
                     recentScrollPane.setVvalue(currentValue + adjustedScrollSpeed); // Tăng giá trị cuộn dọc
+                    currentValue = recentScrollPane.getVvalue();
                     if (recentScrollPane.getVvalue() >= 1.0) {
                         recentScrollPane.setVvalue(0.0); // Quay lại đầu nếu cuộn xong
                     }

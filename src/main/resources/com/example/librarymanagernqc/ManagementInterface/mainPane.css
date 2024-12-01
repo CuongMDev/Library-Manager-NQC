@@ -7,7 +7,6 @@
     -fx-font-weight: bold; /* Độ đậm của chữ */
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 0 0 0 20px;
-    -fx-focus-traversable: false;
     -fx-cursor: HAND;
     -fx-pref-height: 80;
     -fx-background-radius: 15;
@@ -26,6 +25,14 @@
     -fx-text-fill: black;
     -fx-border-color: black;
 }
+
+.menuButton.onChoose {
+    -fx-text-fill: black;
+    -fx-border-color: black;
+}
+
+
+
 
 
 

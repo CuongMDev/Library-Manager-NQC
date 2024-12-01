@@ -26,9 +26,19 @@ public class MainPaneController {
     @FXML
     private JFXButton documentButton;
     @FXML
+    private JFXButton userButton;
+    @FXML
+    private JFXButton borrowedButton;
+    @FXML
+    private JFXButton bookReturnButton;
+    @FXML
+    private JFXButton overdueButton;
+    @FXML
     public JFXButton logoutButton;
+    public JFXButton[] allButtons;
     @FXML
     private StackPane mainStackPane;
+
 
     private final FXMLLoader[] loaders = new FXMLLoader[PaneType.values().length];
     private final Pane[] panes = new Pane[PaneType.values().length];
@@ -40,6 +50,8 @@ public class MainPaneController {
         loaders[PaneType.BORROWED_LIST.ordinal()] = new FXMLLoader(getClass().getResource("BorrowedList/borrowed-list.fxml"));
         loaders[PaneType.RETURNED_LIST.ordinal()] = new FXMLLoader(getClass().getResource("ReturnedList/returned-list.fxml"));
         loaders[PaneType.OVERDUE_LIST.ordinal()] = new FXMLLoader(getClass().getResource("OverdueList/overdue-list.fxml"));
+
+        allButtons = new JFXButton[]{documentButton, userButton, borrowedButton, bookReturnButton, overdueButton, logoutButton};
 
         for (int i = 0; i < PaneType.values().length; i++) {
             panes[i] = loaders[i].load();
@@ -59,6 +71,9 @@ public class MainPaneController {
 
     public void switchPane(PaneType paneType) {
         mainStackPane.getChildren().setAll(panes[paneType.ordinal()]);
+        for (JFXButton button : allButtons) {
+            button.getStyleClass().remove("onChoose");
+        }
     }
 
     @FXML
@@ -68,6 +83,10 @@ public class MainPaneController {
 
             DocumentController documentController = loaders[PaneType.DOCUMENT.ordinal()].getController();
             documentController.updateTable();
+
+            if (!documentButton.getStyleClass().contains("onChoose")) {
+                documentButton.getStyleClass().add("onChoose");
+            }
         }
     }
 
@@ -78,6 +97,10 @@ public class MainPaneController {
 
             UserController userController = loaders[PaneType.USER.ordinal()].getController();
             userController.updateTable();
+
+            if (!userButton.getStyleClass().contains("onChoose")) {
+                userButton.getStyleClass().add("onChoose");
+            }
         }
     }
 
@@ -88,6 +111,10 @@ public class MainPaneController {
 
             BorrowedListController borrowedListController = loaders[PaneType.BORROWED_LIST.ordinal()].getController();
             borrowedListController.updateTable();
+
+            if (!borrowedButton.getStyleClass().contains("onChoose")) {
+                borrowedButton.getStyleClass().add("onChoose");
+            }
         }
     }
 
@@ -98,6 +125,10 @@ public class MainPaneController {
 
             ReturnedListController returnedListController = loaders[PaneType.RETURNED_LIST.ordinal()].getController();
             returnedListController.updateTable();
+
+            if (!bookReturnButton.getStyleClass().contains("onChoose")) {
+                bookReturnButton.getStyleClass().add("onChoose");
+            }
         }
     }
 
@@ -108,6 +139,10 @@ public class MainPaneController {
 
             OverdueListController overdueListController = loaders[PaneType.OVERDUE_LIST.ordinal()].getController();
             overdueListController.updateTable();
+
+            if (!overdueButton.getStyleClass().contains("onChoose")) {
+                overdueButton.getStyleClass().add("onChoose");
+            }
         }
     }
 }
