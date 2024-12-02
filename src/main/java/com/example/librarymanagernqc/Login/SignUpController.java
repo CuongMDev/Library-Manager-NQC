@@ -51,6 +51,9 @@ public class SignUpController {
                     if (backToLoginMouseEvent.getButton() == MouseButton.PRIMARY) {
                         mainStackPane.getChildren().removeLast();
                         mainStackPane.getChildren().add(saveLoginPane);
+
+                        //back to login
+                        backToLoginButton.fireEvent(mouseEvent);
                     }
                 });
 

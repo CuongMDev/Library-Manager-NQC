@@ -11,7 +11,7 @@ public class AccountChecker extends AdminDatabaseController {
     }
 
     public static boolean checkUsernameCondition(String username) {
-        if (username.equals("")) {
+        if (username.isBlank()) {
             setErrorMessage("Name cannot be empty!");
             return false;
         }
