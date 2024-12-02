@@ -133,6 +133,11 @@ public class UserController {
         dateOfBirthColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
+        // Lắng nghe thay đổi của text
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            updateTable();
+        });
+
         optionColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<User, Void> call(TableColumn<User, Void> param) {

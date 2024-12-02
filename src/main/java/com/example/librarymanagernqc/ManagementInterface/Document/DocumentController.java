@@ -377,6 +377,7 @@ public class DocumentController {
 
     private void initRecentScrollPane() {
         recentScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        recentScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         // Tính toán tỷ lệ cuộn ổn định
         double scrollSpeed = 0.005;  // Tốc độ cuộn cố định
@@ -397,7 +398,6 @@ public class DocumentController {
 
                     double currentValue = recentScrollPane.getVvalue();
                     recentScrollPane.setVvalue(currentValue + adjustedScrollSpeed); // Tăng giá trị cuộn dọc
-                    currentValue = recentScrollPane.getVvalue();
                     if (recentScrollPane.getVvalue() >= 1.0) {
                         recentScrollPane.setVvalue(0.0); // Quay lại đầu nếu cuộn xong
                     }
