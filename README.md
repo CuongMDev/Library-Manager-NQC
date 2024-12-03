@@ -55,7 +55,7 @@ The application is designed to manage library operations efficiently. The applic
 - **Check overdue books**: Click "Overdue List" to see all overdue transactions.
 
 ### Logout the Application
-- Click the "Logout" button to log out.
+- Click the "**Logout**" button to log out.
 
 ## Demo
 + **Login**  
