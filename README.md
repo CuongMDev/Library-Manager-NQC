@@ -61,6 +61,9 @@ The application is designed to manage library operations efficiently. The applic
 + **Login**  
   ![Login](src/main/resources/org/preview/Login.png)
 
++ **Book Information**  
+  ![Book Information](src/main/resources/org/preview/BookInformation.png)
+
 + **Add Book**  
   ![Add Book](src/main/resources/org/preview/AddBook.png)
 
