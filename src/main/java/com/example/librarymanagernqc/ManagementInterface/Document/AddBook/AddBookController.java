@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.Document.AddBook;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.Book.BookJsonHandler;
@@ -31,7 +32,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class AddBookController {
+public class AddBookController extends Controller {
     @FXML
     private StackPane mainStackPane;
     @FXML
@@ -97,22 +98,19 @@ public class AddBookController {
             bookButton.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                     //load book information
-                    Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                    FXMLLoader bookInfoLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
+                    BookInformationController bookInfoController;
                     try {
-                        mainStackPane.getChildren().add(bookInfoLoader.load());
+                        bookInfoController = (BookInformationController) Controller.init(getStage(), getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                    switchPane(mainStackPane, bookInfoController.getParent());
 
-                    BookInformationController bookInfoController = bookInfoLoader.getController();
                     bookInfoController.setBook(book);
-
                     //cancel button event
                     bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                         if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                            mainStackPane.getChildren().removeLast();
-                            mainStackPane.getChildren().add(savePane);
+                            switchToSavePane(mainStackPane);
                         }
                     });
 
@@ -123,10 +121,10 @@ public class AddBookController {
                                 //lấy thông tin sách và thêm vào database
                                 Book newBook = bookInfoController.getBook();
                                 // kiểm tra book đã tồn tại chưa
-                                if (BookDatabaseController.isBookExists(newBook.getId())) {
+                                if (BookDatabaseController.getInstance().isBookExists(newBook.getId())) {
                                     System.out.println("Book with ID " + newBook.getId() + " already exists.");
                                 } else {
-                                    boolean isInserted = BookDatabaseController.insertBook(newBook);
+                                    boolean isInserted = BookDatabaseController.getInstance().insertBook(newBook);
                                     if (isInserted) {
                                         System.out.println("Book added to the database successfully.");
                                         //add book
@@ -135,8 +133,7 @@ public class AddBookController {
                                         System.out.println("Failed to add the book to the database.");
                                     }
                                 }
-                                mainStackPane.getChildren().removeLast();
-                                mainStackPane.getChildren().add(savePane);
+                                switchToSavePane(mainStackPane);
                             }
                         }
                     });

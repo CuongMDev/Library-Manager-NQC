@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.Document;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.AddBook.AddBookController;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
@@ -32,7 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class DocumentController {
+public class DocumentController extends Controller {
     @FXML
     private TableColumn<Book, String> idColumn;
     @FXML
@@ -75,13 +76,13 @@ public class DocumentController {
 
     private void deleteBookFromList(String id) {
         Book book = searchBookById(id);
-        boolean isDeletedFromDb = BookDatabaseController.deleteBookById(book.getId());  // Xóa khỏi database
+        boolean isDeletedFromDb = BookDatabaseController.getInstance().deleteBookById(book.getId());  // Xóa khỏi database
 
         if (isDeletedFromDb) {
             booksList.remove(book);  // Xóa khỏi danh sách sau khi xóa thành công trong database
             updateTable();  // Cập nhật bảng để phản ánh sự thay đổi
         } else {
-            System.out.println(BookDatabaseController.getErrorMessage());  // Thông báo nếu xóa không thành công
+            System.out.println(BookDatabaseController.getInstance().getErrorMessage());  // Thông báo nếu xóa không thành công
         }
     }
 
@@ -129,6 +130,11 @@ public class DocumentController {
         addRecentListToTable();
     }
 
+    @Override
+    public void refresh() {
+        updateTable();
+    }
+
     private void initOptionColumns() {
         optionColumn.setCellFactory(new Callback<>() {
             @Override
@@ -151,15 +157,14 @@ public class DocumentController {
                             //lấy ô hiện tại đang chọn
                             Book currentBook = getTableView().getItems().get(getIndex());
                             //load book information
-                            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                            FXMLLoader bookInfoLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
+                            BookInformationController bookInfoController;
                             try {
-                                mainStackPane.getChildren().add(bookInfoLoader.load());
+                                bookInfoController = (BookInformationController) Controller.init(getStage(), getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
 
-                            BookInformationController bookInfoController = bookInfoLoader.getController();
+                            switchPane(mainStackPane, bookInfoController.getParent());
                             bookInfoController.setBook(currentBook);
                             bookInfoController.setType(BookInformationController.Type.EDIT);
 
@@ -169,7 +174,7 @@ public class DocumentController {
                                     if (bookInfoController.checkValidBook()) {
                                         currentBook.setQuantity(bookInfoController.getBook().getQuantity());
 
-                                        boolean isUpdated = BookDatabaseController.updateBook(currentBook);
+                                        boolean isUpdated = BookDatabaseController.getInstance().updateBook(currentBook);
 
                                         if(isUpdated) {
                                             System.out.println("Book updated successfully in database");
@@ -178,8 +183,7 @@ public class DocumentController {
                                             System.out.println("Failed to update book in database");
                                         }
 
-                                        mainStackPane.getChildren().removeLast();
-                                        mainStackPane.getChildren().add(savePane);
+                                        switchToSavePane(mainStackPane);
                                     }
                                 }
                             });
@@ -187,8 +191,7 @@ public class DocumentController {
                             //cancel button event
                             bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                                 if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    switchToSavePane(mainStackPane);
                                 }
                             });
 
@@ -213,7 +216,7 @@ public class DocumentController {
                             Book book = getTableView().getItems().get(getIndex());
 
                             // Kiểm tra nếu sách đang được mượn
-                            if (BorrowedListDatabaseController.isBookLoanExistBybookId(book.getId())) {
+                            if (BorrowedListDatabaseController.getInstance().isBookLoanExistBybookId(book.getId())) {
                                 // Hiển thị thông báo
                                 Alert alert = new Alert(Alert.AlertType.WARNING);
                                 alert.setTitle("Can't delete a book");
@@ -297,15 +300,14 @@ public class DocumentController {
             bookButton.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                     //load book information
-                    Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                    FXMLLoader bookInfoLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
+                    BookInformationController bookInfoController;
                     try {
-                        mainStackPane.getChildren().add(bookInfoLoader.load());
+                        bookInfoController = (BookInformationController) Controller.init(getStage(), getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/Document/BookInformation/book-information.fxml"));
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 
-                    BookInformationController bookInfoController = bookInfoLoader.getController();
+                    switchPane(mainStackPane, bookInfoController.getParent());
                     bookInfoController.setBook(new Book(bookInfo, getBookQuantity(bookInfo.getId())));
                     if (searchBookById(bookInfo.getId()) != null) {
                         bookInfoController.setType(BookInformationController.Type.EDIT);
@@ -314,8 +316,7 @@ public class DocumentController {
                     //cancel button event
                     bookInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                         if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                            mainStackPane.getChildren().removeLast();
-                            mainStackPane.getChildren().add(savePane);
+                            switchToSavePane(mainStackPane);
                         }
                     });
 
@@ -326,10 +327,10 @@ public class DocumentController {
                                 //lấy thông tin sách và thêm vào database
                                 Book newBook = bookInfoController.getBook();
                                 // kiểm tra book đã tồn tại chưa
-                                if (BookDatabaseController.isBookExists(newBook.getId())) {
+                                if (BookDatabaseController.getInstance().isBookExists(newBook.getId())) {
                                     System.out.println("Book with ID " + newBook.getId() + " already exists.");
                                 } else {
-                                    boolean isInserted = BookDatabaseController.insertBook(newBook);
+                                    boolean isInserted = BookDatabaseController.getInstance().insertBook(newBook);
                                     if (isInserted) {
                                         System.out.println("Book added to the database successfully.");
                                         //add book
@@ -338,8 +339,7 @@ public class DocumentController {
                                         System.out.println("Failed to add the book to the database.");
                                     }
                                 }
-                                mainStackPane.getChildren().removeLast();
-                                mainStackPane.getChildren().add(savePane);
+                                switchToSavePane(mainStackPane);
                             }
                         }
                         updateTable();
@@ -435,15 +435,18 @@ public class DocumentController {
     @FXML
     private void onAddMouseClicked(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-            FXMLLoader addBookLoader = new FXMLLoader(getClass().getResource("AddBook/add-book.fxml"));
-            mainStackPane.getChildren().add(addBookLoader.load());
+            AddBookController addBookController;
+            try {
+                addBookController = (AddBookController) Controller.init(getStage(), getClass().getResource("AddBook/add-book.fxml"));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                throw ex;
+            }
 
-            AddBookController addBookController = addBookLoader.getController();
+            switchPane(mainStackPane, addBookController.getParent());
             addBookController.backButton.setOnMouseClicked(addBookMouseEvent -> {
                 if (addBookMouseEvent.getButton() == MouseButton.PRIMARY) {
-                    mainStackPane.getChildren().removeLast();
-                    mainStackPane.getChildren().add(savePane);
+                    switchToSavePane(mainStackPane);
                 }
 
                 updateTable();

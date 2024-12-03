@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.OverdueList;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn.RecordBookReturnController;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class OverdueListController {
+public class OverdueListController extends Controller {
     @FXML
     private TableColumn<BookLoan, String> usernameColumn;
     @FXML
@@ -94,6 +95,11 @@ public class OverdueListController {
         }
     }
 
+    @Override
+    public void refresh() {
+        updateTable();
+    }
+
     private void initOptionColumn() {
         optionColumn.setCellFactory(new Callback<>() {
             @Override
@@ -117,15 +123,14 @@ public class OverdueListController {
                             //lấy ô hiện tại đang chọn
                             BookLoan currentBookLoan = getTableView().getItems().get(getIndex());
                             //load book information
-                            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                            FXMLLoader recordBookReturnLoader = new FXMLLoader(getClass().getResource("RecordBookReturn/record-book-return.fxml"));
+                            RecordBookReturnController recordBookReturnController;
                             try {
-                                mainStackPane.getChildren().add(recordBookReturnLoader.load());
+                                recordBookReturnController = (RecordBookReturnController) Controller.init(getStage(), getClass().getResource("RecordBookReturn/record-book-return.fxml"));
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                            switchPane(mainStackPane, recordBookReturnController.getParent());
 
-                            RecordBookReturnController recordBookReturnController = recordBookReturnLoader.getController();
                             recordBookReturnController.setBookLoan(currentBookLoan);
 
                             //record button event
@@ -135,7 +140,7 @@ public class OverdueListController {
                                     recordBookReturnController.updateBookLoan(currentBookLoan);
 
                                     // thêm thông tin trả sách vào database
-                                    boolean isInserted = ReturnedListDatabaseController.insertBookReturn(currentBookLoan);
+                                    boolean isInserted = ReturnedListDatabaseController.getInstance().insertBookReturn(currentBookLoan);
                                     if (isInserted) {
                                         System.out.println("thêm thông tin trả sách vào database thành công");
                                         //thêm thông tin trả sách
@@ -145,7 +150,7 @@ public class OverdueListController {
                                         System.out.println("thêm thông tin trả sách vào database thất bại");
                                     }
 
-                                    boolean isDelete = BorrowedListDatabaseController.deleteBookLoanById(currentBookLoan);
+                                    boolean isDelete = BorrowedListDatabaseController.getInstance().deleteBookLoanById(currentBookLoan);
                                     if(isDelete){
                                         System.out.println("xóa thông tin mượn sách khỏi database thành công");
                                         //xóa sách khỏi danh sách mượn
@@ -159,8 +164,7 @@ public class OverdueListController {
                                     //add lại số lượng vào document
                                     DocumentController.changeBookQuantity(currentBookLoan.getBookId(), currentBookLoan.getLoanQuantity());
 
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    switchToSavePane(mainStackPane);
                                     updateTable();
                                 }
                             });
@@ -168,8 +172,7 @@ public class OverdueListController {
                             //cancel button event
                             recordBookReturnController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                                 if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    switchToSavePane(mainStackPane);
                                 }
                             });
 

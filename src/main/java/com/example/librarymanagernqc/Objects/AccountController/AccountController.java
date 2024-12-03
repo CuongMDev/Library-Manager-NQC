@@ -1,16 +1,23 @@
-package com.example.librarymanagernqc.Objects.AccountChecker;
+package com.example.librarymanagernqc.Objects.AccountController;
 
-import com.example.librarymanagernqc.AbstractClass.HasError;
 import com.example.librarymanagernqc.database.Controller.AdminDatabaseController;
-import com.example.librarymanagernqc.database.DAO.AdminDAO;
 
-public class AccountChecker extends AdminDatabaseController {
+public class AccountController extends AdminDatabaseController {
+    private static AccountController instance;
+
     // Private constructor to prevent instantiation
-    private AccountChecker() {
+    private AccountController() {
         super();
     }
 
-    public static boolean checkUsernameCondition(String username) {
+    public static AccountController getInstance() {
+        if (instance == null) {
+            instance = new AccountController();
+        }
+        return instance;
+    }
+
+    public boolean checkUsernameCondition(String username) {
         if (username.isBlank()) {
             setErrorMessage("Name cannot be empty!");
             return false;
@@ -18,7 +25,7 @@ public class AccountChecker extends AdminDatabaseController {
         return true;
     }
 
-    public static boolean checkMatchPassword(String password1, String password2) {
+    public boolean checkMatchPassword(String password1, String password2) {
         if (password1.isEmpty()) {
             setErrorMessage("Empty password");
             return false;
@@ -31,7 +38,7 @@ public class AccountChecker extends AdminDatabaseController {
         return true;
     }
 
-    public static boolean checkValidPassword(String password) {
+    public boolean checkValidPassword(String password) {
         if (password.isEmpty()) {
             setErrorMessage("Empty password!");
             return false;
@@ -45,7 +52,7 @@ public class AccountChecker extends AdminDatabaseController {
         return true;
     }
 
-    public static boolean checkDefaultPassword(String password) {
+    public boolean checkDefaultPassword(String password) {
         if (password.equals("00000000")) {
             setErrorMessage("Password should not be defaults password!");
             return true;

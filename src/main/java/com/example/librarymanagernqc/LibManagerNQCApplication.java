@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,8 +22,8 @@ public class LibManagerNQCApplication extends Application {
             stage.setScene(splashScene);
             stage.show();
         } else if ("release".equalsIgnoreCase(mode)) {
-            SplashScreenController splashController = new SplashScreenController();
-            splashController.showSplashScreen(stage);
+            SplashScreenController splashController = (SplashScreenController) Controller.init(stage, getClass().getResource("SplashScreen/splash-screen.fxml"));
+            splashController.showSplashScreen();
         }
     }
 

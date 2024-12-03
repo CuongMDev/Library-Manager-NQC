@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.User.AddUser;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.example.librarymanagernqc.User.User;
 import com.example.librarymanagernqc.Objects.Utils;
@@ -14,7 +15,7 @@ import javafx.scene.control.TextFormatter;
 
 import java.time.LocalDate;
 
-public class AddUserController {
+public class AddUserController extends Controller {
     public enum Type {
         ADD,
         EDIT
@@ -44,12 +45,12 @@ public class AddUserController {
             User user = getUser(); // Lấy thông tin người dùng từ các trường input
 
             //kiểm tra xem user đã có trong database chưa
-            if(UserDatabaseController.isUserExists(user.getUsername(), user.getCitizenId())) {
+            if(UserDatabaseController.getInstance().isUserExists(user.getUsername(), user.getCitizenId())) {
                 System.out.println("User already exists");
                 return;
             }
 
-            if (UserDatabaseController.addUser(user)) {
+            if (UserDatabaseController.getInstance().addUser(user)) {
                 System.out.println("Thêm người dùng vào database thành công");
                 // Cập nhật giao diện nếu cần
             } else {

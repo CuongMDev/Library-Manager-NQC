@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.Objects.Utils;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
@@ -11,7 +12,7 @@ import javafx.scene.control.TextFormatter;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class RecordBookReturnController {
+public class RecordBookReturnController extends Controller {
     public enum Type {
         RECORD,
         INFOMATION

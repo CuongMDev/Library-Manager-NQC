@@ -1,9 +1,9 @@
 package com.example.librarymanagernqc;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
+import com.example.librarymanagernqc.Login.LoginController;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
 import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -12,12 +12,11 @@ import javafx.stage.StageStyle;
 
 import java.util.Objects;
 
-public class SplashScreenController {
-    public void showSplashScreen(Stage stage) {
+public class SplashScreenController extends Controller {
+    public void showSplashScreen() {
         try {
-            // Tải FXML cho màn hình chào
-            Parent splashScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SplashScreen/splash-screen.fxml")));
-            Scene splashScene = new Scene(splashScreen);
+            Scene splashScene = new Scene(getParent());
+            Stage stage = getStage();
 
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("common/images/app-icon.png"))));
             stage.setScene(splashScene);
@@ -34,13 +33,13 @@ public class SplashScreenController {
                     try {
                         stage.close();
 
-                        Stage mainStage = new Stage();
-                        Parent mainScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Login/login.fxml")));
-                        mainStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("common/images/app-icon.png"))));
-                        mainStage.setTitle("Library Manager NQC");
-                        mainStage.setScene(new Scene(mainScreen));
-                        mainStage.setResizable(false);
-                        mainStage.show();
+                        Stage newStage = new Stage();
+                        LoginController loginController = (LoginController)Controller.init(newStage, getClass().getResource("Login/login.fxml"));
+                        newStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("common/images/app-icon.png"))));
+                        newStage.setTitle("Library Manager NQC");
+                        newStage.setScene(new Scene(loginController.getParent()));
+                        newStage.setResizable(false);
+                        newStage.show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

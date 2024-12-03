@@ -3,14 +3,14 @@ package com.example.librarymanagernqc.database.Controller;
 import com.example.librarymanagernqc.AbstractClass.HasError;
 import com.example.librarymanagernqc.database.DAO.AdminDAO;
 
-public class AdminDatabaseController extends HasError {
+public abstract class AdminDatabaseController extends HasError {
 
     private static final AdminDAO adminDAO = new AdminDAO();
 
     protected AdminDatabaseController() {
     }
 
-    public static boolean checkValidAccount(String username, String password) {
+    public boolean checkValidAccount(String username, String password) {
         try {
             if (adminDAO.isAcountExists(username, password)) {
                 return true;
@@ -24,7 +24,7 @@ public class AdminDatabaseController extends HasError {
         return false;
     }
 
-    public static boolean checkValidUsername(String username) {
+    public boolean checkValidUsername(String username) {
         try {
             if (adminDAO.isUserExists(username)) {
                 return true;
@@ -38,7 +38,7 @@ public class AdminDatabaseController extends HasError {
         return false;
     }
 
-    public static boolean insertAdminAcount(String username, String password) {
+    public boolean insertAdminAcount(String username, String password) {
         try {
             if (adminDAO.insertAdminAcount(username, password)) {
                 return true;
@@ -53,7 +53,7 @@ public class AdminDatabaseController extends HasError {
     }
 
     //sign up
-    public static boolean isUserExists(String username) {
+    public boolean isUserExists(String username) {
         try {
             if (adminDAO.isUserExists(username)) {
                 setErrorMessage("Username already exist");
@@ -66,7 +66,7 @@ public class AdminDatabaseController extends HasError {
         return false;
     }
 
-    public static boolean checkValidKey(String username, String key) {
+    public boolean checkValidKey(String username, String key) {
         try {
             if (adminDAO.isKeyExists(username, key)) {
                 return true;
@@ -80,7 +80,7 @@ public class AdminDatabaseController extends HasError {
         return false;
     }
 
-    public static boolean setPassword(String username, String password) {
+    public boolean setPassword(String username, String password) {
         try {
             if (adminDAO.setPassword(username, password)) {
                 System.out.println("Successfully set password");
@@ -97,7 +97,7 @@ public class AdminDatabaseController extends HasError {
         return false;
     }
 
-    public static boolean setRecoveryKey(String username, String key) {
+    public boolean setRecoveryKey(String username, String key) {
         try {
             if (adminDAO.setRecoveryKey(username, key)) {
                 System.out.println("Successfully set recovery key");

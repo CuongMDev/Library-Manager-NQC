@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.User.RecordBookLoan;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
@@ -19,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
-public class RecordBookLoanController {
+public class RecordBookLoanController extends Controller {
     @FXML
     private TextField username;
     @FXML

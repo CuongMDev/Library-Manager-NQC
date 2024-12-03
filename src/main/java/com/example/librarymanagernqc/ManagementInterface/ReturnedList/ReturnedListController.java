@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.ReturnedList;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBookReturn.RecordBookReturnController;
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
@@ -24,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class ReturnedListController {
+public class ReturnedListController extends Controller {
     @FXML
     private TableColumn<BookLoan, String> usernameColumn;
     @FXML
@@ -84,6 +85,11 @@ public class ReturnedListController {
         }
     }
 
+    @Override
+    public void refresh() {
+        updateTable();
+    }
+
     private void initOptionColumn() {
         optionColumn.setCellFactory(new Callback<>() {
             @Override
@@ -107,15 +113,15 @@ public class ReturnedListController {
                             //lấy ô hiện tại đang chọn
                             BookLoan currentBookLoan = getTableView().getItems().get(getIndex());
                             //load book information
-                            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                            FXMLLoader recordBookReturnLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/BorrowedList/RecordBookReturn/record-book-return.fxml"));
+                            RecordBookReturnController recordBookReturnController;
                             try {
-                                mainStackPane.getChildren().add(recordBookReturnLoader.load());
+                                recordBookReturnController = (RecordBookReturnController) Controller.init(getStage(), getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/BorrowedList/RecordBookReturn/record-book-return.fxml"));
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
 
-                            RecordBookReturnController recordBookReturnController = recordBookReturnLoader.getController();
+                            switchPane(mainStackPane, recordBookReturnController.getParent());
+
                             recordBookReturnController.setBookLoan(currentBookLoan);
                             //set type infomation
                             recordBookReturnController.setType(RecordBookReturnController.Type.INFOMATION);
@@ -124,8 +130,7 @@ public class ReturnedListController {
                             recordBookReturnController.backButton.setManaged(true);
                             recordBookReturnController.backButton.setOnMouseClicked(backMouseEvent -> {
                                 if (backMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    switchToSavePane(mainStackPane);
                                 }
                             });
 

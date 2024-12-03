@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.Document.BookInformation;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.Objects.Book.Book;
 import com.example.librarymanagernqc.Objects.Utils;
 import com.jfoenix.controls.JFXButton;
@@ -11,7 +12,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class BookInformationController {
+public class BookInformationController extends Controller {
     public enum Type {
         ADD,
         EDIT

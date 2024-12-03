@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.User;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.ManagementInterface.BorrowedList.BorrowedListController;
 import com.example.librarymanagernqc.ManagementInterface.Document.BookInformation.BookInformationController;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
@@ -42,7 +43,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class UserController {
+public class UserController extends Controller {
     @FXML
     private StackPane mainStackPane;
     @FXML
@@ -96,8 +97,13 @@ public class UserController {
         }
     }
 
+    @Override
+    public void refresh() {
+        updateTable();
+    }
+
     public void recordBookLoan(BookLoan bookLoan) {
-        boolean isInsertedBookLoan = BorrowedListDatabaseController.insertBookLoan(bookLoan);
+        boolean isInsertedBookLoan = BorrowedListDatabaseController.getInstance().insertBookLoan(bookLoan);
         if (isInsertedBookLoan) {
             System.out.println("Thêm thông tin mượn sách vào database thành công");
             BorrowedListController.addBookLoanToList(bookLoan);
@@ -107,8 +113,8 @@ public class UserController {
             //giảm số lượng sách
             DocumentController.changeBookQuantity(getBook.getId(), -bookLoan.getLoanQuantity());
 
-            if(!RecentBorrowedDatabaseController.isRecentBookExists(getBook.getId())) {
-                boolean isInsertRecentBorrowed = RecentBorrowedDatabaseController.insertRecentBorrowed(getBook);
+            if(!RecentBorrowedDatabaseController.getInstance().isRecentBookExists(getBook.getId())) {
+                boolean isInsertRecentBorrowed = RecentBorrowedDatabaseController.getInstance().insertRecentBorrowed(getBook);
 
                 if (isInsertRecentBorrowed) {
                     DocumentController.addBookToRecentList(getBook);
@@ -158,25 +164,24 @@ public class UserController {
                             //lấy ô hiện tại đang chọn
                             User currentUser = getTableView().getItems().get(getIndex());
                             //load user information
-                            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                            FXMLLoader userInfoLoader = new FXMLLoader(getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/User/AddUser/add-user.fxml"));
+                            AddUserController addUserController;
                             try {
-                                mainStackPane.getChildren().add(userInfoLoader.load());
+                                addUserController = (AddUserController) Controller.init(getStage(), getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/User/AddUser/add-user.fxml"));
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                            switchPane(mainStackPane, addUserController.getParent());
 
-                            AddUserController userInfoController = userInfoLoader.getController();
-                            userInfoController.setUser(currentUser);
-                            userInfoController.setType(AddUserController.Type.EDIT);
+                            addUserController.setUser(currentUser);
+                            addUserController.setType(AddUserController.Type.EDIT);
 
                             //save button event
-                            userInfoController.addButton.setOnMouseClicked(addMouseEvent -> {
+                            addUserController.addButton.setOnMouseClicked(addMouseEvent -> {
                                 if (addMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    if (userInfoController.checkValidUser()) {
-                                        currentUser.setUser(userInfoController.getUser());
+                                    if (addUserController.checkValidUser()) {
+                                        currentUser.setUser(addUserController.getUser());
 
-                                        boolean isUpdated = UserDatabaseController.updateUser(currentUser);
+                                        boolean isUpdated = UserDatabaseController.getInstance().updateUser(currentUser);
                                         if (isUpdated) {
                                             System.out.println("User updated successfully in database");
                                         } else {
@@ -184,17 +189,15 @@ public class UserController {
                                         }
                                         userTable.refresh();
 
-                                        mainStackPane.getChildren().removeLast();
-                                        mainStackPane.getChildren().add(savePane);
+                                        switchToSavePane(mainStackPane);
                                     }
                                 }
                             });
 
                             //cancel button event
-                            userInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
+                            addUserController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                                 if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    switchToSavePane(mainStackPane);
                                 }
                             });
 
@@ -218,7 +221,7 @@ public class UserController {
                             User user = getTableView().getItems().get(getIndex());
 
                             // kiểm tra nếu người dùng đang mượn sách thì không được xóa
-                            if(BorrowedListDatabaseController.isBookLoanExistBymemberName(user.getUsername())) {
+                            if(BorrowedListDatabaseController.getInstance().isBookLoanExistBymemberName(user.getUsername())) {
                                 // Hiển thị thông báo
                                 Alert alert = new Alert(Alert.AlertType.WARNING);
                                 alert.setTitle("Can't delete a user");
@@ -228,7 +231,7 @@ public class UserController {
                             }
                             else{
                                 // Xóa người dùng khỏi database
-                                boolean isDeleted = UserDatabaseController.deleteUser(user);
+                                boolean isDeleted = UserDatabaseController.getInstance().deleteUser(user);
                                 if (isDeleted) {
                                     // Nếu xóa thành công, xóa người dùng khỏi TableView
                                     getTableView().getItems().remove(user);
@@ -254,21 +257,19 @@ public class UserController {
                             //lấy ô hiện tại đang chọn
                             User currentUser = getTableView().getItems().get(getIndex());
                             //load record book loan information
-                            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                            FXMLLoader bookLoanInfoLoader = new FXMLLoader(getClass().getResource("RecordBookLoan/record-book-loan.fxml"));
+                            RecordBookLoanController bookLoanInfoController;
                             try {
-                                mainStackPane.getChildren().add(bookLoanInfoLoader.load());
+                                bookLoanInfoController = (RecordBookLoanController) Controller.init(getStage(), getClass().getResource("RecordBookLoan/record-book-loan.fxml"));
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                            switchPane(mainStackPane, bookLoanInfoController.getParent());
 
-                            RecordBookLoanController bookLoanInfoController = bookLoanInfoLoader.getController();
                             bookLoanInfoController.setUser(currentUser);
 
                             bookLoanInfoController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                                 if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    switchToSavePane(mainStackPane);
                                 }
                             });
 
@@ -279,8 +280,7 @@ public class UserController {
 
                                         recordBookLoan(getBookLoan);
 
-                                        mainStackPane.getChildren().removeLast();
-                                        mainStackPane.getChildren().add(savePane);
+                                        switchToSavePane(mainStackPane);
                                     }
                                 }
                             });
@@ -313,15 +313,12 @@ public class UserController {
     @FXML
     private void onAddMouseClicked(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-            FXMLLoader addUserLoader = new FXMLLoader(getClass().getResource("AddUser/add-user.fxml"));
-            mainStackPane.getChildren().add(addUserLoader.load());
+            AddUserController addUserController = (AddUserController) Controller.init(getStage(), getClass().getResource("AddUser/add-user.fxml"));
+            switchPane(mainStackPane, addUserController.getParent());
 
-            AddUserController addUserController = addUserLoader.getController();
             addUserController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                 if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                    mainStackPane.getChildren().removeLast();
-                    mainStackPane.getChildren().add(savePane);
+                    switchToSavePane(mainStackPane);
                 }
             });
             addUserController.addButton.setOnMouseClicked(addUserMouseEvent -> {
@@ -338,8 +335,7 @@ public class UserController {
                             return;  // Không cho phép thêm người dùng vào bảng
                         }
 
-                        mainStackPane.getChildren().removeLast();
-                        mainStackPane.getChildren().add(savePane);
+                        switchToSavePane(mainStackPane);
 
                         userTable.getItems().add(addUserController.getUser());
                     }

@@ -10,25 +10,34 @@ import com.example.librarymanagernqc.database.Controller.UserDatabaseController;
 import java.util.List;
 
 public class DatabaseLoader extends HasError {
+    private static DatabaseLoader instance;
+
     // Private constructor to prevent instantiation
     private DatabaseLoader() {
+    }
+
+    public static DatabaseLoader getInstance() {
+        if (instance == null) {
+            instance = new DatabaseLoader();
+        }
+        return instance;
     }
 
     /**
      * Phương thức này được gọi để tải data từ database
      * @return true if load successfully, false if not
      */
-    public static boolean loadDataFromDatabase() {
+    public boolean loadDataFromDatabase() {
         boolean success = true;
-        if (!BookDatabaseController.loadBooksFromDatabase()) {
+        if (!BookDatabaseController.getInstance().loadBooksFromDatabase()) {
             success = false;
-        } else if (!UserDatabaseController.loadMemberFromDatabase()) {
+        } else if (!UserDatabaseController.getInstance().loadMemberFromDatabase()) {
             success = false;
-        } else if(!BorrowedListDatabaseController.loadBookLoanFromDatabase()) {
+        } else if(!BorrowedListDatabaseController.getInstance().loadBookLoanFromDatabase()) {
             success = false;
-        } else if(!ReturnedListDatabaseController.loadBookReturnFromDatabase()) {
+        } else if(!ReturnedListDatabaseController.getInstance().loadBookReturnFromDatabase()) {
             success = false;
-        } else if (!RecentBorrowedDatabaseController.loadRecentBorrowedFromDatabase()) {
+        } else if (!RecentBorrowedDatabaseController.getInstance().loadRecentBorrowedFromDatabase()) {
             success = false;
         }
 

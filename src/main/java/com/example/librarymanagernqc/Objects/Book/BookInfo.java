@@ -5,14 +5,14 @@ import com.example.librarymanagernqc.Objects.Utils;
 import java.util.List;
 
 public class BookInfo {
-    protected String id;
-    protected String title;
-    protected String authors;
-    protected String publisher;
-    protected String publishedDate;
-    protected String description;
-    protected String thumbnailUrl;
-    protected String infoLink;
+    private String id;
+    private String title;
+    private String authors;
+    private String publisher;
+    private String publishedDate;
+    private String description;
+    private String thumbnailUrl;
+    private String infoLink;
 
     public BookInfo(String id, String title, String authors, String publisher, String publishedDate, String description, String thumbnailUrl, String infoLink) {
         this.id = id;

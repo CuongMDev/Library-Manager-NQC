@@ -10,12 +10,21 @@ import java.util.List;
 public class BookDatabaseController extends HasError {
     private static final BookDAO bookDAO = new BookDAO();
 
+    private static BookDatabaseController instance;
+
     // Private constructor to prevent instantiation
     private BookDatabaseController() {
     }
 
+    public static BookDatabaseController getInstance() {
+        if (instance == null) {
+            instance = new BookDatabaseController();
+        }
+        return instance;
+    }
+
     // Phương thức này được gọi để tải sách từ database
-    public static boolean loadBooksFromDatabase() {
+    public boolean loadBooksFromDatabase() {
         try {
             List<Book> booksFromDb = bookDAO.getBooksFromDatabase();
             //tải sách vào database
@@ -28,7 +37,7 @@ public class BookDatabaseController extends HasError {
     }
 
     // xóa sách
-    public static boolean deleteBookById(String bookId) {
+    public boolean deleteBookById(String bookId) {
         if (!bookDAO.deleteBookById(bookId)) {
             setErrorMessage("Error deleting book");
             return false;
@@ -37,7 +46,7 @@ public class BookDatabaseController extends HasError {
     }
 
     //kiểm tra sách đã tồn tại chưa
-    public static boolean isBookExists(String bookId) {
+    public boolean isBookExists(String bookId) {
         if (!bookDAO.isBookExists(bookId)) {
             setErrorMessage("Book does not exist");
             return false;
@@ -46,7 +55,7 @@ public class BookDatabaseController extends HasError {
     }
 
     // thêm sách
-    public static boolean insertBook(Book newBook) {
+    public boolean insertBook(Book newBook) {
         if (!bookDAO.insertBook(newBook)) {
             setErrorMessage("Error inserting book");
             return false;
@@ -55,7 +64,7 @@ public class BookDatabaseController extends HasError {
     }
 
     // update sách
-    public static boolean updateBook(Book updatedBook) {
+    public boolean updateBook(Book updatedBook) {
         if (!bookDAO.updateBook(updatedBook)) {
             setErrorMessage("Error updating book");
             return false;

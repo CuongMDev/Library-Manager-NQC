@@ -1,6 +1,7 @@
 package com.example.librarymanagernqc.Login;
 
-import com.example.librarymanagernqc.Objects.AccountChecker.AccountChecker;
+import com.example.librarymanagernqc.AbstractClass.Controller;
+import com.example.librarymanagernqc.Objects.AccountController.AccountController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -13,7 +14,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class ForgotPasswordController {
+public class ForgotPasswordController extends Controller {
     @FXML
     public Button backToLoginButton;
     @FXML
@@ -27,7 +28,7 @@ public class ForgotPasswordController {
 
     public void onRecoverMouseClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            if (AccountChecker.checkValidUsername(usernameField.getText())) { //account valid
+            if (AccountController.getInstance().checkValidUsername(usernameField.getText())) { //account valid
                 Pane saveLoginPane = (Pane) mainStackPane.getChildren().removeLast();
                 FXMLLoader recoveryKey = new FXMLLoader(getClass().getResource("recovery-key.fxml"));
                 try {
@@ -58,7 +59,7 @@ public class ForgotPasswordController {
                     }
                 });
             } else {
-                errorText.setText(AccountChecker.getErrorMessage());
+                errorText.setText(AccountController.getInstance().getErrorMessage());
             }
         }
     }

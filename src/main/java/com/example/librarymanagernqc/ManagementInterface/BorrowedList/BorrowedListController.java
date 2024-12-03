@@ -1,5 +1,6 @@
 package com.example.librarymanagernqc.ManagementInterface.BorrowedList;
 
+import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.ManagementInterface.Document.DocumentController;
 import com.example.librarymanagernqc.ManagementInterface.ReturnedList.ReturnedListController;
 import com.example.librarymanagernqc.Objects.BookLoan.BookLoan;
@@ -7,11 +8,8 @@ import com.example.librarymanagernqc.ManagementInterface.BorrowedList.RecordBook
 import com.example.librarymanagernqc.TimeGetter.TimeGetter;
 import com.example.librarymanagernqc.database.Controller.BorrowedListDatabaseController;
 import com.example.librarymanagernqc.database.Controller.ReturnedListDatabaseController;
-import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
-import com.example.librarymanagernqc.database.DAO.ReturnedListDAO;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -19,24 +17,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
-import javax.swing.text.DateFormatter;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class BorrowedListController {
+public class BorrowedListController extends Controller {
     @FXML
     private TableColumn<BookLoan, String> usernameColumn;
     @FXML
@@ -103,6 +96,11 @@ public class BorrowedListController {
         }
     }
 
+    @Override
+    public void refresh() {
+        updateTable();
+    }
+
     private void initOptionColumn() {
         optionColumn.setCellFactory(new Callback<>() {
             @Override
@@ -126,15 +124,14 @@ public class BorrowedListController {
                             //lấy ô hiện tại đang chọn
                             BookLoan currentBookLoan = getTableView().getItems().get(getIndex());
                             //load book information
-                            Pane savePane = (Pane) mainStackPane.getChildren().removeLast();
-                            FXMLLoader recordBookReturnLoader = new FXMLLoader(getClass().getResource("RecordBookReturn/record-book-return.fxml"));
+                            RecordBookReturnController recordBookReturnController;
                             try {
-                                mainStackPane.getChildren().add(recordBookReturnLoader.load());
+                                recordBookReturnController = (RecordBookReturnController) Controller.init(getStage(), getClass().getResource("RecordBookReturn/record-book-return.fxml"));
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                            switchPane(mainStackPane, recordBookReturnController.getParent());
 
-                            RecordBookReturnController recordBookReturnController = recordBookReturnLoader.getController();
                             recordBookReturnController.setBookLoan(currentBookLoan);
 
                             //record button event
@@ -144,23 +141,21 @@ public class BorrowedListController {
                                     recordBookReturnController.updateBookLoan(currentBookLoan);
 
                                     // thêm thông tin trả sách vào database
-                                    boolean isInserted = ReturnedListDatabaseController.insertBookReturn(currentBookLoan);
+                                    boolean isInserted = ReturnedListDatabaseController.getInstance().insertBookReturn(currentBookLoan);
                                     if (isInserted) {
                                         System.out.println("thêm thông tin trả sách vào database thành công");
                                         //thêm thông tin trả sách
                                         ReturnedListController.addBookLoanToList(currentBookLoan);
-                                    }
-                                    else{
+                                    } else {
                                         System.out.println("thêm thông tin trả sách vào database thất bại");
                                     }
 
-                                    boolean isDelete = BorrowedListDatabaseController.deleteBookLoanById(currentBookLoan);
-                                    if(isDelete){
+                                    boolean isDelete = BorrowedListDatabaseController.getInstance().deleteBookLoanById(currentBookLoan);
+                                    if (isDelete) {
                                         System.out.println("xóa thông tin mượn sách khỏi database thành công");
                                         //xóa sách khỏi danh sách mượn
                                         removeBookLoanFromList(currentBookLoan);
-                                    }
-                                    else{
+                                    } else {
                                         System.out.println("xóa thông tin mượn sách database thất bại");
                                     }
 
@@ -168,8 +163,7 @@ public class BorrowedListController {
                                     //add lại số lượng vào document
                                     DocumentController.changeBookQuantity(currentBookLoan.getBookId(), currentBookLoan.getLoanQuantity());
 
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    switchToSavePane(mainStackPane);
                                     updateTable();
                                 }
                             });
@@ -177,8 +171,7 @@ public class BorrowedListController {
                             //cancel button event
                             recordBookReturnController.cancelButton.setOnMouseClicked(cancelMouseEvent -> {
                                 if (cancelMouseEvent.getButton() == MouseButton.PRIMARY) {
-                                    mainStackPane.getChildren().removeLast();
-                                    mainStackPane.getChildren().add(savePane);
+                                    switchToSavePane(mainStackPane);
                                 }
                             });
 

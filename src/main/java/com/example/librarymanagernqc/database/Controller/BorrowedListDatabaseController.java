@@ -12,11 +12,20 @@ import java.util.List;
 public class BorrowedListDatabaseController extends HasError {
     private static BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
 
+    private static BorrowedListDatabaseController instance;
+
     private BorrowedListDatabaseController() {
     }
 
+    public static BorrowedListDatabaseController getInstance() {
+        if (instance == null) {
+            instance = new BorrowedListDatabaseController();
+        }
+        return instance;
+    }
+
     // Phương thức này được gọi để tải sách mượn từ database
-    public static boolean loadBookLoanFromDatabase() {
+    public boolean loadBookLoanFromDatabase() {
         try {
             List<BookLoan> bookloanFromDb = borrowedListDAO.getBookLoanFromDatabase();
             // tải sách mượn vào database
@@ -29,7 +38,7 @@ public class BorrowedListDatabaseController extends HasError {
     }
 
     // xóa book loan
-    public static boolean deleteBookLoanById(BookLoan curBook) {
+    public boolean deleteBookLoanById(BookLoan curBook) {
         if (!borrowedListDAO.deleteBookLoanById(curBook)) {
             setErrorMessage("Error deleting Book Loan");
             return false;
@@ -38,7 +47,7 @@ public class BorrowedListDatabaseController extends HasError {
     }
 
     // kiểm tra book loan có tồn tại không với bookId không
-    public static boolean isBookLoanExistBybookId(String bookId) {
+    public boolean isBookLoanExistBybookId(String bookId) {
         if (!borrowedListDAO.isBookLoanExistBybookId(bookId)) {
             setErrorMessage("Book Loan not found");
             return false;
@@ -47,7 +56,7 @@ public class BorrowedListDatabaseController extends HasError {
     }
 
     // kiểm tra book loan có tồn tại không với member_name không
-    public static boolean isBookLoanExistBymemberName(String member_name) {
+    public boolean isBookLoanExistBymemberName(String member_name) {
         if (!borrowedListDAO.isBookLoanExistBymemberName(member_name)) {
             setErrorMessage("Book Loan not found");
             return false;
@@ -56,7 +65,7 @@ public class BorrowedListDatabaseController extends HasError {
     }
 
     // insert bookloan
-    public static boolean insertBookLoan(BookLoan curBookLoan) {
+    public boolean insertBookLoan(BookLoan curBookLoan) {
         if (!borrowedListDAO.insertBookLoan(curBookLoan)) {
             setErrorMessage("Error inserting Book Loan");
             return false;
