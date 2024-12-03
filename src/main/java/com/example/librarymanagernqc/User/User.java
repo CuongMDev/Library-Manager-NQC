@@ -1,7 +1,6 @@
 package com.example.librarymanagernqc.User;
 
-import com.example.librarymanagernqc.Objects.Book.Book;
-import com.example.librarymanagernqc.Objects.Utils;
+import com.example.librarymanagernqc.Objects.FuzzySearch;
 
 import java.util.List;
 
@@ -83,6 +82,6 @@ public class User {
      * search user by title, limit = 0 mean no limit
      */
     public static List<User> fuzzySearch(List<User> users, String word, int maxDistance, int limit) {
-        return Utils.fuzzySearch(users, word,"getUsername", 0, limit);
+        return FuzzySearch.search(users, word,"getUsername", 0, limit);
     }
 }

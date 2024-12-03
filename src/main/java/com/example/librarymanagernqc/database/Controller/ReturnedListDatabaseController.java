@@ -9,7 +9,7 @@ import java.lang.ModuleLayer.Controller;
 import java.util.List;
 
 public class ReturnedListDatabaseController extends HasError {
-    private static ReturnedListDAO returnedListDAO = new ReturnedListDAO();
+    private final ReturnedListDAO returnedListDAO = new ReturnedListDAO();
 
     private static ReturnedListDatabaseController instance;
 

@@ -5,6 +5,8 @@ import com.example.librarymanagernqc.database.DAO.AdminDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 public class AdminDAOTest {
   private AdminDAO adminDAO;
 
@@ -14,7 +16,7 @@ public class AdminDAOTest {
   }
 
   @Test
-  public void testIsAcountExists(){
+  public void testIsAcountExists() throws SQLException {
     String ExistsUserName = "nqc";
     String ExistsPassword = "nqcnqcnqc";
 
@@ -27,7 +29,7 @@ public class AdminDAOTest {
   }
 
   @Test
-  public void testIsUserExists(){
+  public void testIsUserExists() throws SQLException {
     String ExistsUserName = "nqc";
 
     String nonExistsUserName = "iuqtgik";

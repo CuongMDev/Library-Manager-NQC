@@ -10,7 +10,7 @@ import com.example.librarymanagernqc.database.DAO.BorrowedListDAO;
 import java.util.List;
 
 public class BorrowedListDatabaseController extends HasError {
-    private static BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
+    private BorrowedListDAO borrowedListDAO = new BorrowedListDAO();
 
     private static BorrowedListDatabaseController instance;
 

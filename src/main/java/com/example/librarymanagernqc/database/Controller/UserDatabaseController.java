@@ -8,7 +8,7 @@ import com.example.librarymanagernqc.database.DAO.UserDAO;
 import java.util.List;
 
 public class UserDatabaseController extends HasError {
-    private static UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO = new UserDAO();
 
     private static UserDatabaseController instance;
 

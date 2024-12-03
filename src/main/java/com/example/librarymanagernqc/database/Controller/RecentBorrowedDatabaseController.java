@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class RecentBorrowedDatabaseController extends HasError {
-    private static final RecentBorrowedDAO recentBorrowedDAO = new RecentBorrowedDAO();
+    private final RecentBorrowedDAO recentBorrowedDAO = new RecentBorrowedDAO();
 
     private static RecentBorrowedDatabaseController instance;
 

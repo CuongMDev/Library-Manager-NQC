@@ -1,7 +1,6 @@
 package com.example.librarymanagernqc.Objects.BookLoan;
 
-import com.example.librarymanagernqc.Objects.Book.Book;
-import com.example.librarymanagernqc.Objects.Utils;
+import com.example.librarymanagernqc.Objects.FuzzySearch;
 
 import com.example.librarymanagernqc.database.DAO.IdGeneratorDAO;
 import java.util.List;
@@ -142,6 +141,6 @@ public class BookLoan {
      * search book loan by title, limit = 0 mean no limit
      */
     public static List<BookLoan> fuzzySearch(List<BookLoan> bookLoans, String word, int maxDistance, int limit) {
-        return Utils.fuzzySearch(bookLoans, word,"getBookTitle", 0, limit);
+        return FuzzySearch.search(bookLoans, word,"getBookTitle", 0, limit);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.librarymanagernqc.Objects.Book;
 
-import com.example.librarymanagernqc.Objects.Utils;
-import eu.hansolo.tilesfx.tools.DoubleExponentialSmoothingForLinearSeries;
+import com.example.librarymanagernqc.Objects.FuzzySearch;
 
 import java.util.List;
 
@@ -25,6 +24,6 @@ public class Book extends BookInfo {
      * search book by title, limit = 0 mean no limit
      */
     public static List<Book> fuzzySearch(List<Book> books, String word, int maxDistance, int limit) {
-        return Utils.fuzzySearch(books, word,"getTitle", 0, limit);
+        return FuzzySearch.search(books, word,"getTitle", 0, limit);
     }
 }

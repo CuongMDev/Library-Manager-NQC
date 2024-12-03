@@ -4,8 +4,7 @@ import com.example.librarymanagernqc.AbstractClass.HasError;
 import com.example.librarymanagernqc.database.DAO.AdminDAO;
 
 public abstract class AdminDatabaseController extends HasError {
-
-    private static final AdminDAO adminDAO = new AdminDAO();
+    private final AdminDAO adminDAO = new AdminDAO();
 
     protected AdminDatabaseController() {
     }

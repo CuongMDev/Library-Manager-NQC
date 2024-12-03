@@ -2,6 +2,7 @@ package com.example.librarymanagernqc.ManagementInterface.Document.BookInformati
 
 import com.example.librarymanagernqc.AbstractClass.Controller;
 import com.example.librarymanagernqc.Objects.Book.Book;
+import com.example.librarymanagernqc.Objects.QRCode;
 import com.example.librarymanagernqc.Objects.Utils;
 import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;
@@ -103,7 +104,7 @@ public class BookInformationController extends Controller {
         }
         //qr loading
         try {
-            Image qrImage = Utils.generateQRCode(book.getInfoLink());
+            Image qrImage = QRCode.generateQRCode(book.getInfoLink());
             bookQrImage.setImage(qrImage);
         } catch (Exception e) {
             e.printStackTrace();

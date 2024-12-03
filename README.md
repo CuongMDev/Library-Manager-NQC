@@ -17,7 +17,11 @@ The application is designed to manage library operations efficiently. The applic
 5. Getting data from GoogleBookAPI
 
 ## UML diagram
-![UML diagram](caykethua/Main.jpg)
+![UML diagram 1](src/main/resources/org/preview/inheritanceTree1.png)
+
+![UML diagram 2](src/main/resources/org/preview/inheritanceTree2.png)
+
+![UML diagram 3](src/main/resources/org/preview/inheritanceTree3.png)
 
 ## Installation
 1. Clone the project from the repository.
@@ -54,20 +58,23 @@ The application is designed to manage library operations efficiently. The applic
 - Click the "Logout" button to log out.
 
 ## Demo
++ **Login**  
+  ![Login](src/main/resources/org/preview/Login.png)
+
 + **Add Book**  
-  ![Add Book](src/main/resources/org/Icon/AddBook.png)
+  ![Add Book](src/main/resources/org/preview/AddBook.png)
 
 + **Edit User**  
-  ![Edit User](src/main/resources/org/Icon/EditUser.png)
+  ![Edit User](src/main/resources/org/preview/EditUser.png)
 
 + **Borrow Books**  
-  ![Borrow](src/main/resources/org/Icon/Borrow.png)
+  ![Borrow](src/main/resources/org/preview/Borrow.png)
 
 + **Return Books**  
-  ![Return](src/main/resources/org/Icon/Return.png)
+  ![Return](src/main/resources/org/preview/Return.png)
 
 + **Overdue Management**  
-  ![Overdue](src/main/resources/org/Icon/Overdue.png)
+  ![Overdue](src/main/resources/org/preview/Overdue.png)
 
 
 ## Future Improvements
