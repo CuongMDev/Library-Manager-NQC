@@ -19,7 +19,7 @@ public class QRCode {
     /**
      * Creating QR Code from Link
      */
-    public static Image generateQCode(String text) throws WriterException, IOException {
+    public static Image generateQRCode(String text) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 150, 150);
 

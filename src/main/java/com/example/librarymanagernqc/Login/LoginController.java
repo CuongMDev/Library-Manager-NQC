@@ -33,8 +33,7 @@ public class LoginController extends Controller {
     private Text errorText;
 
     public void initialize() {
-        usernameField.setText("MCuong");
-        passwordField.setText("12345678");
+
     }
 
     private void enterApp() {
