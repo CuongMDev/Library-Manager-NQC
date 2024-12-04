@@ -39,6 +39,9 @@ public class LoginController extends Controller {
     private void enterApp() {
         try {
             // Get the current stage
+            if (getStage() == null) {
+                setStage(new Stage());
+            }
             Stage stage = getStage();
             stage.close();
 
