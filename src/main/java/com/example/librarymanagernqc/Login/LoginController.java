@@ -38,10 +38,7 @@ public class LoginController extends Controller {
 
     private void enterApp() {
         try {
-            // Get the current stage
-            if (getStage() == null) {
-                setStage(new Stage());
-            }
+            errorText.setText("");
             Stage stage = getStage();
             stage.close();
 
@@ -59,11 +56,7 @@ public class LoginController extends Controller {
                     stage.close();
 
                     // Set the new scene
-                    try {
-                        stage.setScene(new Scene(new FXMLLoader(getClass().getResource("login.fxml")).load()));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    stage.setScene(getParent().getScene());
                     stage.show();
                     stage.centerOnScreen();
                 }
