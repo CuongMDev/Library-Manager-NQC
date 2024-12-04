@@ -125,7 +125,7 @@ public class OverdueListController extends Controller {
                             //load book information
                             RecordBookReturnController recordBookReturnController;
                             try {
-                                recordBookReturnController = (RecordBookReturnController) Controller.init(getStage(), getClass().getResource("RecordBookReturn/record-book-return.fxml"));
+                                recordBookReturnController = (RecordBookReturnController) Controller.init(getStage(), getClass().getResource("/com/example/librarymanagernqc/ManagementInterface/BorrowedList/RecordBookReturn/record-book-return.fxml"));
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
