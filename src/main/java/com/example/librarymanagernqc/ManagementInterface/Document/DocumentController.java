@@ -226,7 +226,9 @@ public class DocumentController extends Controller {
                             } else {
                                 // Xóa sách khỏi danh sách và database
                                 deleteBookFromList(book.getId());
+                                updateTable();
                             }
+
                         });
 
                     }
@@ -328,13 +330,26 @@ public class DocumentController extends Controller {
                                 Book newBook = bookInfoController.getBook();
                                 // kiểm tra book đã tồn tại chưa
                                 if (BookDatabaseController.getInstance().isBookExists(newBook.getId())) {
-                                    System.out.println("Book with ID " + newBook.getId() + " already exists.");
+                                    //edit
+                                    Book currentBook = searchBookById(bookInfo.getId());
+                                    currentBook.setQuantity(bookInfoController.getBook().getQuantity());
+
+                                    boolean isUpdated = BookDatabaseController.getInstance().updateBook(currentBook);
+
+                                    if(isUpdated) {
+                                        System.out.println("Book updated successfully in database");
+                                    }
+                                    else{
+                                        System.out.println("Failed to update book in database");
+                                    }
+
                                 } else {
                                     boolean isInserted = BookDatabaseController.getInstance().insertBook(newBook);
                                     if (isInserted) {
                                         System.out.println("Book added to the database successfully.");
                                         //add book
                                         DocumentController.addBookToList(newBook);
+                                        updateTable();
                                     } else {
                                         System.out.println("Failed to add the book to the database.");
                                     }

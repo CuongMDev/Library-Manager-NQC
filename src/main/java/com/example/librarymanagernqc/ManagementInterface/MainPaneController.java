@@ -66,6 +66,10 @@ public class MainPaneController extends Controller {
     }
 
     public void switchMainPane(PaneType paneType) {
+        if (paneType == PaneType.OVERDUE_LIST) {
+          controllers[PaneType.BORROWED_LIST.ordinal()].refresh();
+        }
+
         Controller controller = controllers[paneType.ordinal()];
         controller.refresh();
         switchPane(mainStackPane, controller.getParent());

@@ -62,13 +62,13 @@ public class OverdueListController extends Controller {
     }
 
     public static void setAllOverdueList(List<BookLoan> newOverdueList) {
-//        overdueList = newOverdueList;
         overdueList.clear();
         overdueList.addAll(newOverdueList);
     }
 
 
     public static void removeBookLoanFromList(BookLoan bookLoan) {
+        BorrowedListController.removeBookLoanFromList(bookLoan);
         overdueList.remove(bookLoan);
     }
 

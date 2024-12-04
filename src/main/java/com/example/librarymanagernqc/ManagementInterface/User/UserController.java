@@ -82,6 +82,15 @@ public class UserController extends Controller {
     }
 
 
+    public void updateUser(User user) {
+        for (User curUser : usersList) {
+            if (curUser.getUsername().equals(user.getUsername())) {
+                curUser = user;
+                return;
+            }
+        }
+    }
+
     /**
      * search book by title, limit = 0 mean no limit
      */
@@ -184,10 +193,11 @@ public class UserController extends Controller {
                                         boolean isUpdated = UserDatabaseController.getInstance().updateUser(currentUser);
                                         if (isUpdated) {
                                             System.out.println("User updated successfully in database");
+                                            updateUser(currentUser);
+                                            updateTable();
                                         } else {
                                             System.out.println("Failed to update user in database");
                                         }
-                                        userTable.refresh();
 
                                         switchToSavePane(mainStackPane);
                                     }
@@ -235,6 +245,7 @@ public class UserController extends Controller {
                                 if (isDeleted) {
                                     // Nếu xóa thành công, xóa người dùng khỏi TableView
                                     getTableView().getItems().remove(user);
+                                    updateTable();
                                 }
                             }
                         });
@@ -337,7 +348,8 @@ public class UserController extends Controller {
 
                         switchToSavePane(mainStackPane);
 
-                        userTable.getItems().add(addUserController.getUser());
+                        usersList.add(addUserController.getUser());
+                        updateTable();
                     }
                 }
             });
