@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
@@ -96,6 +97,7 @@ public class RecordBookLoanController extends Controller {
     private void setInitValue() {
         loanDate.setText(TimeGetter.getCurrentTime().format(Utils.isoFormatter));
         loanQuantity.setText(String.valueOf(0));
+        loanQuantity.setTextFormatter(new TextFormatter<>(Utils.numberFilter));
     }
 
     //return true ID is found
